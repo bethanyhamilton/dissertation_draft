@@ -1,0 +1,146 @@
+ \section{three category}
+
+ %%%%%%%%%%%%%%%%%%3 category case
+
+
+ In a three category moderator example, $p=3$,  using a no-intercept model and constraining the regression coefficients to be equal, we will have a $2 \time 3$ dimension $\mathbf{C}$ matrix that will look like this:
+
+ \begin{equation}
+     \mathbf{C} = 
+     \begin{bmatrix} 
+     -1 & 1 & 0\\
+     -1 & 0 & 1\\
+     \end{bmatrix}
+ \end{equation}
+
+And $\mathbf{C}\mathbf{\hat{\beta}}$is:
+
+ \begin{equation}
+     \mathbf{C} \mathbf{\hat{\beta}}= 
+     \begin{bmatrix} 
+     -1 & 1 & 0\\
+     -1 & 0 & 1\\
+     \end{bmatrix}\begin{bmatrix}\mathbf{\hat{\beta}}_1 \\
+     \mathbf{\hat{\beta}}_2 \\ \mathbf{\hat{\beta}}_3\end{bmatrix}  = \begin{bmatrix}
+         \mathbf{\hat{\beta}}_2 - \mathbf{\hat{\beta}}_1 \\
+         \mathbf{\hat{\beta}}_3 - \mathbf{\hat{\beta}}_1
+     \end{bmatrix}
+ \end{equation}
+
+ which is set to equal $\begin{bmatrix}
+     0 \\ 0 
+ \end{bmatrix}$. 
+
+ Then to be able to find the moments of $\mathbf{V}^R$ we need to specify the true variance of $(\mathbf{C}\mathbf{\hat{\beta}}-\mathbf{c})$, let be denoted as $\mathbf{\Omega}$ which is $\mathbf{\Omega} = \mathbf{C}Var(\mathbf{\hat{\beta}}) \mathbf{C}'$. So for our example:
+
+ \begin{equation}
+     \begin{split}
+         \mathbf{\Omega}  &= \mathbf{C}Var(\mathbf{\hat{\beta}}) \mathbf{C}' \\
+         &= \begin{bmatrix} 
+      -1 & 1 & 0\\
+     -1 & 0 & 1\\
+     \end{bmatrix} \times \begin{bmatrix}
+         Var(\mathbf{\hat{\beta}})_1 & 0 & 0 \\
+         0 & Var(\mathbf{\hat{\beta}})_2 & 0 \\
+         0 & 0 & Var(\mathbf{\hat{\beta}})_3
+     \end{bmatrix} \begin{bmatrix} 
+     -1 & -1 \\
+     1 & 0 \\
+     0 & 1
+     \end{bmatrix} \\
+    &= \begin{bmatrix}
+        Var(\mathbf{\hat{\beta}})_1 + Var(\mathbf{\hat{\beta}})_2 & Var(\mathbf{\hat{\beta}})_1 \\
+        Var(\mathbf{\hat{\beta}})_1 & Var(\mathbf{\hat{\beta}})_1+Var(\mathbf{\hat{\beta}})_3
+    \end{bmatrix} 
+     \end{split}
+ \end{equation}
+ 
+ 
+ 
+ 
+ The $Q$ statistic can be rewritten as: 
+
+ \begin{equation}
+     Q = \mathbf{z}'\mathbf{D}^{-1}\mathbf{z}, 
+ \end{equation}
+
+ where $\mathbf{z = \mathbf{\Omega}}^{-1/2}(\mathbf{C}\mathbf{\hat{\beta}}-\mathbf{c}) $. For our case: 
+
+ \begin{equation}
+     \mathbf{z} = \left(\begin{bmatrix}
+        Var(\mathbf{\hat{\beta}})_1 + Var(\mathbf{\hat{\beta}})_2 & Var(\mathbf{\hat{\beta}})_1 \\
+        Var(\mathbf{\hat{\beta}})_1 & Var(\mathbf{\hat{\beta}})_1+Var(\mathbf{\hat{\beta}})_3
+    \end{bmatrix} \right)^{-1/2} \begin{bmatrix}
+         \mathbf{\hat{\beta}}_2 - \mathbf{\hat{\beta}}_1 \\
+         \mathbf{\hat{\beta}}_3 - \mathbf{\hat{\beta}}_1
+     \end{bmatrix}
+ \end{equation}
+ 
+ 
+ 
+ 
+ and the normalized variance of the test statistic (scaled by true sampling variance) is:  $\mathbf{D} = \mathbf{\Omega}^{-1/2}\mathbf{C}\mathbf{V}^R\mathbf{C}'\mathbf{\Omega}^{-1/2}$. For our 2 category case: 
+
+ \begin{equation}
+    \begin{split}
+       \mathbf{D} = & \left(\begin{bmatrix}
+        Var(\mathbf{\hat{\beta}})_1 + Var(\mathbf{\hat{\beta}})_2 & Var(\mathbf{\hat{\beta}})_1 \\
+        Var(\mathbf{\hat{\beta}})_1 & Var(\mathbf{\hat{\beta}})_1+Var(\mathbf{\hat{\beta}})_3
+    \end{bmatrix} \right)^{-1/2} \times \\
+     & \begin{bmatrix} 
+     -1 & 1 & 0 \\
+     -1 & 0 & 1
+     \end{bmatrix} \begin{bmatrix}
+         V^R_1 & 0 & 0 \\
+         0& V^R_2 & 0  \\
+         0& 0  & V^R_3  
+     \end{bmatrix}
+     \begin{bmatrix} 
+     -1 & -1 \\
+     1 & 0 \\
+     0 & 1
+     \end{bmatrix} \times \\
+     &\left(\begin{bmatrix}
+        Var(\mathbf{\hat{\beta}})_1 + Var(\mathbf{\hat{\beta}})_2 & Var(\mathbf{\hat{\beta}})_1 \\
+        Var(\mathbf{\hat{\beta}})_1 & Var(\mathbf{\hat{\beta}})_1+Var(\mathbf{\hat{\beta}})_3
+    \end{bmatrix} \right)^{-1/2} \\ 
+    \end{split}
+ \end{equation}
+
+  \begin{equation}
+    \begin{split}
+       = & \left(\begin{bmatrix}
+        Var(\mathbf{\hat{\beta}})_1 + Var(\mathbf{\hat{\beta}})_2 & Var(\mathbf{\hat{\beta}})_1 \\
+        Var(\mathbf{\hat{\beta}})_1 & Var(\mathbf{\hat{\beta}})_1+Var(\mathbf{\hat{\beta}})_3
+    \end{bmatrix} \right)^{-1/2} \times \\
+     &
+    \begin{bmatrix}
+        V^R_1 + V^R_2 & V^R_1 \\
+        V^R_1 & V^R_1+V^R_3
+    \end{bmatrix}
+      \times \\
+     &\left(\begin{bmatrix}
+        Var(\mathbf{\hat{\beta}})_1 + Var(\mathbf{\hat{\beta}})_2 & Var(\mathbf{\hat{\beta}})_1 \\
+        Var(\mathbf{\hat{\beta}})_1 & Var(\mathbf{\hat{\beta}})_1+Var(\mathbf{\hat{\beta}})_3
+    \end{bmatrix} \right)^{-1/2} \\ 
+    \end{split}
+ \end{equation}
+
+
+\begin{equation}
+\begin{split}
+    Q &= \left( \mathbf{\Omega}^{-1/2}(\mathbf{C}\mathbf{\hat{\beta}}) \right)' \left(\mathbf{\Omega}^{-1/2}\mathbf{C}\mathbf{V}^R\mathbf{C}'\mathbf{\Omega}^{-1/2} \right)^{-1} \left( \mathbf{\Omega}^{-1/2}(\mathbf{C}\mathbf{\hat{\beta}}) \right) \\
+     & = (\mathbf{C}\mathbf{\hat{\beta}})' \left( \mathbf{\Omega}^{-1/2} \right)' \mathbf{\Omega}^{1/2} \left(\mathbf{C}\mathbf{V}^R\mathbf{C}'\right)^{-1} \mathbf{\Omega}^{1/2} \left( \mathbf{\Omega}^{-1/2}(\mathbf{C}\mathbf{\hat{\beta}}) \right) \\
+     & = (\mathbf{C}\mathbf{\hat{\beta}})' \left( \mathbf{\Omega}^{-1/2} \right)' \mathbf{I}  \mathbf{\Omega}^{1/2} \left(\mathbf{C}\mathbf{V}^R\mathbf{C}'\right)^{-1} (\mathbf{C}\mathbf{\hat{\beta}})  \\
+     & = (\mathbf{C}\mathbf{\hat{\beta}})' \left( \mathbf{\Omega}^{-1/2} \right)'  \mathbf{\Omega}^{-1/2} \mathbf{\Omega}^{1/2} \mathbf{\Omega}^{1/2} \left(\mathbf{C}\mathbf{V}^R\mathbf{C}'\right)^{-1} (\mathbf{C}\mathbf{\hat{\beta}})  \\
+      & = (\mathbf{C}\mathbf{\hat{\beta}})' \left( \mathbf{\Omega}^{-1/2} \right)'  \mathbf{\Omega}^{-1/2} \mathbf{\Omega}^{1} \left(\mathbf{C}\mathbf{V}^R\mathbf{C}'\right)^{-1} (\mathbf{C}\mathbf{\hat{\beta}})  \\
+      & = (\mathbf{C}\mathbf{\hat{\beta}})' \mathbf{\Omega}^{-1} \mathbf{\Omega} \left(\mathbf{C}\mathbf{V}^R\mathbf{C}'\right)^{-1} (\mathbf{C}\mathbf{\hat{\beta}})  \\
+      & = (\mathbf{C}\mathbf{\hat{\beta}})' \left(\mathbf{C}\mathbf{V}^R\mathbf{C}'\right)^{-1} (\mathbf{C}\mathbf{\hat{\beta}})  \\
+      & = (\mathbf{C}\mathbf{\hat{\beta}})' \left(\mathbf{C}\mathbf{V}^R\mathbf{C}'\right)^{-1} (\mathbf{C}\mathbf{\hat{\beta}})  \\
+      & =(\mathbf{C}\mathbf{\hat{\beta}})' \begin{bmatrix}
+          \frac{1}{V_2^R} - \frac{V_1^R}{\left(V_2^R\right)^2 \left(1 + V_1^R \sum_{p=2}^P \frac{1}{V_p^R} \right)} & & \\
+          & & &\\
+          & & \frac{1}{V_p^R} - \frac{V_1^R}{\left(V_p^R\right)^2 \left(1 + V_1^R \sum_{p=2}^P \frac{1}{V_p^R} \right)}
+      \end{bmatrix} (\mathbf{C}\mathbf{\hat{\beta}}) 
+\end{split}
+\end{equation}

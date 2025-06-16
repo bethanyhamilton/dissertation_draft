@@ -1,0 +1,556 @@
+\chapter{Literature Review}\label{ch:literaturereview}
+
+
+In this dissertation, I aim to address the need for a power approximation for the tests of categorical moderators for meta-regression models that handle dependence. The literature review is divided into two major sections. First, I discuss power analysis methods related to independent effect sizes. I provide an overview of meta-regression of independent effects, tests of categorical moderators for meta-regression of independent effects, and power analysis for tests from models that assume that the effects are independent. Second, I discuss power analysis methods related to dependent effect sizes. I provide an overview of meta-regression models with dependent effects, working models for dependent effect sizes, robust variance estimation, tests of moderators for meta-regression of dependent effects, and power analysis for tests from models of dependent effects. 
+
+\section{Meta-Regression of Independent Effects}
+Meta-analysis is the quantitative synthesis of results from primary research studies where results from the primary research studies are extracted as effect sizes \autocite[e.g., standardized mean differences, correlation, odds ratio, etc.;][]{cooper2019} and then pooled across the studies as a weighted average. 
+
+%While power-analysis methods for meta-regression discussed in this review are not limited to standardized mean differences, I will use the standardized mean differences (SMDs) as a leading example for this literature review. SMD is a measure of the average standardized difference in an outcome between two groups, and it varies in direction and magnitude since it is the most common type of effect size used in social science research \autocite{tipton2019, ahn2012}. 
+
+Beyond pooling effect sizes, meta-regression is used to characterize and explain the variability in the effect sizes. Variability in the effect sizes can arise in many ways, such as differences in the samples, outcomes, methods, settings, or interventions. Meta-regression assesses these differences by modeling these variables as moderators in a meta-regression model and characterizes the variability through measures such as the Cochran's \emph{Q} statistic \autocite{cochran1954,cooper2019}, $I^2$ \autocite{higgins2002}, and estimated variation in the true effect sizes, $\tau^2$. 
+
+In practice, meta-analytic data in social sciences tend to have a dependent effects structure. For example, primary studies may include more than one effect size per study, multiple studies from the same research lab, or multiple treatment groups with the same control group within the same experiment. Although researchers have developed and examined various modeling methods to account for dependence, and these models are extensively implemented in practice, most power analysis methodologies for meta-regression tests have been developed for models that only assume independent effect sizes \autocite{hedges2001, hedges2004, jackson2017}.  Below, I review the meta-regression model assuming independent effects before reviewing methods for estimating the power of tests for meta-regression of dependent effects.  
+
+              
+\subsection{General Model Specification}
+The following is the model specification for meta-regression when the effect sizes are independent. Let there be one effect size, $i$, in each primary study, $j$, with a total of $k$ effect sizes across the whole meta-analytic dataset with $J$ studies ($k = J$ for independent effects models). $T_j$ is an effect size estimate for study $j$ with a known corresponding sampling variance, $\sigma_j^2$. 
+%Each $T_j$ is normally distributed with a mean of $0$ and a variance of $\sigma_j^2$ about the effect size parameter, $\theta_j$. 
+$\epsilon_j$ is the error term, which depends on further model assumptions that I delineate later in this section.
+%: $T_j - \theta_j = \epsilon_j \sim N(0, \sigma_j^2)$. 
+The following is the general meta-regression model of independent effects with an intercept \autocite{cooper2019}:
+\begin{equation} \label{eq:meta-regression independent}
+T_j =  \mathbf{\beta}_0 + \mathbf{\beta}_1x_{j1} +, \cdots,+ \mathbf{\beta}_px_{jp} + \epsilon_j,
+\end{equation}
+where for each study there are $p$ known predictor variables, $x_{j1}, \cdots, x_{jp}$, that correspond to each effect size that encodes characteristics of the effect size estimate, $\beta_1, \cdots, \beta_p$ are the regression coefficients that quantify how the predictors relate to the effect sizes, and $\mathbf{\beta}_0$ is the intercept or overall average effect size when all the $x_{jp}$ have a value of $0$. The corresponding design matrix, $\mathbf{X}$, for a meta-regression model of independent effects with an intercept, is a $J \times (p+1)$ matrix as follows:
+\begin{equation}
+    \mathbf{X} = \begin{bmatrix}
+    1 & x_{11} & x_{12}  &\cdots & x_{1p} \\
+    1 & x_{21} & x_{22} & \cdots & x_{2p}\\
+    \vdots & \vdots & \vdots & \ddots & \vdots\\
+    1 & x_{J1} & x_{J2} & \cdots & x_{Jp}
+    \end{bmatrix}
+    \nonumber
+\end{equation}
+with the first column of this matrix representing the intercept of the model. 
+
+As stated earlier, one primary aim of meta-analysis is to estimate the overall weighted average of all effect sizes. A meta-regression model with only the intercept, $\beta_0$, and sampling error, $\epsilon_j$,  will provide the overall weighted pooled effect, $\hat{\mu}_{\delta}$,  which is equivalent to the weighted mean:
+\begin{equation}
+    \label{model_avg_effect}
+    \hat{\mu}_{\delta} = \frac{\sum_{j=1}^Jw_j T_j}{\sum_{j=1}^Jw_j},
+\end{equation} 
+where $w_j$ is a general weight for study $j$.
+
+Meta-regression is a weighted regression model that can use the inverse of the variance estimate as the weight. These weights signify the precision of the estimated effect size within each study \autocite{viechtbauer2007}. The specification of the inverse variance weights depends on several assumptions. One assumption is that one true effect size underlies all of the studies' effects and models, and only the sampling error of the effect sizes accounts for the variability models by a fixed effects model. Therefore, the error term, $\epsilon_j$ from Equation \ref{eq:meta-regression independent}, is equal to only the sampling error, $e_j$, for this assumption. The sampling error is assumed normally distributed with a mean of 0 and a known sampling variance of $\sigma^2_j$. The inverse variance weights in a fixed effects model of independent effects are $\dot{w}_j = 1/\sigma^2_j$ \autocite{cooper2019}. 
+
+Alternatively, random effects models are used when the assumption is that the population is more heterogeneous. A random effects model treats the sample of studies in a meta-analysis as coming from a population of studies and estimates the variance of the effect sizes between studies in addition to the sampling error \autocite{higgins2009}; therefore, the error term $\epsilon_j$ from Equation \ref{eq:meta-regression independent}, is equal to the sampling error, $e_j$, plus a random effect, $u_j$, for each study. The $u_j$ has a mean of 0 and a between-study variance of $\tau^2$. The distribution of $\epsilon_j$ then has a mean of zero and diagonal covariance matrix given by: $diag(\sigma^2_1 + \tau^2, \sigma^2_2 + \tau^2, \cdots, \sigma^2_J + \tau^2)$. For a random effects model with no dependence among the effect sizes, the inverse variance weights are the inverse of the sum of the sampling variance, $\sigma^2_j$, and the estimate of between-study variance, $\hat{\tau}^2$, or $\ddot{w}_j = 1/(\sigma^2_j + \hat{\tau}^2)$, and the weight matrix is $\mathbf{W} = diag[1/(\sigma^2_1 + \hat{\tau}^2), \cdots, \sigma^2_J + \hat{\tau}^2)]$ \autocite{cooper2019}.
+
+For this study, I focus on random effects models, so the following are some details on how to estimate the regression slopes from Equation \ref{eq:meta-regression independent}. The weighted least squares estimator for the estimate of the regression slopes, $\bm{\hat{\beta}}$, is:
+\begin{equation}\label{eq:estbetaind}
+    \bm{\hat{\beta}} = (\mathbf{X}'\mathbf{W}\mathbf{X})^{-1}\mathbf{X}'\mathbf{W}\mathbf{T} = \left( \sum_{j=1}^J \ddot{w}_j\mathbf{x}_j\mathbf{x}_j' \right)^{-1}\left( \sum_{j=1}^J \ddot{w}_j\mathbf{x}_j T_j \right)
+\end{equation}
+where $\mathbf{T} = (T_1, \cdots, T_J)'$, $\mathbf{x}_j' = (x_{j1}, \cdots, x_{jp})$, and $\ddot{w}_j$ are the weights from a random effects model \autocite{cooper2019}. 
+
+\subsection{Categorical Moderators} 
+ A categorical moderator is a predictor in a meta-regression model that captures mutually exclusive possible values of a qualitative characteristic. An example of a categorical moderator in a meta-analytic dataset is a variable capturing the level of random assignment of the study's sample, where a study could be assigned one of the following values: student, teacher/classroom, school, or district. Categorical moderators are commonly used in meta-regression models  \autocite{tipton2019, ahn2012}. For example, \textcite{tipton2019}, in a review of meta-analysis methodology used in meta-analyses published in 2016 across four social science journals, found that of the 64 articles included in their analysis, $94\%$ of those reviewed exclusively used categorical moderators. In another review of meta-analyses from psychology and education between 1986 and 2013, \textcite{polanin2016} found that the average meta-analyses had 20.5 categorical moderators. In the context of meta-regression of independent effects where there is only one effect size per study, there is no within-study variation in moderator variables, and categorical moderators only vary across studies. 
+ 
+%Sometimes, it is necessary to categorize values on moderators since the construct can be measured differently across studies. For example, suppose an applied meta-analyst wanted to include age as a moderator in their model. In that case, some studies may report age (a continuous variable), while others may report grade level (a categorical variable). They may need to categorize age or use grade instead to be able to include this variable. 
+
+As in standard regression, categorical moderators in meta-regression can be coded with dummy (or indicator) variables. I will use $b_{jc}$ in place of $x_{jp}$ from Equation \ref{eq:meta-regression independent} to represent a specific type of predictor called a dummy variable for a categorical moderator. For a categorical moderator with a total of $C$ categories, $b_{jc}$ is the dummy variable for study $j$ and category $c$, where $c = 1, \cdots, C$. $b_{jc}$ is coded as $1$ if that study falls in category $c$; otherwise, $b_{jc}$ equals $0$. Using the example of the categorical moderator for the level of random assignment of the sample, with possible values of student, teacher/classroom, school, or district, if the sample in study $j$ was randomized at the student level, it would have a $1$ for the dummy variable of the student category. Furthermore, the same study would have a value of $0$ for the teacher/classroom, school, and district dummy variables.  
+
+Let $\mu_1, \cdots, \mu_{C}$ correspond to the average effect sizes for categories $c = 1, \cdots, C$, and $\mu_C$ be the average effect size for the last category, $C$. In a regression model with an intercept, one fewer than the full number of dummy variables is included in the model. 
+%The category not included in the model is called the reference category. Treating category $C$ as the reference category and $c = 1, \cdots, C-1$ as the remaining categories, 
+The intercept of the model, $\beta_0$, is the average effect size estimate for the reference category, $\beta_0 = \mu_C$. The remaining regression terms for the rest of the categories, $\beta_1 \dots \beta_{C-1}$, are the differences in the average effect for that corresponding category, and the reference category, $\beta_1 = \mu_1 - \mu_C, \cdots, \beta_{C-1} = \mu_{C-1} - \mu_C$. Below is the regression model with an intercept and the dummy variables of a categorical moderator with more than two categories:
+\begin{equation} \label{eq:intercept-category}
+    T_j = \beta_0 + \beta_1 b_{j1} +, \cdots, +   \beta_{C-1}  b_{j(C-1)} 
+    +\epsilon_j.
+\end{equation}
+
+%%%%original formulation
+%Alternatively, in a no-intercept model, all the dummy variables are included to estimate a separate intercept for each category. Each regression slope, $\beta_c$, is the average effect size for that specific category in this specification, $\beta_1 = \mu_1, \beta_2 = \mu_2, \cdots,\beta_{C} = \mu_C$. Below is the no-intercept meta-regression model: 
+%\begin{equation}\label{eq: no intercept-category}
+%    T_j =  \beta_1  b_{j1} +, \cdots, +   \beta_{C} b_{jC} + \epsilon_j,
+%\end{equation}
+
+
+%%%% New formulation where I use $\mu_c$ in place of $\beta_c$ for the regression slopes. 
+Alternatively, in a no-intercept model, all the dummy variables are included to estimate a separate intercept for each category. Each regression slope is the average effect size for that specific category in this specification, so I will use $\mu_c$ instead of $\beta_c$ to represent the regression slopes for a no-intercept model. Below is the no-intercept meta-regression model: 
+\begin{equation}\label{eq: no-intercept independent}
+    T_j =  \mu_1  b_{j1} +, \cdots, +   \mu_{C} b_{jC} + \epsilon_j,
+\end{equation}
+Also, in a no-intercept model, the design matrix changes, and there is no longer a column of $1$'s to indicate the intercept as in the design matrix for Equation \ref{eq:meta-regression independent}. Below is the design matrix from a no-intercept model using dummy variables: 
+\begin{equation} \mathbf{X} = 
+    \begin{bmatrix}
+     b_{11} & b_{12} &\cdots  & b_{1C} \\
+     b_{21} & b_{22} & \cdots & b_{2C}\\
+     \vdots & \vdots & \ddots & \vdots\\
+     b_{J1} & b_{J2} & \cdots & b_{JC}
+    \end{bmatrix}
+    \nonumber
+\end{equation}
+where the dimensions of this design matrix are $J \times C$.
+
+
+\section{Tests of Categorical Moderators for Meta-Regression with Independent Effects}
+
+Below is an overview of hypothesis tests relevant to categorical moderators in the meta-regression model when testing the equality of the categories. First, I provide an overview of the test of a moderator with two categories. Then, I provide an overview of the omnibus test of a categorical moderator with more than two categories.
+
+
+\subsection{Tests of Moderator with Two Categories}
+While many meta-analysts have traditionally tested a single meta-regression coefficient assuming a standard normal distribution \autocite{hedges2004}, the t-distribution is often used more recently. For models of independent effects, the Knapp-Hartung correction should be applied due to the standard errors for random effects models using REML estimation being underestimated and resulting in higher Type I error rates \autocite[see][for details]{cooper2019, knapp2003}. For this study, I will focus on power analysis using the t-distribution.
+
+
+The following is a demonstration of a test of a moderator with just two categories in a model with an intercept. Let's assume that Equation \ref{eq:intercept-category} only had two categories, and the model formulation is now: $T_j = \beta_0 + \beta_1 b_{j1} +\epsilon_j$. To test whether the difference between the average effect size of the two categories is 0 with a two-tailed test, the null hypothesis would be $H_0: \beta_1 = 0$ (or $H_0: \mu_2 - \mu_1 = 0$), and the alternative hypothesis would be $H_1: \beta_1 \neq 0$ (or $H_1: \mu_2 - \mu_1 \neq 0$). The test statistic is $t_1 = \hat{\beta}_1 / S_1$, where $S_1$ is the standard error of $\hat{\beta}_1$, which can be found as the square root of the diagonal elements of the covariance matrix, $(\mathbf{X}'\mathbf{W}\mathbf{X})^{-1} = \left( \sum_{j=1}^J \ddot{w}_j\mathbf{x}_j\mathbf{x}_j' \right)^{-1}$ \autocite{cooper2019}. Another way to write the test would be $t_1 = (\hat{\mu}_1 - \hat{\mu}_2)  /S_1$. If the null hypothesis is true, the test statistic approximately follows a Student's t-distribution with degrees of freedom equal to the number of studies minus two, $J-2$.
+
+
+The test of equality between two categories in the parametrization of a no-intercept model is not presented in the literature for the power analysis of independent effects for that particular formulation. However, a constraint matrix, $\mathbf{C}$, can be used to test $H_0: \mu_2 - \mu_1$ in a no-intercept model \autocite{pustejovsky2018}. The null hypothesis in this case will be $H_0: \mathbf{C}\mathbf{\beta} = \mathbf{0}$ where $\mathbf{C}$ is a $1 \times 2$ row vector,  $\bm{\beta}$ is a  $2 \times 1$ column vector, and  $\mathbf{0}$ is a  scalar. Below is what the matrices would look like using $\mu_c$ to represent the regression coefficients of a no-intercept model:
+\begin{equation}
+    \begin{split}
+        \mathbf{C} \times \bm{\beta} & = \mathbf{0} \\
+        \begin{bmatrix}
+            -1 & 1 
+        \end{bmatrix} \times
+        \begin{bmatrix}
+            \mu_1 \\
+            \mu_2
+        \end{bmatrix} & = \begin{bmatrix}
+            0 
+        \end{bmatrix}
+    \end{split}
+\end{equation}
+
+For this test, it will be the same framework as the $t$-test from above. One option to do this test is to use the \texttt{linear\_contrast}() function from \texttt{clubSandwich} with the \texttt{"contrasts"} argument set to \texttt{"constrain\_equal"} \autocite{pustejovsky2024a}. This test is also defined as $t_1 = (\hat{\mu}_1 - \hat{\mu}_2)  / \sqrt{v_1 + v_2 }$, where $v_1$ and $v_2$ are the inverse of the sum of the weights for each category: $v_c = \sum_{j=1}^{Jc} \ddot{w}_{jc}$.
+
+
+
+%Directly test clubSandwich. contracts matrix. Not in the literature, but the way to do this is..   Linear contrasts clubsandwich. Compute constrats. And hypothesis tests. Same as frame work of t-test. 
+
+
+\subsection{Omnibus Test of Categorical Moderator with More than Two Categories}
+
+Below is the omnibus test of a categorical moderator with more than two categories in the ANOVA context. The ANOVA framework for the test is more applicable to this study.  
+
+
+%ANOVA context
+For categorical moderators with more than two categories,  $C > 2$, the omnibus test with a no-intercept model (Equation \ref{eq: no-intercept independent}) is used to test if the categories differ in their average effects. So the null hypothesis in this context would be $H_0: \mu_{1} = \mu_{2} = \hdots = \mu_{c}$. The alternative hypothesis would be $H_1: \mu_c \neq \mu_d$ for some $c \neq d$. Let $\ddot{w}_{jc}$ be the weight in study $j$ and category $c$, and $T_{jc}$ be the effect size estimate in study $j$ and category $c$. Then, the omnibus test of categorical moderators that uses a $Q$ statistic and is found by: 
+\begin{equation} \label{eq: Qstat}
+    Q_{\beta_c} = \sum_{c=1}^C w_c(\hat{\mu}_{c} - \overline{\hat{\mu}})^2 
+\end{equation}
+where $w_c = \sum_{j=1}^{Jc} \ddot{w}_{jc}$, $\hat{\mu}_c = \frac{\sum_{j=1}^{Jc} \ddot{w}_{jc} T_{jc}}{\sum_{j=1}^{Jc} \ddot{w}_{jc}}$,  $\overline{\hat{\mu}} = \frac{\sum_{c=1}^C w_c \hat{\mu}_c}{\sum_{c=1}^C w_c}$. This test statistic has a $\chi^2$ distribution with $(C-1)$ degrees of freedom.
+
+%Now, let's consider the same thing in a model parametrized with an intercept term and dummy variables.  To test if the difference between the average effect for each non-reference category and the average effect for the reference category is equal to 0, you can run the omnibus test of the moderators, including the intercept in the regression model. To test the regression slopes not including the intercept, the null hypothesis becomes: $H_0: \bm{\beta} = \bm{0}$ where $\bm{0}$ is a $(C-1) - 1 \times 1 $ vector of 0's. This test will be equivalent to the one above regardless of the parametrization of the meta-regression model. 
+
+%intecept dummy coded model with inter
+
+
+%Meta-regression context is not included currently. 
+
+
+%For unplanned pair-wise comparisons, changing the reference of the categorical moderator will change the value of the $\beta$ slopes by changing differences in the average effect for one category and the average effect for that new reference category. So, to look at a specific comparison, just look at the corresponding slope that looks at the difference between those two categories. Depending on how many comparisons are to control the familywise Type I error rate, there is a probability of making at least 1 Type I error across all comparisons; of those comparisons, either the Bonferroni procedure or Scheff\'e corrections can be made. Those of these corrections are conservative and will affect power (Polanin and Pigott, 2015).  
+
+
+
+\section{Power Analysis for Meta-Regression of Independent Effects}
+
+Power analysis for meta-regression of independent effects has been an area of research for some time \autocite{hedges2001, hedges2004, valentine2010, jackson2017}. While meta-analysts aim to include all studies that are published on the topic of interest in their dataset, power analyses for meta-analysis are often implemented in the planning stages of a meta-analysis project when applying for grants. Power analysis for meta-analysis is also used to help understand the constraints of the number of studies collected on interpreting the statistical inferences after data collection. 
+
+For the calculation of the power of statistical tests in meta-analysis, \textcite{hedges2001} and \textcite{hedges2004} provide a framework for the statistical power of both the fixed- and random-effects tests of the average effect, tests for heterogeneity of the effect size parameter across studies, and tests of contrasts among effect sizes, pairwise-comparisons, and omnibus tests. For this study, I will provide an overview of the power of tests of moderators, including the test of the overall pooled effect in random effects models, the test of a moderator with two categories, and the omnibus tests for categorical moderators with more than two categories. Because the tests for heterogeneity of effect size parameters across studies and pairwise comparisons are not the focus of this study, I will not discuss the methods in this literature review (please see \textcite{hedges2001} and \textcite{hedges2004} for more information). 
+     
+\subsection{Power-analysis for the test of the overall pooled effect}
+
+% $\delta$ is a specific value of the effect assumed under the null $H_0: \mu = \delta$,
+
+Certain information and assumptions are required to conduct power analysis for meta-analysis. Power analysis for meta-analysis of a random-effects model requires setting a threshold for the smallest anticipated effect size, cut-off for statistical significance, making assumptions about sample size (number of studies and within-study sample size), and the between-studies variance parameter's value \autocite{hedges2001}. 
+
+For an \textit{a priori} power calculation for a random-effects model of independent effect sizes with only the intercept in the regression model, to test if the overall pooled effect size (Equation \ref{model_avg_effect}) is equal to some value, $d$, the null hypothesis would be $H_0: \mu_{\delta}=d$. The test would be $t_{\mu_{\delta}} = \frac{\hat{\mu}_{\delta}-d}{\sqrt{\hat{V}}}$,
+ where $\hat{\mu}_{\delta}$ is the random effects estimate for the overall average effect size and $\hat{V}$, typically for a random effects model, $V = \frac{1}{W}$ where $W = \sum_{j=1}^J (\hat{\tau}^2 + \sigma^2_j)^{-1}$.  The test statistic follows a central Student's t-distribution with $J-1$ degrees of freedom when the null hypothesis holds \autocite{hedges2001, vembye2023}. Otherwise, if the null hypothesis is false, the test statistic approximately follows a non-central Student's t-distribution with a non-centrality parameter $\lambda = (\mu_{\delta} - d)/\sqrt{V}$ with $J-1$ degrees of freedom (Hartung and Knapp, 2001). The following equation provides the formula to calculate the power of this test:   
+\begin{equation} \label{power-overall}
+   P(\alpha, \lambda, J)_{t_{\mu_{\delta}}} =  F_t(-c_{\alpha/2, J-1}|J-1,\lambda) + 1- F_t(c_{\alpha/2, J-1}|J-1,\lambda).
+\end{equation}
+Here, $F_t(x|v,\lambda)$ is this cumulative distribution function of a non-central Student-t distribution, and $c_{\alpha/2,\zeta}$ is the upper $\alpha/2$-level critical value for the central Student-t distribution with $\zeta = J-1$ degrees of freedom \autocite{vembye2023, hedges2001}. 
+
+To approximate an \textit{a priori} power analysis in this framework, it is necessary to determine the minimum meaningful effect size and the variance of the weighted overall mean effect size by assuming values for $\sigma_j^2$,  $\tau^2$, and the number of studies in the meta-analysis. For example, for a test of $H_0: \mu_{\delta} = 0$ and a $\alpha = .05$, say a researcher wants to determine the power of a $\mu_{\delta} = .25$. We would need an estimate of $V$. Assuming equal sample sizes, $\sigma_1 = \sigma_2 = \cdots, \sigma_J = \sigma$, then $V$ becomes $(\tau^2 +\sigma^2)/J$. For the degree of between-study heterogeneity, \textcite{pigott2012} suggested values for the $\tau^2$: $\tau^2 = (1/3)\sigma^2$, $\tau^2 = \sigma^2$, and $\tau^2 = 3\sigma^2$ for low, moderate, and high degree of between-study heterogeneity, respectively.  So, if a researcher assumed a high degree of heterogeneity, then $V= 4\sigma^2/J$. To approximate $\sigma^2$, assuming the treatment groups are of equal size, there is a relationship between the effect size estimate's sampling variance and the overall pooled effect size: $\sigma^2 \approx (\frac{4}{N} + \frac{\mu^2}{2(N-1)})$ where $N$ is the effective sample size \autocite{valentine2010}. Therefore, if we assume  $N = 50$ and $J= 40$, $\sigma^2 \approx 4/50$ and the sampling $V$ would be: $V = \frac{4 \times (4/50)}{40} = 0.008$. The non-centrality parameter will be $\lambda = (.25 - 0)/ \sqrt{0.008} = 2.795$. The critical value of a t-distribution with $J-1 = 39$ degrees of freedom at $\alpha=.05$ and a two-tailed test is $ \pm 2.023$. Therefore using Equation \ref{power-overall}, $P(\alpha, \lambda, J)_{t_{\mu_{\delta}}} = 0.778$.
+ 
+
+\subsection{Power for Test of a Moderator with Two Categories}
+%pairwise t-test or two-category
+Referring back to the test presented in section 2.2.0.1 of the $\beta_1$ regression coefficient. The test statistic follows a non-central Student-t distribution with non-centrality parameter $\lambda =  \beta_c - d /  S_c$ and $J-2$ degrees of freedom. Power is given by:
+\begin{equation}
+   P(\alpha, \lambda, J)_{t_{\beta}} =  F_t(-c_{\alpha/2,J-1}|J-1,\lambda) + 1- F_t(c_{\alpha/2,J-1}|J-1,\lambda)
+\end{equation}
+
+This test is not so different from the test of the overall pooled effect size, except we are testing to see if the difference between the average effect size for $\mu_2$ and $\mu_1$ is different from some value $d$ (or in the case of the hypothesis of section 2.2.0.1,  $d= 0$).
+
+Following the considerations for a power-analysis presented by \textcite{hedges2004}, for example, say we want to test the following $H_0: \beta_1 = 0$ with an $\alpha = .05$. Also, let's assume that the true value of $\beta = .30$ or the difference between $\mu_1$ and $\mu_2$ is $\beta_1 = 0.30$ and that the estimated variance of $\hat{\beta}_1$ is 0.04 which will be the second diagonal element of covariance matrix if there is an intercept in the model, so $S_c = 0.2$. Also, let's assume a moderate degree of between-study heterogeneity of $\tau^2 = 0.5$. Say we want to know the power for this test when $J=25$; then the power of a two-sided test is $ P(\alpha, \lambda, J)_{t_{\beta}}  = 0.301$.
+
+
+\subsection{Power for Omnibus Test of Categorical Moderator with More than Two Categories}
+
+The null hypothesis for the omnibus test of categorical moderators is that all the categorical mean effect sizes do not differ, as stated in section 2.2.0.2. For the omnibus test, \textcite{hedges2004} present models that assume fixed or random effects. Additionally, they present the power analyses for the tests in the meta-ANOVA and meta-regression frameworks. The omnibus test in the meta-ANOVA framework, assuming a random effects model, is more in line with this study's power analysis derivation, so I provide an overview below.
+
+\textcite{hedges2004} introduce the framework for the omnibus test of regression coefficients, where the omnibus test of a categorical moderator with more than two categories aligns with the test called the Omnibus Test for Between-Groups Differences in \textcite{hedges2004}. In the context of a categorical moderator in a no-intercept model, the null hypothesis is $H_0: \mu_{1} = \mu_{2} = \hdots = \mu_{C}$. For the omnibus test presented in section 2.2.0.2, the null hypothesis is rejected when the $Q$ test statistic as calculated in \ref{eq: Qstat} is greater than the critical value which is the $100(1-\alpha)$ percentile point of a $\chi^2$ distribution with $(C-1)$ degrees of freedom. 
+
+When the null hypothesis is false, then the $Q_{\beta}$ has a non-central chi-square distribution with the same degrees of freedom and a non-centrality parameter, $\lambda = \sum_{c=1}^C w_c(\mu_{c} - \overline{\mu})^2$, where  $\mu_{c}$ is the average effect size parameter for category $c$ and $ \overline{\mu}$ is the weighted grand mean of all the categories. 
+
+%Below is the cumulative distribution function of a non-central chi-square:
+
+%\begin{equation}
+%     F(x| \nu, \lambda) = \sum_{j=0}^{\infty} e^{-\frac{\lambda}{2}}\frac{(\frac{\lambda}{2})^i}{i!}Q(x|\nu+2i,0)
+%\end{equation}
+%where $Q(x|\nu+2i,0)$ is the CDF of a random variable that follows a central chi-square distribution:
+%\begin{equation}
+%    F(x|\nu) = \frac{\gamma(\frac{\nu}{2}, \frac{x}{2})}{\Gamma(\frac{\nu}{2})}
+%\end{equation}
+%where $\gamma(\nu,x)$ is the lower incomplete gamma function.
+
+Given the alpha level, the number of categories, and non-centrality parameter,  the power for the omnibus test can be calculated as
+\begin{equation}
+    P(\alpha, \lambda, q)_{Q_{\beta_c}} = 1 - F_{\chi^2} (c_{\alpha, q} | q , \lambda)
+\end{equation}
+where $F_{\chi^2}(x|\nu, \lambda)$ is the non-central $\chi^2$  cumulative distribution function and $c_{\alpha,q}$ is the critical value for the central $\chi^2$ distribution with $q = C - 1$ degrees of freedom. When conducting a power analysis for the test of $Q_{\beta_c}$, the non-centrality parameter $\lambda$ depends on the category mean effect size parameters ($\mu_1, \cdots, \mu_C$), sample variance of the effect size estimates ($\sigma_j$), and between-study variance ($\tau^2$). 
+
+%which is evaluated at the threshold value for chi-square of $f(\alpha)$.
+%\begin{equation}
+%    p(\alpha, \lambda, q)_{Q_{\beta_c}} = 1 -\left.[ F(x| q, \lambda)] \right|_{f(\alpha)}
+%\end{equation}
+
+%\begin{equation}
+%    p(\alpha, \lambda, q)_{Q_{\beta_c}} = 1 - F_{q, \lambda} (c_{\alpha, q})
+%\end{equation}
+
+%An example of this
+
+
+As stated, these methods for finding power are only for independent effects. In the following sections, I will introduce the modeling framework for dependent effect sizes and the work done thus far to approximate the power of the tests from the meta-regression of dependent effect sizes. 
+
+
+
+\section{Meta-Regression of Dependent Effects}
+
+Meta-analytic datasets often have complicated structures, such as within-study dependence among the effect sizes, resulting in the effect sizes being inter-correlated. While there is a myriad of sources of the correlation among effect sizes, the following are two ways that lead to dependent effect sizes. The first type results from collecting effects on multiple related outcomes from the same or partially overlapping samples within a primary study (termed correlated sampling errors). The second type results from multiple samples using the same experimental conditions because they are from the same research lab or PI where the effect sizes are estimated from independent samples (termed hierarchical effects) \autocite{hedges2010}. However, correlated sampling errors and hierarchical effects can be present in the same meta-analytic dataset, and there are many more types of correlation structures and sources of dependence.  
+
+\textcite{pustejovsky2022} proposed a working model that accounts for both sources of dependence, called the correlated-and-hierarchical effects working model (CHE). I will go into more detail about this model below, but first, I will detail the general modeling framework for dependent effects in the next section. 
+
+
+\subsection{General Model Specification with dependent effects}
+
+
+I begin with a general meta-regression model that recognizes within-study dependence in effect sizes. Let $T_{ij}$ denote effect size estimate $i$, $i = 1, ..., k_j$,  from study $j$ where $j=1,..., J$ with a corresponding standard error, $\sigma_{ij}$. Unlike meta-regression for independent effects (Equation \ref{eq:meta-regression independent}), each study reports $k_j >= 1$ effect sizes, with dependence among the study's effect sizes. Assume that $T_{ij}$ is an unbiased estimator for the true effect size, $\theta_{ij}$, and $\sigma_{ij}$ is known. Additionally, $\mathbf{x}_{ij}$ is a set of $p$ covariates variables corresponding to each effect size estimate, and $\boldsymbol{\beta}$ is a vector of $p$ regression coefficients. 
+
+
+The following models the relationship between the effect estimates and the covariates:
+%\begin{equation} \label{meta-regression simple}
+%T_{ij} = \mathbf{x}_{ij}\beta + \epsilon_{ij},
+%\end{equation}
+%In vector notation, the above model is rewritten as:
+\begin{equation}\label{eq:ma_dependent}
+    T_{ij} = \mathbf{x}_{ij}\boldsymbol{\beta} + \epsilon_{ij}
+\end{equation}
+where the assumptions about the error term $\epsilon_{ij}$ and the correlation between errors within the same study will vary depending on the assumption underlying the working model \autocite{pustejovsky2022}. I will go into more detail about working models in Section 2.4.3. 
+
+ %$\boldsymbol{\varepsilon}_j$ is a $k_j \times 1$ vector of errors with a mean of $0$ and covariance matrix $\Phi_j$, for all $j=1, \dots, J$. 
+
+
+%%% This went somewhere. 
+%Denote $\mathbf{X} = (\mathbf{X}_1', \dots, \mathbf{X}_J')'$, $\boldsymbol{\varepsilon} = (\boldsymbol{\varepsilon}_1', \dots, \boldsymbol{\varepsilon}_J')' $, and $\mathbf{\Phi} = diag(\mathbf{\Phi}_1, \dots, \mathbf{\Phi}_J)$.
+
+The $\mathbf{x}_{ij}$ predictors contain study and sample characteristics that could be related to the magnitude of the effect size. The coefficient column vector $\bm{\beta}$ contains all the corresponding coefficients for each predictor, which describe how each predictor is related to the effect sizes. 
+
+The $\bm{\beta} $ in Equation \ref{eq:ma_dependent} is estimated using weighted least squares regression \autocite{tipton2015b}. The following is how to find the weighted least squares estimator of $\bm{\beta}$:
+\begin{equation}\label{eq:beta_est}
+    \bm{\hat{\beta}} = \left( \sum_{j=1}^J \mathbf{X}_j' \mathbf{W}_j \mathbf{X}_j \right)^{-1} \left(\sum_{j=1}^J \mathbf{X}_j' \mathbf{W}_j \mathbf{T}_j   \right)
+\end{equation}
+where $\mathbf{W}_j$ denotes a set of symmetric weight matrices, $\mathbf{W}_1 \dots \mathbf{W}_J$, with dimensions $k_j \times k_j$, $\boldsymbol{\beta}$ is a $p \times 1$ vector of coefficients, $\mathbf{T}_j$ is a $k_j \times 1$ vector of effect size estimates from study $j$, and $\mathbf{X}_j$ is a $k_j \times p$ design matrix of covariates. Additionally, the exact variance of $\bm{\hat{\beta}}$ is:
+\begin{equation}
+    Var(\bm{\hat{\beta}}) = \mathbf{M \left[\sum_{j=1}^J\mathbf{X}'_j\mathbf{W}_j\mathbf{\Phi}_j\mathbf{W}_j\mathbf{X}_j \right]}\mathbf{M}
+\end{equation}
+where $\mathbf{M}= (\mathbf{X}'\mathbf{W}\mathbf{X})^{-1}$,  $\mathbf{W}$ is block diagonal matrix of weights, $\mathbf{X} = ( \mathbf{X}_1', \cdots, \mathbf{X}_J')'$, and $\mathbf{\Phi}_j = Var(\epsilon_{ij}).$ are the study-specific covariances.
+
+The structure of the weight matrix will vary depending on the working model and may include off-diagonal elements \autocite{pustejovsky2022}. If the working model perfectly captures the dependence structure of the effect sizes, then $ \mathbf{W}_J$ would be the exact inverse of the true variance-covariance matrix for each study, $\mathbf{\Phi_j}$. Additionally, the $\bm{\hat{\beta}}$ would be a fully efficient estimator \autocite{pustejovsky2022}.  
+
+%If a test of a regression coefficient for a moderator is statistically significant, the inference is that the moderator explains variance in the effect sizes.
+
+
+\subsection{Categorical Moderators} 
+
+Moderators in meta-regression for independent effects do not vary within studies, as there is only one effect size per study; however, moderators in meta-regression in the dependent effects context can vary both within and between studies. The type of outcome measure of the effect size is an example of a within-study categorical moderator, and the publication status of a research study is an example of a between-study categorical moderator. While within-study categorical moderators can vary within a study, a between-study categorical moderator will have the same value for all the effect sizes within a study. For this study, I am concerned with study-level moderators. 
+
+Rewriting the parameterization for categorical moderators in the independent effect sizes, including an index, $i$, for the effect sizes within the study, the dummy variables for a categorical moderator become $b_{ijc}$, and the meta-regression model with an intercept becomes:
+\begin{equation}
+    T_{ij} = \beta_0 + \beta_1 b_{ij1} +, \cdots, +   \beta_{c-1}  b_{ij(c-1)} 
+    +\epsilon_{ij}
+\end{equation}
+and the meta-regression model no-intercept model becomes:
+\begin{equation} \label{eq: no-intercept dependent}
+    T_{ij} = \mu_1 b_{ij1} +, \cdots, +   \mu_{C}  b_{ijC} 
+    +\epsilon_{ij}.
+\end{equation}
+which has a design matrix of:
+\begin{equation}
+    \begin{bmatrix}
+     b_{111} & b_{112} &\cdots  & b_{11c} \\
+     b_{211} & b_{212} &\cdots  & b_{21c} \\
+     b_{311} & b_{312} &\cdots  & b_{31c} \\
+     b_{121} & b_{122} & \cdots & b_{12c}\\
+     \vdots & \vdots & \ddots & \vdots\\
+     b_{kJ1} & b_{kJ2} & \cdots & b_{kJc}
+    \end{bmatrix}.
+    \nonumber
+\end{equation}
+%Mention the balance. mention the number of studies per category. While categorical moderators can vary both within and between studies, I will focus on study-level moderators.
+
+
+
+\subsection{Working Models for Dependent Effects}
+
+A recent paper by \textcite{pustejovsky2022} aimed to comprehensively describe and model how dependent and correlated effect size structures arise. For this dissertation, I focus on the correlated-and-hierarchical effects working model  \autocite[CHE;][]{ pustejovsky2022}. 
+
+\subsubsection{Correlated Hierarchical Effects Model} 
+For the CHE model, the structure of the errors, $\epsilon_{ij}$ from Equation \ref{eq:ma_dependent}, is $\epsilon_{ij} = u_j + v_{ij}+ e_{ij} $ where $Var(u_j) = \tau^2$ is the between-study variance, $Var(v_{ij})= \omega^2$ is the within-study variance, and $Var(e_{ij}) = \sigma^2_j$ is the sampling error variance. While many estimation methods can be used to estimate the CHE model's variance components, \textcite{pustejovsky2022} proposed that the variance components are estimated using full or restricted maximum likelihood estimators \autocite[REML;][]{viechtbauer2005}. 
+
+Furthermore, the model assumes that sampling errors from the same study have a common correlation, $cor(e_{hj}, e_{ij}) = \rho$. Through this specification, the CHE model accounts for both hierarchical and correlated data structures. For the CHE model, effect size estimates from the same study are modeled as correlated with the value fixed to a common value within studies, and sampling variances are also assumed constant within each study. The variance-covariance matrices have the following form:
+\begin{equation}
+    \mathbf{\Phi}_j^{CHE} = Var(\mathbf{\epsilon}_j) =[\tau^2 + \rho \sigma^2_j]\mathbf{J}_j +[\omega^2 + (1- \rho)\sigma_j^2]\mathbf{I}_j
+\end{equation}
+where $\mathbf{J}_j$ is a $k_j \times k_j$ matrix of 1's and $\mathbf{I}_j$ is a $k_j \times k_j$ identity matrix. The weight matrices of the CHE model use estimated variance components as inverse-variance weights, $\mathbf{W}^{CHE}_j = (\mathbf{\Phi}_j^{CHE})^{-1}$, as follows \autocite{tipton2015b}: 
+\begin{equation}\label{CHE Weight Matrix}
+    \mathbf{W}_j^{CHE} = \frac{1}{\hat{\omega}^2 + (1-\rho)\sigma^2_j} \left[ \mathbf{I}_j - \frac{\hat{\tau}^2+ \rho\sigma^2_j}{k_j(\hat{\tau}^2+\rho\sigma^2_j) + \hat{\omega^2 + (1-\rho)\sigma^2_j}} \mathbf{1}_j \mathbf{1}'_j\right]
+\end{equation}
+where $\mathbf{1}_j$ is a $k_j \times 1$ vector of 1's.  
+
+%The overall weighted average is:
+
+%\begin{equation}
+%    \hat{\mu} = \frac{1}{W} \sum_{j=1}^J w_j \overline{T}_j
+%\end{equation}
+
+%where $\overline{T}_j = \frac{1}{k_j}\sum_{i=1}^{k_j}T_{ij}$. The variance of $\hat{\mu}$ is approximately $\frac{1}{W}$ if the CHE model is the correct model. It is an approximation because $W$ is found using estimated variance components. 
+
+
+
+\subsubsection{Simplifications of the CHE model} 
+
+The multi-level meta-analysis model \autocite[MLMA;][]{vandennoortgate2013, vandennoortgate2015} and correlated effects model \autocite[CE;][]{hedges2010} are simplifications of the CHE model. The MLMA model assumes that the effect sizes are independent across samples and nested within studies, creating a hierarchical structure. The MLMA model models the errors as including both within- and between-study variation as the CHE model does, but it does not model the correlation in the sampling errors, thus $cor(e_{hj}, e_{ij}) = 0$. MLMA has also typically been paired with REML estimation to find the variance components \autocite{pustejovsky2022}. 
+
+The CE model assumes effect sizes are measured on the same sample, resulting in dependence. Distinct from the CHE model, the CE model includes only a single between-study variance component typically estimated with the method-of-moments formula \autocite{hedges2010}. Like the CHE model, it does assume that sampling errors from the same study have a common correlation, $\rho$. 
+Beyond assuming that sampling variances for each effect and the correlation between pairs of effect sizes within a study are the same, the CE model also assumes that the covariates in the meta-regression model can explain all of the within-study variation in the true effect size parameters. The only estimated variance component in the model is the between-study variation in true effect sizes, $\tau^2$, due to these assumptions \autocite{pustejovsky2022}. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+CHE is more comprehensive than the MLMA and the CE models since it incorporates both correlated sampling errors as the CE model and models both the within- and between-study variances as the MLMA model. Furthermore, the CHE model accounts for both dependency structures, which is common in meta-analytic datasets \autocite{pustejovsky2022}. For the power analysis of the test of the overall pooled effect in meta-regression of dependent effects, there has been some prior work done for the MLMA, CE, and CHE models \autocite{vembye2023, vembye2024, zhang2024}, which I will review in a later section.  
+
+%The following are the diagonal weight matrices of the CE model: 
+%\begin{equation}
+%    \mathbf{W}_{j_{CE}} = \frac{1}{k_j(\hat{\tau}^2+\sigma^2_j)}\mathbf{I}_j
+%\end{equation}
+%where $\mathbf{I}_j$ is a identity matrix with $k_j \times k_j$ dimensions. Unlike the CHE model, these weights are not exactly the inverse of the variance-covariance matrix. 
+
+%For the MLMA model, the weight matrices are as follows:
+
+
+%\begin{equation}
+%    \mathbf{W}_{j_{MLMA}} = \frac{1}{\hat{\omega}^2+\sigma^2_j}\left[\mathbf{I}_j- \frac{\hat{\tau^2}}{k_j\hat{\tau^2}+\hat{\omega^2}+ \sigma^2_j}\right]\mathbf{1}_j\mathbf{1}_j'
+%\end{equation}
+
+%Also, these weight matrices also include off-diagonal elements. 
+
+
+\section{Robust Variance Estimation}
+
+Robust variance estimation (RVE) is an adjustment generally used to handle within-study dependence in effect size estimates when estimating the SEs of the $\beta$ coefficients of meta-regression models. RVE was proposed by \textcite{hedges2010} to handle dependence when the covariance structure between effect sizes is unknown, as is often the case in applied settings. When estimating the standard errors of the $\bm{\hat{\beta}}$, it uses the average of products of regression residuals to approximate the variance-covariance structure, $\mathbf{\Phi}_j$ for each study. RVE is also agnostic to distributional assumptions and the weight structure. RVE can be applied to meta-regression models estimated with weighted least squares. RVE does not involve the choice of weights when estimating the variances of the meta-regression coefficients, $Var(\bm{\hat{\beta}})$, but the weights do impact the estimation of the meta-regression coefficients $\bm{\hat{\beta}}$. The most precise estimator of $\bm{\hat{\beta}}$ is when the weights are the exact inverse of the true variance-covariance matrix; however, the correlation between effect sizes within the same study is often not reported in primary studies. RVE uses an appropriate approximation of the $\mathbf{\Phi}_j$ by specifying a working model corresponding to the meta-analytic data structure \autocite{pustejovsky2022}. A working model paired with RVE allows for better estimation of both the average effect size estimates $\bm{\hat{\beta}}$ and the standard errors of the effect size estimates. 
+
+%Let $\mathbf{W} = diag(\mathbf{W}_1, \dots, \mathbf{W}_J)$ be a block diagonal matrix of weights. Given a set of weights, the weighted least squares estimate of $\boldsymbol{\beta}$ is:
+%\begin{equation}
+ %   \bm{\hat{\beta}} = \mathbf{M(\sum_{j=1}^J\mathbf{X}'_j\mathbf{W}_j\mathbf{T}_j}),
+%\end{equation}
+%where $\mathbf{M}= (\mathbf{X}'\mathbf{W}\mathbf{X})^{-1}$. 
+
+%If the structure of $\mathbf{\Phi}_j$ is fully known then weights are $\mathbf{W}_j = \mathbf{\Phi}_j^{-1}$ and $\bm{\hat{\beta}}$ reduces to $\mathbf{M}$. Since, in an application, the covariance structure is rarely correctly specified, we can use RVE to estimate the variance of $\bm{\hat{\beta}}$ without having the correct covariance matrix structure. 
+
+%%%%%%%%%
+The variance of $\bm{\hat{\beta}}$,  $\mathbf{V}^R$, using RVE  is found by:
+\begin{equation}\label{eq:RVE_VR}
+    \mathbf{V}^R = \mathbf{M}\left[ \sum_{j=1}^J \mathbf{X}_j' \mathbf{W}_j\mathbf{A}_j\mathbf{e}_j\mathbf{e}_j'\mathbf{A}_j'\mathbf{W}_j\mathbf{X}_j \right]\mathbf{M}
+\end{equation}
+where $\mathbf{e}_j = \mathbf{T}_j - \mathbf{X}_j\bm{\hat{\beta}}$ is the vector of residuals for study $j$ and $\mathbf{A}_j$ is a $k_j \times k_j$ adjustment matrix \autocite{tipton2015a,tipton2015b}.  
+
+
+\section{Tests of Moderators for Meta-Regression with Dependent Effects }
+
+Methods for the power analysis of categorical moderators for meta-regression with dependent effects are not currently available, so I will provide an overview of tests of meta-regression moderators more generally in the following sections. In Chapter \ref{ch: theory}, I provide more detail about how these tests will be specified for a study-level categorical moderator. 
+
+\subsection{Test of Single Meta-regression Coefficient}
+%\subsection{Small Sample Adjustments for Tests of Moderators}
+
+\textcite{tipton2015a} presents the methods for testing a single meta-regression model coefficient assuming dependent effects. For the test of one regression coefficient, denoted as $\beta_s$, the null hypothesis would be $H_0: \beta_s = 0$. The test statistic would be:
+\begin{equation}
+    t_s = \hat{\beta}_s/\sqrt{V^R_{ss}}. 
+\end{equation}
+where $\hat{\beta}_s$ is entry $s$ of $\bm{\hat{\beta}}$ (Equation \ref{eq:beta_est}), and $V^R_{ss}$ is the $s$th diagonal entry of $\mathbf{V}^R$ (Equation \ref{eq:RVE_VR}).
+
+Then, to test  $H_0: \beta_s = 0$, we compare $t_s$ to a z-distribution when the number of studies is large (Hedges et al., 2010) and $t$-distribution with Satterthwaite degrees of freedom, $\nu_s$, when the number of available clusters or studies is small \autocite{tipton2015a}. The degrees of freedom can be approximated by a Satterthwaite approximation of $t_s$:
+\begin{equation} \label{eq: satt formulation}
+    \nu_s = 2E(V^R_{ss})^2 / Var(V^R_{ss})
+\end{equation}
+where the distribution of $V^R_{ss}$ is approximated using a multiple of a $\chi^2$ distribution. 
+
+For the test of a $\hat{\beta}_s$, the associated standard errors must be accurately estimated. The standard errors from RVE, as proposed by \textcite{hedges2010},  are accurate if estimated with a sufficiently large number of studies. Still, suppose the number of studies is too small for the estimation requirements.  In that case, the resulting standard errors will be underestimated, inflating the Type I error rate \autocite{tipton2015a}.   \textcite{tipton2015a} evaluated several small sample bias corrections for the meta-regression coefficient t-test of single coefficients.  The original adjustment matrices used to calculate $\mathbf{V}^R$ in Equation \ref{eq:RVE_VR} were CR0 and CR1, where CR0 is a $k_j \times k_j$ identity matrix, $\mathbf{I}_{k_j}$, and CR1 is $\mathbf{A}_j = \sqrt{J/(J-p)\mathbf{I}_{k_j}}$ \autocite{hedges2010, tipton2015a}. The CR2 adjustment matrix proposed by \textcite{mccaffrey2001} was suggested as an alternative to CR0 and CR1. The CR2 adjustment matrix is as follows \autocite[See Eq. 4 in][]{tipton2015b}:
+\begin{equation}\label{adjustment}
+    \mathbf{A}_j = \mathbf{W}_j^{-1/2}[\mathbf{W}_j^{-1/2}(\mathbf{W}_j^{-1}-\mathbf{X}_j\mathbf{M\mathbf{X}_j'})\mathbf{W}_j^{-1/2}]^{-1/2}\mathbf{W}_j^{-1/2}.
+\end{equation}
+Note $\mathbf{U}^{-1/2}$ denotes the inverse of the symmetric square root of the matrix, which will satisfy this property: $\mathbf{U}^{-1/2}\mathbf{U}\mathbf{U}^{-1/2}= I$ \autocite{tipton2015b}. \textcite{tipton2015a} found that the CR2 adjustment matrix with Satterthwaite degrees of freedom \autocite{mccaffrey2001} had lower nominal Type I error rates among the corrections that they evaluated. When there are fewer than 40 independent studies, the adjustment matrix proposed by \textcite{hedges2010} has an inflated Type I error rate \autocite{tipton2015a}.
+
+Beyond the number of studies in a meta-analytic dataset, the features of the covariate greatly affected the magnitude of the degrees of freedom. \textcite{tipton2015a} found that outliers and imbalances in categorical covariates affect the Type I error rates of RVE without correction, independent of the number of studies. The CR2 adjustment and Satterthwaite degrees of freedom account for outliers when estimating the standard errors. Furthermore, Satterthwaite degrees of freedom are smaller when large imbalances exist in a covariate. Therefore, \textcite{tipton2015a} advised using these corrections even when the number of studies in a meta-analytic dataset seemed sufficiently large. 
+
+
+\subsection{Omnibus Test of Multiple Meta-regression Coefficients}
+
+%For tests of the fixed effects coefficients,  For a single meta-regression coefficient, $\beta_s$, $ q = 1$, with $\mathbf{c}=0$ and $\mathbf{C}$ set to a $1 \times p$ vector with entry $s$ equal to 1 and all other entries equal to $0$.
+
+
+\textcite{tipton2015b} presents the methods for the omnibus test of multiple contrasts using RVE estimation of a meta-regression model. The omnibus test of multiple regression coefficients has the null hypothesis:
+$H_0: \mathbf{C}\bm{\beta} = \mathbf{c}$, where $\mathbf{C}$ is a $q \times p$ contrast matrix and $\mathbf{c}$ is a $q \times 1$ vector of null-hypothesized values. While there are many tests that use this formulation, one example is to test that all the regression coefficients are equal, where you can test $p$ coefficients to all be equal to one of the other coefficients (or more generally, $q+1$ coefficients to all be equal to a common unknown value). The null hypothesis for this type of test would be $H_0: \beta_1 = \beta_2 = \dots = \beta_{p-1}$, with $q = p - 1$. The $\mathbf{C}$ matrix in this case is $\mathbf{C} = [-\mathbf{1}_{q}\mathbf{I}_q]$, where for each row there will be one entry with a value of -1 representing the coefficient in the test that all other coefficients are set equal to and another entry with a value of 1 representing one of the $p-1$ coefficients that we will test against the coefficient represented by entry with a -1, while all other entries in the row are equal to 0 to represent the other $p-1$ coefficients  \autocite{tipton2015b, pustejovsky_wald_2025}. In the context of a no-intercept meta-regression model with a categorical moderator that has three categories, $ C=3$, the null hypothesis to test if all the categories are equal is: $H_0: \mu_1 = \mu_2 = \mu_3$, or the overall pooled effects for each category are all equal. There are $q = C-1 = 2$ constraints, and they can be specified as: $\mu_1 = \mu_2$ and $\mu_1 = \mu_3$. Note that these constraints also imply that $\mu_2 = \mu_3$. With these constraints, the $\mathbf{C}\bm{\beta}$ will be the following:
+\begin{equation}
+\mathbf{C}\bm{\beta} =
+    \begin{bmatrix}
+        -1 & 1 & 0 \\
+        -1 & 0 & 1
+    \end{bmatrix} \begin{bmatrix}
+        \mu_1 \\
+        \mu_2 \\
+        \mu_3
+    \end{bmatrix} =
+    \begin{bmatrix}
+        \mu_2 - \mu_1 \\
+        \mu_3 - \mu_1
+    \end{bmatrix}
+\end{equation}
+which is set equal to $\mathbf{c} = \begin{bmatrix}
+    0 \\ 0
+\end{bmatrix}$ for the null hypothesis to test \autocite{pustejovsky_wald_2025}.
+
+
+The corresponding test in the RVE estimation framework for the null hypothesis, $H_0: \mathbf{C}\bm{\beta} = \mathbf{c}$, is the Wald-type test statistic, $Q$, given by  \autocite{tipton2015b}:
+\begin{equation} \label{eq: omnibus test all predictors}
+    Q = (\mathbf{C}\bm{\hat{\beta}} - \mathbf{c})'(\mathbf{C}\mathbf{V}^R\mathbf{C}')^{-1}(\mathbf{C}\bm{\hat{\beta}} - \mathbf{c})
+\end{equation}
+which follows a $\chi^2$ distribution with $q$ degrees of freedom when the number of independent studies is sufficiently large \autocite{tipton2015b}. We can reject the null hypothesis where at least one of the contrasts is not equal to the corresponding null-hypothesized value, $H_1: \mathbf{C}\bm{\beta} \neq \mathbf{c}$. The $Q$ statistic is equivalent to a $F$ statistic by $F = Q/q$, which follows a $F$-distribution with $q$ and $\infty$ degrees of freedom, provided the number of studies is large. However, as with the single covariate case, the standard errors are downwardly biased, and the Type I error rate increases when the number of meta-analytic studies is small. 
+
+As \textcite{tipton2015a} did in the context of a single meta-regression coefficient, \textcite{tipton2015b} examined several small-sample approximations for cluster-robust Wald test statistics. This paper formulated and examined small-sample adjustment methods with the simulation conditions varying the features of the design matrix to find a test that performs well in small samples. Following the conclusions of \textcite{tipton2015a}, \textcite{tipton2015b} used the CR2 adjustment for the sample corrections of the multiple contrasts hypothesis test. \textcite{tipton2015b} evaluated several different ways to approximate the distribution of the $Q$ statistic. 
+In the multivariate case, to be able to approximate the distribution of $Q$, all corrections considered in \textcite{tipton2015b} involve finding the sampling distribution of the following random matrix: $\mathbf{C}\mathbf{V}^R\mathbf{C}'$.  
+To approximate the distribution of $Q$ they evaluated 1) two approaches using a spectral decomposition of $\mathbf{C}\mathbf{V}^R\mathbf{C}'$, which approximates the distribution of $Q$ as a sum of independent univariate random variables or 2) three approaches to approximate the sampling distribution of $\mathbf{C}\mathbf{V}^R\mathbf{C}'$ using a Wishart distribution, which use test statistics that follow Hotelling's $T^2$ distribution. For the approaches using the Wishart distribution, the $Q$ statistic approximately follows a multivariate distribution called Hotelling's $T^2$ distribution with $\eta$ degrees of freedom. It is proportional to the $F$ distribution by:
+\begin{equation}
+    \frac{\eta - q +1}{\eta q}Q \sim F(q, \eta -q +1).
+\end{equation}
+
+To evaluate the different ways of estimating the degrees of freedom, $\eta$, \textcite{tipton2015b} conducted an extensive simulation study examining the different approaches to approximate the distribution of $Q$. The results showed that one of the tests that follows Hotelling's $T^2$ with the degrees of freedom derived by \textcite{zhang2012, zhang2013} (HTZ) outperformed the other methods in terms of maintaining Type 1 error rate. The resulting HTZ-based degrees of freedom are:
+\begin{equation}\label{eq:HTZ_eta}
+    \eta = \frac{q(q+1)}{\sum_{s=1}^q\sum_{t=1}^q Var(d_{st})}
+\end{equation}
+where $d_{st}$ is the entry in row $s$ and column $t$ of $(\mathbf{C}\mathbf{V^R}\mathbf{C}')^{-1}$ and $Var(d_{st})$ is estimated by the working model \autocite{tipton2015b}. The HTZ method can be used in both tests of multiple contrasts and tests of a single meta-regression coefficient. Furthermore, \textcite{tipton2015b} found that the Type I error rate for the HTZ test was below the nominal level when there was a small number of studies and a greater number of constraints, which could indicate that the test is conservative under such conditions. 
+
+%In their study, \textcite{tipton2015b} specified five covariates: a study-level binary covariate that had a highly imbalanced number of studies per category across the categories, a within-study binary covariate that had a highly imbalanced number of studies per category across the categories, a study-level continuous covariate that was approximately normally distributed, an effect-size level continuous variable that was approximately normally distributed, and an effect-size level continuous covariate that had a highly skewed distribution \autocite{tipton2015b}.
+
+
+\textcite{joshi_cluster_2022} proposed and evaluated cluster wild bootstrapping as an alternative to the HTZ test for multiple contrasts. Cluster wild bootstrapping is a method that generates weights that are constant per cluster; then, the residuals are transformed by multiplying them by the random weights. The transformed residuals are then added to the predicted values from a null model in order to generate a new outcome variable, which is then used to calculate a test statistic for each replication \autocite{joshi_cluster_2022}. Across two simulation studies, they found that cluster wild bootstrapping not only controlled the Type I error rate but also had more power than the HTZ test for multiple contrasts, especially for conditions with a small number of studies and a higher number of contrasts. 
+
+%In their study designs, they configured the meta-regression coefficients in two different ways. In the first study, they fixed the intercept to $0.3$ and the remaining five coefficients to $0$ when looking at Type I error. To examine power, they again fixed the intercept to $0.3$, but they set one of the five covariates to either $0.1$ or $0.5$ while the rest were fixed to $0$. For their second study, \textcite{joshi_cluster_2022} specified the intercept to $0.3$ again, but this time they fixed the first regression coefficient to either $0$, $0.1$, $0.3$, or $0.5$ and varied the covariate at the study or effect-size level. The remaining coefficients were fixed to 0 \autocite{joshi_cluster_2022}. 
+
+Currently, there are no closed-form approximations for tests of multiple contrasts that are needed to conduct power calculations for the tests of moderators. These forms are needed to manipulate parameters that would impact the power of the tests of multiple meta-regression coefficients. In the next section, I will go over the approximations for the test of the overall pooled effect size from meta-analytic models that account for dependence among effect sizes (CHE, CE, and MLMA) paired with model-based or robust variance estimators. 
+
+
+%To conduct hypothesis tests with multiple constraints on the regression coefficients of vector $\mathbf{\beta}$ one could use a wald-type test. This involves setting up the constraints on the regression coefficient expressed as a matrix where each row corresponds to one constraint called $\mathbf{C}$ that is $q \times q$ dimensions where $q = p - 1$. The joint null hypothesis would then be $H_0: \mathbf{C}\mathbf{\beta} = \mathbf{0}$ where $\mathbf{0}$ is a vector of 0's with $q \times 1$ dimensions. 
+
+ %-- Explain the C matrix. 
+%multiple contrasts or Wald test
+%Wald test
+%Univariate regression context
+
+%follow textbook presentation for this. 
+
+%handbook for meta-regression
+
+
+\section{Power Analysis for Meta-Regression with Dependent Effects}
+
+%%%%% A lot of notes in this section. I should do a better job of summarizing the important points and writing out all the final equations here. Also add a demonstration                   
+\subsection{Power-analysis for the test of overall pooled effect}
+
+
+\textcite{vembye2023} provides the framework and derivations for the test of the overall pooled effect for the CHE, CE, and MLMA working models with either model-based or RVE-based estimation. Their primary aim is to better understand the performance of meta-analytic models proposed by \textcite{pustejovsky2022} through evaluating the statistical power of the models to detect a non-null average effect size. \textcite{vembye2023} developed new approximations for several Wald-type tests based on the CHE, CE, and MLMA models. They evaluated the performance of the approximations via Monte Carlo simulations with a data-generating process in which the true error structure followed the CHE working model because the CE and MLMA models are nested within this type of model. 
+
+In the approximation described by \textcite{vembye2023}, the authors aimed to determine the non-centrality parameters and the degrees of freedom of each working model using the Satterthwaite approximation for either the model-based variance estimator or the robust variance estimator. These quantities are a function of a) the number of included studies, $J$; b) the parameters of the data-generating model including the between-study variance $\tau^2$, within-study variance $\omega^2$, and sampling correlation $\rho$; and c) the sample characteristics, including the sample variances, $\sigma^2_j$ and the number of effect size estimates in each primary study, $k_j$. The new approximations closely match the true model power when the relevant primary study characteristics, including sampling variance, $\sigma_j^2$ (or sample size $N_j$), and the number of effect sizes per study, $k_j$, are sampled from pilot data with similar characteristics to the data used for the eventual meta-analysis. Below is an overview of a power analysis involving statistically dependent effect sizes using the CHE with RVE.
+
+For the power approximation for the test of an overall pooled effect, \textcite{vembye2023} presented the following study-level weights for the CHE model:
+\begin{equation} \label{eq: CHEweights-study}
+    \tilde{w}_j = \frac{k_j}{k_j\hat{\tau}^2 + k_j\rho\sigma_j^2 +\hat{\omega}^2 + (1- \rho)\sigma_j^2}.
+\end{equation}
+If the CHE model is correctly specified, then $var(\hat{\mu}_{\delta}) \approx \frac{1}{W}$,
+ where $W = \sum_{j=1}^J \tilde{w}_j$. For the CHE model, the robust estimator for the variance of $\hat{\mu}$ is:
+\begin{equation}
+    V^R = \frac{1}{W^2}\sum_{j=1}^J\frac{\tilde{w}_j^2(\overline{T}_j -\hat{\mu}_{\delta})^2}{(1-\frac{\tilde{w}_j}{W})}
+\end{equation}
+$V^R$ is the unbiased estimator of $Var(\hat{\mu}_{\delta})$ if CHE is the correct working model. So, the test for the hypothesis $H_0: \mu_{\delta} = d$ with the robust Wald test statistic is:
+\begin{equation}
+    t^R = \frac{\mu_{\delta} - d}{\sqrt{V^R}}.
+\end{equation}
+\textcite{vembye2023}, extending the methods of \textcite{tipton2015a}, derived Satterthwaite degrees of freedom for this test of the overall pooled effect size (see Appendix \ref{App: overallpooled} for a slightly modified version of this derivation) as:
+\begin{equation} \label{eq: satt df overall pooled}
+    \zeta = \left[ \sum_{j=1}^J \frac{\tilde{w}_j^2}{(W-\tilde{w}_j)^2} - \frac{2}{W} \sum_{j=1}^J \frac{\tilde{w}_j^3}{(W-\tilde{w}_j)^2} + \frac{1}{W^2} \left(\sum_{j=1}^J \frac{\tilde{w}_j^2}{W-\tilde{w}_j}   \right)^2\right]^{-1}.
+\end{equation}
+
+
+When  $|t^R| > c_{\alpha/2, \zeta}$, then the null hypothesis is rejected. For this test, \textcite{vembye2023} assumed that under the alternative hypothesis, the test statistic $t^R$ follows a non-central Student-t distribution with a non-centrality parameter, $\lambda$, equal to:
+\begin{equation}
+    \lambda =\sqrt{W}(\mu_{\delta} -d)
+\end{equation}
+and with degrees of freedom from Equation \ref{eq: satt df overall pooled}. The following equation can be used to derive the power for this test:
+\begin{equation}
+    P(\alpha, \lambda, \zeta)_{t_{\mu_{\delta}}} = F_t(-c_{\alpha/2, \zeta}|\zeta,\lambda) + 1 - F_t(c_{\alpha/2, \zeta}|\zeta,\lambda)
+\end{equation}
+where $F_t(x|\zeta,\lambda)$ is the cumulative distribution function of a non-central Student's t-distribution and $c_{\alpha/2}$ is the upper critical value from a central Student's t-distribution ($\lambda = 0$) with degrees of freedom from Equation \ref{eq: satt df overall pooled}. Along with the true effect size, $\mu_{\delta}$, because the formulation of $\zeta$ includes study-level CHE weights (Equation \ref{eq: CHEweights-study}), the following parameters must be specified in order to approximate power:  the between-study ($\tau^2$), the within-study variance ($\omega^2$), the assumed correlation between sampling errors ($\rho$), total number of studies $J$, the sampling variance at the study-level ($\sigma^2_j$), and the number of effect sizes in each study ($k_j$).
+
+
+%%% notes on sampling assumptions and sim design
+ %They used data to inform the distribution of the study characteristics: the analytic sample comprised 77 studies, with an average effective sample size of 140 and an average of 4.1 effect sizes per study. They generated effect size estimates by first simulating study-specific characteristics and effect size parameters based on the DBFJ17 meta. The simulated effective sample sizes $N_j$ and the number of effect sizes $k_j$ in three ways: Balanced: Assume completely balanced sample characteristics: $\sigma^2_j = 0.068$ and $k_j = 4.1$  (average values from DBFJ17 meta-analysis ); Stylized: They drew $4/\sigma^2_j $ from a gamma distribution with a shape of $\alpha = 1.33$  and rate = .0095 which they found by fitting the effective sample sizes from the DBFJ17 meta-analysis by ML using the fitdistr function from MASS package and by sampling $k_j \sim 1 + Poisson(3.1)$; Empirical: repeatedly sampling directly from empirical distribution of sampling variances and number effects found in of DBFJ17 meta. This one matched the actual distribution of the study characteristics used in the data–generating process. The design factors that they varied are number of studies (10, 20, 40, 60), average effect size (0.00, 0.05, 0.10, 0.20), between-study heterogeneity (0.05, 0.20, 0.40), within-study heterogeneity (0.00, 0.05, 0.10, 0.20), and the sampling correlation (.0, .2, .5, .8). 
+
+
+
+Because analysts generally do not know the sampling variances ($\sigma^2_j$) and the number of effect sizes per study ($k_j$) before conducting a meta-analysis, \textcite{vembye2023} suggested drawing random samples of size $J$ of each characteristic from specified distributions. They compared three ways to obtain a random sample of each characteristic. The first way was to sample the sampling variances and the number of effects per study from empirical distributions, representing obtaining these primary study characteristics from an initial scoping review or a meta-analysis on a similar topic. The second way entailed sampling the primary study characteristics from stylized distributions that were similar in shape to the empirical distributions, where they drew $4/\sigma^2_j$ from a $Gamma(1.33, .0095)$ distribution with the parameters for the shape and rate obtained from the empirical distribution, and the $k_j$ from a $1 + Poisson(3.1)$ distribution with the rate parameter obtained from the mean of the empirical distribution. The third way involved assuming perfect balance, where the average values for $\sigma_j^2$ and $k_j$ from the empirical dataset were imputed and assumed to be constant in the approximation. 
+
+\textcite{vembye2023} conducted a study comparing power estimates resulting from the power approximations for the CHE, MLMA, and CE models paired with either model-based or RVE Satterthwaite degrees of freedom to the true power estimates resulting from a Monte Carlo simulation that generated data following the CHE working model. The experimental design included the following design factors: number of studies $J= (10, 20, 40, 60)$, true average effect size $\mu = (0.00, 0.05, 0.10, 0.20)$, between-study heterogeneity $\tau = (0.05, 0.20, 0.40)$, within-study heterogeneity $\omega = (0.00, 0.05, 0.10, 0.20)$, and the sampling correlation $\rho = (.0, .2, .5, .8)$. The results showed that that the power approximations performed reliably when the methods implemented the empirical assumptions about the primary study characteristics. Also, the power approximations based on the stylized distributions rarely overestimated the true power by more than five percentage points. Power approximations assuming completely balanced primary study characteristics overstated the true power substantially, with the power approximations overestimating power by more than $10\%$. Furthermore, when comparing the approximations for the model-based vs. RVE-based degrees of freedom with each model, the authors found that the RVE-based degrees of freedom performed better as the method controls for the nominal Type-I error rate in meta-analytic data sets with a small number of studies. 
+
+All power approximations for the overall pooled effect size in the context of dependent effects proposed by \textcite{vembye2023} are implemented in a software package called \texttt{POMADE} in R.  \textcite{vembye2024} also provides further guidelines on conducting a power analysis for the CHE+RVE approximation with a demonstration of this package.        
+
+\textcite{zhang2024} also developed power approximation formulas for the MLMA model. Their approximation used model-based variance estimation based on the normal distribution instead of the $t$-distribution with degrees of freedom derived from a Satterthwaite approximation. Additionally, they assume the number of effect sizes per study is the same across all studies. Due to these decisions, the approximations presented in \textcite{zhang2024} will result in more optimistic estimates of power levels for the MLMA model than \textcite{vembye2023} \autocite{vembye2024}.  
+
+
+
+% For their conclusions, power approximations are accurate when based on empirical study characteristics. Approximations for the RVE-based tests are more accurate than those for the model-based tests when the analyst has empirical data available. Power approximations based on stylized distributions rarely overestimate the true power by more than five percentage points. Power approximations assuming completely balanced study characteristics tend to overstate true power substantially. Simple power approximations do not accurately predict true power levels. Robust variance estimation guards against Type-I error with all working models. There are only minor power differences between RVE models.
+
+ %They only evaluated testing the overall average effect size, but these findings might not generalize to models that involve moderators. For example, when predictor variables vary within the study, CHE resulted in more precise estimates than CE \autocite{pustejovsky2022}. 
+ 
+ 
+ 
+% They state that it would require making assumptions about the distributions of covariates across studies and effect sizes. If they have pilot data, you could conduct it using Monte Carlo Simulation. Furthermore,  they determined the distributions of study features using pilot data. Still, it may not represent the target population of studies (they may impose too much or too little imbalance in the data). 
+
+%Limitations and Future Directions: They assume a CHE model for the data-generating process. They suggest power approximations that allow for some degree of misspecification of the working model, such as assuming a correlation of $\rho$ = .6, but allowing the data generating process to have a correlation of .4 < $\rho$<.8. Only focusing on SMDs – they suggest that it can translate easily to fisher’s z-transformed correlation coefficient, but for log odds ratio or risk ratios it needs more assumptions.
+                            
+%In the methods section, I present reworked derivations that were presented in this paper in their supplementary materials for the Satterthwaite degrees of freedom for model-based and robust variance estimators. 
+
+
+
+\section{Purpose of Study}
+
+Through this review of the literature, it becomes apparent that there is a gap in power analysis methods for tests of moderators from meta-regression of dependent effects. Extending the work of \textcite{vembye2023}, this study will provide a framework for the power analysis of a categorical study-level moderator when dependent effect sizes are modeled using a CHE working model. I will focus on the omnibus test of a study-level categorical moderator.  
+
+Specifically, I have the following aims for the dissertation: 
+\begin{enumerate}
+\item Conduct a Monte Carlo simulation study to validate an approximation for the power of the robust-Wald test of a categorical study-level moderator based on the CHE model with HTZ degrees of freedom. I aim to compare predicted power levels to simulation-based estimates of power.
+\item Evaluate the different sampling methods for the sampling variances ($\sigma^2_j$) and the number of effect sizes ($k_j$) with the power approximation. 
+\item Evaluate the empirical Type I error rates of the robust-Wald test of categorical study-level moderators for the CHE+RVE method.
+\end{enumerate}
+
+%I believe the results of this study will immediately inform the work of applied meta-analysts for two key reasons. First, I am evaluating the power approximations with the CHE model, which accounts for both types of dependence most often encountered in meta-analyses in social science research \autocite{tipton2019a}. Furthermore, categorical moderators are of common interest in meta-analysis as focal moderators of interest \autocite{polanin2016, tipton2019, ahn2012}. 
+
+The remaining chapters of the dissertation are organized as follows. In Chapter \ref{ch: theory}, I provide the derived HTZ degrees of freedom for a CHE working model and RVE-based Wald test. Then, in Chapter \ref{ch: methods}, I describe the methods for the Monte Carlo simulation to validate the power approximation for the Wald test of study-level categorical moderators. In Chapter \ref{ch: results}, I present the results of the simulation. Finally, in Chapter \ref{ch: discussion}, I provide a discussion of the results and my conclusions for the study.  
+

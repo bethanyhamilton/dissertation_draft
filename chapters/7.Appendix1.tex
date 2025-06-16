@@ -1,0 +1,174 @@
+
+
+\chapter{Derivations Related to the Test of the Overall Pooled Effect Size for one category} \label{App: overallpooled}
+
+In order to be able to find the derivation of the HTZ Approximation for the Robust Variance Estimator of a study-level categorical predictor, I will need to have the derivation of the Satterthwaite degrees of freedom for the overall pooled effect size for one category. The following is the derivation that I reworked in the context of the overall pooled effect size for each category that follows the derivation from \textcite{vembye2023} for the overall pooled effect size that can be found in Supplementary S2.2 of that paper. To be able to do this, I parameterized the meta-regression model as a no-intercept model so that each category is a separate intercept and amounts to the overall pooled effect for that specific category, $\overline{\bm{T}}_c$
+
+Let $\overline{\bm{T}}_c = (\overline{T}_{1c}, \overline{T}_{2c}, ..., \overline{T}_{Jc})$ be the $Jc \times 1$ vector of average effect sizes from each study within a category. Let $\bm{W}_c = diag(\tilde{w}_{1c}, \tilde{w}_{2c}, ..., \tilde{w}_{Jc})$ be the $Jc \times 1$ diagonal matrix with the inverse variance weights of the CHE model along the diagonal,  let $\bm{I}_c$ be a $Jc \times Jc$ identity matrix, and let $\bm{1}_c$ be a $Jc \times 1$ vector of 1's. Assuming a CHE working model, $\overline{\bm{T}}_c \sim N(\mu \bm{1}_c, \bm{W}_c^{-1})$.   $W_c$ is the sum of the weights within a category, $W_c = \sum_{j=1}^{Jc} \tilde{w}_{jc}$. The variance components, $\hat{\omega}^2$ and $\hat{\tau}^2$, are the within and between-study variances, respectively. $\rho$ is the true sampling correlation.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Satterthwaite Approximation for the Robust Variance Estimator}
+
+Below, I rewrite $V^R_c $ in the form we need it to find the $ E(V^R_c)$ and $Var(V^R_c)$.
+\begin{equation}
+    \begin{split}
+        V^R_c & = \frac{1}{W_c^2}  \sum_{j=1}^{Jc} \left[ \frac{\tilde{w}_{jc}^2 (\overline{T}_{jc} - \hat{\mu_c})^2}{1-\frac{\tilde{w}_{jc}}{W_c}} \right] \\
+        & =  \frac{1}{W_c^2}  \sum_{j=1}^{Jc} \left[ \tilde{w}_{jc}^2 (\overline{T}_{jc} - \hat{\mu_c})^2 \left(1-\frac{\tilde{w}_{jc}}{W_c}\right)^{-1}  \right] \\
+        & =  \frac{1}{W_c^2}  \sum_{j=1}^{Jc} \left[ \tilde{w}_{jc}^2 \left(\overline{T}_{jc} - \frac{1}{W_c}\sum_{j=1}^{Jc} \tilde{w}_{jc}\overline{T}_{jc}\right)^2 \left(1-\frac{\tilde{w}_{jc}}{W_c}\right)^{-1}  \right] \\
+        & =  \frac{1}{W_c^2}  \sum_{j=1}^{Jc} \left[ \tilde{w}_{jc}^2 \left(\overline{T}_{jc} - \frac{\overline{T}_{jc} \tilde{w}_{jc}}{W_c}\right)^2 \left(1-\frac{\tilde{w}_{jc}}{W_c}\right)^{-1}  \right] \\
+        & =  \frac{1}{W_c^2}  \sum_{j=1}^{Jc} \left[ \tilde{w}_{jc}^2 \left( \overline{T}_{jc}^2 \left(1- \frac{\tilde{w}_{jc}}{W_c}\right)^2 \right) \left(1-\frac{\tilde{w}_{jc}}{W_c}\right)^{-1}  \right] \\
+    \end{split}
+    \nonumber
+\end{equation}
+Then in order to rewrite $V^R_c$ in quadradic form, let:
+\begin{equation}
+   R = \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \mathbf{1}_c\mathbf{1}_c' \right) \mathbf{W_c} \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1} \mathbf{W_c} \left(\mathbf{I}_c - \frac{1}{W_c}  \mathbf{1}_c\mathbf{1}_c' \mathbf{W_c}\right).
+   \nonumber
+\end{equation}
+Then, $V^R_c = \frac{1}{W_c^2} \overline{T}_c'R\overline{T}_c$ when written in quadratic form. 
+
+The mean and variance of $V^R_c$ can be obtained using properties of quadratic forms for normal random variables (Mathai \& Provost, 1992):
+\begin{equation}
+    \begin{split}
+        E(V^R_c) & = \frac{1}{W_c^2}tr(\mathbf{R}\mathbf{W_c}^{-1}) \\
+        Var(V^R_c) & = \frac{2}{W^4_c} tr(\mathbf{R}\mathbf{W_c}^{-1}\mathbf{R}\mathbf{W_c}^{-1})
+    \end{split}
+    \nonumber
+\end{equation}
+
+Below is the proof for $E(V^R_c)$. It is important to note that  $\left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \mathbf{1}_c\mathbf{1}_c' \right)$ is idempotent. 
+\begin{equation}
+    \begin{split}
+       E(V^R_c) & = \frac{1}{W^2_c } tr(\mathbf{R}\mathbf{W_c}^{-1}) \\
+       & = \frac{1}{W^2_c} tr\left( \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \mathbf{1}_c\mathbf{1}_c' \right) \mathbf{W_c} \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1} \mathbf{W_c} \left(\mathbf{I}_c - \frac{1}{W_c}  \mathbf{1}_c\mathbf{1}_c' \mathbf{W_c}\right) \mathbf{W_c}^{-1}  \right) \\
+        & = \frac{1}{W^2_c} tr\left( \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1} \mathbf{W_c}   \left(\mathbf{I}_c - \frac{1}{W_c}  \mathbf{1}_c\mathbf{1}_c' \mathbf{W_c}\right) \mathbf{W_c}^{-1}  \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \mathbf{1}_c\mathbf{1}_c' \right)  \mathbf{W_c} \right) \\
+        & = \frac{1}{W^2_c} tr\left( \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}    \left(\mathbf{W_c} - \frac{1}{W_c} \mathbf{W_c}  \mathbf{1}_c\mathbf{1}_c' \mathbf{W_c}\right) \mathbf{W_c}^{-1}  \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \mathbf{1}_c\mathbf{1}_c' \right)  \mathbf{W_c} \right) \\
+        & = \frac{1}{W_c^2} tr\left( \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}    \left(\mathbf{W_c}\mathbf{W_c}^{-1} - \frac{1}{W_c} \mathbf{W_c}  \mathbf{1}_c\mathbf{1}_c' \mathbf{W_c} \mathbf{W_c}^{-1}\right)   \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \mathbf{1}_c\mathbf{1}_c' \right)  \mathbf{W_c} \right) \\
+        & = \frac{1}{W^2_c} tr\left( \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}    \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c}  \mathbf{1}_c\mathbf{1}_c'\right)   \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \mathbf{1}_c\mathbf{1}_c' \right)  \mathbf{W_c} \right) \\
+        & = \frac{1}{W_c^2} tr\left( \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}    \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c}  \mathbf{1}_c\mathbf{1}_c'\right)    \mathbf{W_c} \right) \\
+        & = \frac{1}{W^2_c} tr\left( \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}    \left(\mathbf{W_c} - \frac{1}{W_c} \mathbf{W_c}  \mathbf{1}_c\mathbf{1}_c'\mathbf{W_c}\right)     \right) \\
+        & = \frac{1}{W^2_c} tr\left( \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}   \mathbf{W_c} \left(\mathbf{I}_c - \frac{1}{W_c}   \mathbf{1}_c\mathbf{1}_c'\mathbf{W_c}\right)     \right) \\
+         & = \frac{1}{W^2_c} tr\left( \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}   \mathbf{W_c} \left(\mathbf{I}_c -    \mathbf{1}_c\mathbf{1}_c'\frac{\mathbf{W_c}}{W_c}\right)     \right) \\
+    \end{split}
+    \nonumber
+\end{equation}
+Below are the matrices within the trace rewritten in matrix form below to make it easier to follow the derivation: 
+\begin{equation}
+    \begin{split}
+        & = \begin{bmatrix}
+            \frac{W_c}{W_c-\tilde{w}_{1c}} & 0 & \dots & 0 \\
+            & \ddots & & \\
+            & & &  \frac{W_c}{W_c-\tilde{w}_{jc} } 
+        \end{bmatrix} \begin{bmatrix}
+            \tilde{w}_{1c} & & \\
+            & \ddots & \\
+            & & \tilde{w}_{jc}
+        \end{bmatrix} \begin{bmatrix}
+            1- \frac{\tilde{w}_{1c} }{W_c} & \frac{\tilde{w}_{1c} }{W_c} & \dots   \\
+            &  \ddots &  & \\
+            & & 1- \frac{\tilde{w}_{jc} }{W_c} 
+        \end{bmatrix} \\
+        & = \begin{bmatrix}
+            \frac{W_c\tilde{w}_{1c} }{W_c-\tilde{w}_{1c} } &  & \dots & \\
+            & \ddots & & \\
+            & & &  \frac{W_c \tilde{w}_{jc} }{W_c-\tilde{w}_{jc} } 
+        \end{bmatrix}  \begin{bmatrix}
+            1- \frac{\tilde{w}_{1c} }{W_c} & \frac{\tilde{w}_{1c} }{W_c} & \dots   \\
+            &  \ddots &  & \\
+            & & 1- \frac{\tilde{w}_{jc} }{W_c} 
+        \end{bmatrix} \\
+         & = \begin{bmatrix}
+            \left(\frac{W_c\tilde{w}_{1c} }{W_c-\tilde{w}_{1c} }\right)\left(\frac{W_c-\tilde{w}_{1c} }{W_c}\right) &  & \dots & \\
+            & \ddots & & \\
+            & & &  \left(\frac{W_c\tilde{w}_{jc} }{W_c-\tilde{w}_{jc} }\right)\left(\frac{W_c-\tilde{w}_{jc} }{W_c}\right) 
+        \end{bmatrix}   \\
+        & = \begin{bmatrix}
+            \tilde{w}_{1c} & & \\
+            & \ddots & \\
+            & & \tilde{w}_{jc}
+        \end{bmatrix}  
+    \end{split}
+    \nonumber
+\end{equation}
+Finally, now that I have simplified the part within the trace I found that $E(V^R_c)$ equals:
+\begin{equation}
+    E(V^R_c) = \frac{1}{W_c^2}tr(\mathbf{W_c}) = \frac{1}{W^2_c} \sum_{j=1}^{Jc} \tilde{w}_{jc} = \frac{1}{W_c}
+    \nonumber
+\end{equation}
+Next I find  $Var(V^R_c)$:
+\begin{equation}
+    \begin{split}
+         Var(V^R_c) & = \frac{2}{W_c^4} tr(\mathbf{R}\mathbf{W_c}^{-1}\mathbf{R}\mathbf{W_c}^{-1}) \\
+         & = \frac{2}{W^4_c} tr\Bigg(\left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \mathbf{1}_c\mathbf{1}_c' \right) \mathbf{W_c} \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1} \mathbf{W_c} \left(\mathbf{I}_c - \frac{1}{W_c}  \mathbf{1}_c\mathbf{1}_c' \mathbf{W_c}\right) \mathbf{W_c}^{-1} \times \\
+          & \quad \quad \quad \quad \quad \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \mathbf{1}_c\mathbf{1}_c' \right) \mathbf{W_c} \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1} \mathbf{W_c} \left(\mathbf{I}_c - \frac{1}{W_c}  \mathbf{1}_c\mathbf{1}_c' \mathbf{W_c}\right) \mathbf{W_c}^{-1} \Bigg) \\
+          & = \frac{2}{W_c^4} tr\Bigg(\left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \mathbf{1}_c\mathbf{1}_c' \right) \mathbf{W_c} \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}  \left(\mathbf{W_c}\mathbf{W_c}^{-1} - \frac{\mathbf{W_c}}{W_c}  \mathbf{1}_c\mathbf{1}_c' \mathbf{W_c}\mathbf{W_c}^{-1}\right)  \times \\
+          & \quad \quad \quad \quad \quad \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \mathbf{1}_c\mathbf{1}_c' \right) \mathbf{W_c} \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1} \left(\mathbf{W_c}\mathbf{W_c}^{-1}  - \frac{\mathbf{W_c} }{W_c}  \mathbf{1}_c\mathbf{1}_c' \mathbf{W_c}\mathbf{W_c}^{-1}\right)  \Bigg) \\
+          & = \frac{2}{W^4_c} tr\Bigg(\left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \mathbf{1}_c\mathbf{1}_c' \right) \mathbf{W_c} \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}  \left(\mathbf{I}_c - \frac{\mathbf{W_c}}{W_c}  \mathbf{1}_c\mathbf{1}_c' \right)  \times \\
+          & \quad \quad \quad \quad \quad \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \mathbf{1}_c\mathbf{1}_c' \right) \mathbf{W_c} \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1} \left(\mathbf{I}_c  - \frac{\mathbf{W_c} }{W_c}  \mathbf{1}_c\mathbf{1}_c' \right)  \Bigg) \\
+          & = \frac{2}{W^4_c} tr\Bigg(\left(\mathbf{I}_c  - \frac{\mathbf{W_c} }{W_c}  \mathbf{1}_c\mathbf{1}_c' \right)\left(\mathbf{I}_c - \frac{\mathbf{W_c}}{W_c} \mathbf{1}_c\mathbf{1}_c' \right) \mathbf{W_c} \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}  \left(\mathbf{I}_c - \frac{\mathbf{W_c}}{W_c}  \mathbf{1}_c\mathbf{1}_c' \right)  \times \\
+          & \quad \quad \quad \quad \quad \left(\mathbf{I}_c - \frac{\mathbf{W_c}}{W_c}  \mathbf{1}_c\mathbf{1}_c' \right) \mathbf{W_c} \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}   \Bigg) \\
+          & = \frac{2}{W^4_c} tr\Bigg(\left(\mathbf{I}_c  - \frac{\mathbf{W_c} }{W_c}  \mathbf{1}_c\mathbf{1}_c' \right) \mathbf{W_c} \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1} \left(\mathbf{I}_c - \frac{\mathbf{W_c}}{W_c}  \mathbf{1}_c\mathbf{1}_c' \right) \mathbf{W_c} \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}   \Bigg) \\
+          & = \frac{2}{W^4_c} tr\Bigg( \mathbf{W_c} \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1} \left(\mathbf{I}_c  - \frac{\mathbf{W_c} }{W_c}  \mathbf{1}_c\mathbf{1}_c' \right)  \mathbf{W_c} \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}   \left(\mathbf{I}_c - \frac{\mathbf{W_c}}{W_c}  \mathbf{1}_c\mathbf{1}_c' \right)   \Bigg) \\
+          & = \frac{2}{W^4_c} tr\Bigg(  \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1} \mathbf{W_c} \left(\mathbf{I}_c  - \frac{\mathbf{W_c} }{W_c}  \mathbf{1}_c\mathbf{1}_c'\mathbf{W_c} \right)   \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}   \left(\mathbf{I}_c - \frac{\mathbf{W_c}}{W_c}  \mathbf{1}_c\mathbf{1}_c' \right)   \Bigg) \\ 
+    \end{split}
+    \nonumber
+\end{equation}
+
+\begin{equation}
+    \begin{split}
+        & = \frac{2}{W^4_c} tr\Bigg(  \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1} \mathbf{W^2_c} \left(\mathbf{I}_c  - \frac{1 }{W_c}  \mathbf{1}_c\mathbf{1}_c'\mathbf{W_c} \right)   \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}   \left(\mathbf{I}_c - \frac{\mathbf{W_c}}{W_c}  \mathbf{1}_c\mathbf{1}_c' \right)   \Bigg) \\   
+        & = \frac{2}{W^4_c} tr\Bigg( \mathbf{W^2_c} \left[   \left(\left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}\mathbf{I}_c  - \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}\frac{1 }{W_c}  \mathbf{1}_c\mathbf{1}_c'\mathbf{W_c} \right) \right] \times \\
+        & \quad \quad \quad \quad \quad\left[    \left(\left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}\mathbf{I}_c - \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}\frac{\mathbf{W_c}}{W_c}  \mathbf{1}_c\mathbf{1}_c' \right) \right]   \Bigg) \\
+        & = \frac{2}{W^4_c} tr\Bigg( \mathbf{W^2_c} \bigg(  \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-2}  - \left(\left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-2}\frac{\mathbf{W_c} }{W_c}  \mathbf{1}_c\mathbf{1}_c' \right) - \\
+        & \quad \quad \quad \quad \quad  \left(\left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1} \mathbf{1}_c\mathbf{1}_c'\frac{\mathbf{W_c}}{W_c}\left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}  \right) + \\
+        & \quad \quad \quad \quad \quad     \left(\left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}  \mathbf{1}_c\mathbf{1}_c'\frac{\mathbf{W_c}}{W_c} \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1} \mathbf{1}_c\mathbf{1}_c'\frac{\mathbf{W_c}}{W_c} \right)  \bigg)   \Bigg) \\
+        & = \frac{2}{W^4_c} tr\Bigg(   \mathbf{W^2_c}\left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-2}  - \mathbf{W^2_c}\left(\left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-2}\frac{\mathbf{W_c} }{W_c}  \mathbf{1}_c\mathbf{1}_c' \right) - \\
+        & \quad \quad \quad \quad \quad  \mathbf{W^2_c}\left(\left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1} \mathbf{1}_c\mathbf{1}_c'\frac{\mathbf{W_c}}{W_c}\left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}  \right) + \\
+        & \quad \quad \quad \quad \quad     \mathbf{W^2_c}\left(\left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}  \mathbf{1}_c\mathbf{1}_c'\frac{\mathbf{W_c}}{W_c} \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1} \mathbf{1}_c\mathbf{1}_c'\frac{\mathbf{W_c}}{W_c} \right)     \Bigg) \\
+    \end{split}
+    \nonumber
+\end{equation}
+Now find the value of each term in trace. 
+\begin{equation}
+    tr\left( \mathbf{W^2_c}\left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-2} \right) = W^2_c \sum_{j=1}^{Jc} \frac{\tilde{w}_{jc}^2}{(W_c-\tilde{w}_{jc})^2} 
+    \nonumber
+\end{equation}
+\begin{equation}
+    tr\left(\mathbf{W_c^2}\left(\left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-2}\frac{\mathbf{W_c} }{W_c}  \mathbf{1}_c\mathbf{1}_c' \right) \right) =W_c\sum_{j=1}^{Jc} \frac{\tilde{w}_{jc}^3}{(W_c-\tilde{w}_{jc} )^2} 
+    \nonumber
+\end{equation}
+\begin{equation}
+    tr\left(\mathbf{W_c^2}\left(\left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1} \mathbf{1}_c\mathbf{1}_c'\frac{\mathbf{W_c}}{W_c}\left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}  \right) \right) =W_c\sum_{j=1}^{Jc} \frac{\tilde{w}_{jc}^3}{(W_c-\tilde{w}_{jc})^2} 
+    \nonumber
+\end{equation}
+\begin{equation}
+    tr\left(\mathbf{W_c^2}\left(\left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1}  \mathbf{1}_c\mathbf{1}_c'\frac{\mathbf{W_c}}{W_c} \left(\mathbf{I}_c - \frac{1}{W_c} \mathbf{W_c} \right)^{-1} \mathbf{1}_c\mathbf{1}_c'\frac{\mathbf{W_c}}{W_c} \right) \right) =\left(\sum_{j=1}^{Jc} \frac{\tilde{w}_{jc}^2}{(W_c-\tilde{w}_{jc})} \right)^2
+    \nonumber
+\end{equation}
+Plug these into $\frac{2}{W_c^4}tr(\mathbf{R}\mathbf{W_c}^{-1}\mathbf{R}\mathbf{W_c}^{-1})$.
+\begin{equation}
+    \begin{split}
+        & = \frac{2}{W_c^4} \left(W_c^2 \sum_{j=1}^{Jc} \frac{\tilde{w}_{jc}^2}{(W_c-\tilde{w}_{jc})^2} - 2W_c\sum_{j=1}^{Jc} \frac{\tilde{w}_{jc}^3}{(W_c-\tilde{w}_{jc})^2} + \left(\sum_{j=1}^{Jc} \frac{\tilde{w}_{jc}^2}{(W_c-\tilde{w}_{jc})} \right)^2\right) \\
+        & = \frac{2}{W_c^2} \left( \sum_{j=1}^{Jc} \frac{\tilde{w}_{jc}^2}{(W_c-\tilde{w}_{jc})^2} - \frac{2}{W_c}\sum_{j=1}^{Jc} \frac{\tilde{w}_{jc}^3}{(W_c-\tilde{w}_{jc})^2} + \frac{1}{W_c^2}\left(\sum_{j=1}^{Jc} \frac{\tilde{w}_{jc}^2}{(W_c-\tilde{w}_{jc})} \right)^2\right) \\
+    \end{split}
+    \nonumber
+\end{equation}
+
+Finally, the Satterthwaite degrees of freedom for a test of the overall pooled effect size for category $c$ are therefore
+
+\begin{equation}
+    \begin{split}
+        \zeta & = \frac{2 \times [E(V^R)]^2}{Var(V^R)} \\
+             & = \left[ \sum_{j = 1} ^{Jc} \frac{w^2_{jc}}{ (W_c - \tilde{w}_{jc}) ^2} - \frac{2}{W} \sum_{j = 1} ^{Jc} \frac{\tilde{w}_{jc}^3}{(W_c - \tilde{w}_{jc})^2} + \frac{1}{W_c^2} \left(\sum_{j = 1} ^{Jc} \frac{\tilde{w}_{jc}^2}{W-\tilde{w}_{jc}} \right)^2 \right]^{-1}.
+    \end{split}
+    \nonumber
+\end{equation}
+
+
+
+
+

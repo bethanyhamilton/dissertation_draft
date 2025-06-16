@@ -1,0 +1,891 @@
+
+\subsection{Satterthwaite Approximations for Model-Based Degrees of Freedom for the Overall Pooled Effect}
+
+For the model-based hypothesis test:
+
+\begin{equation} \label{model-basedwaldtest}
+ t^M = \frac{\hat{\mu} - d}{\sqrt{V^M}}
+\end{equation}
+
+Where $V^M = 1/W$. If the null hypothesis, $H_0: \mu = d$ holds, then $t^M$ follows a standard normal distribution, otherwise $t^M$ follows a normal distribution with mean $\lambda = \sqrt{W}(\mu - d)$ and unit variance when CHE is correctly specified and the number of independent studies is large. For a smaller number of studies (less than 40 primary studies), then using a non-central Student-t distribution with Satterthwaite approximation to degrees of freedom, $\zeta$, and with non-centrality parameter $\lambda$ would be another alternative (NOTE: J-1 is a simpler alternative but is a rough approximation to the sampling distribution of the model-based test). The power of the model-based Wald test against a two-sided alternative can be approximated by:
+
+\begin{equation}
+    F_t(-c_{\alpha/2,\zeta}  | \zeta, \lambda) +1 - F_t(-c_{\alpha/2,\zeta}  | \zeta, \lambda) 
+\end{equation}
+
+
+
+
+For the CHE model, the Satterthwaite degrees of freedom are given by:
+
+\begin{equation}\label{CHEdf}
+    \zeta = \frac{st - u^2}{sy^2 + tx^2 - 2uxy}
+\end{equation}
+
+where 
+
+\begin{equation}
+     x = \frac{1}{W} \sum_{j=1}^J w^2_j
+\end{equation}
+
+\begin{equation}
+    y = \frac{1}{W}\sum_{j=1}^J \frac{w^2_j}{k_j}
+\end{equation}
+
+\begin{equation}
+    s = x^2 + Wx - \frac{2}{W}\sum_{j=1}^J w^3_j
+\end{equation}
+
+\begin{equation}
+    t = y^2 + \sum_{j=1}^J \frac{w^2_j}{k_j^2} + \sum_{j=1}^J \frac{k_j -1}{(\hat{\omega}^2 + (1-\rho)\sigma^2_j )^2} - \frac{2}{W}\sum_{j=1}^J \frac{w^2_j}{k_j^2}
+\end{equation}
+    
+\begin{equation}
+    u = xy + Wy - \frac{2}{W}\sum_{j=1}^J\frac{w_j^3}{k_j}
+\end{equation}
+
+Goal: To derive equations used in the Satterthwaite degrees of freedom for the model-based variance estimator used in the test for the overall pooled average effect size (intercept). 
+
+Introduction: 
+
+Let $\mu_p$ be the overall average effect size for one category $p$ and $d_p$ be a specific value of effect size. $V_p$ is some variance estimator that can be model-based or robust. $J_p$ is the total number of studies per category. $k_{j_p}$ is effect sizes within each study $j_p$ and $K_p$ is the total number of effect sizes within a category. $\textbf{1}_{j_p}$  is a vector of 1's with size $k_{j_p} \times 1$. $ \textbf{1}$ is a vector of 1's with size of $k_p \times 1$. $\textbf{I}_{j_p}$ is an identity matrix with a size of $k_{j_p} \times k_{j_p}$. $T_{ij_p}$ is effect size estimate $i$ from study $j_p$. $\textbf{T}_{j_p}$ is a vector of effect size estimates from study $j_p$ for $j_p=1,...,J_p$.  
+
+
+
+
+
+When $V$ is an unbiased estimator of the true sampling variance of $\hat{\mu}$, then the Satterthwaite degrees of freedom are defined as:
+
+\begin{equation}
+    \frac{2 \times [E(V)]^2}{Var(V)}
+\end{equation}
+
+
+The CHE data-generating process can be written as:
+
+\begin{equation}
+    \mathbf{T}_j = N(\mu\mathbf{1}_j, \mathbf{\Phi}_j)
+\end{equation}
+
+where 
+
+\begin{equation}
+    \mathbf{\Phi}_j = (\tau^2 + \rho\sigma_j^2)\mathbf{1}_j\textbf{1}_j' + (\omega^2 + (1-\rho)\sigma^2_j)\mathbf{I}_j.
+\end{equation}
+
+Let $\mathbf{\Phi} = diag(\mathbf{\Phi_1}, \mathbf{\Phi_2}, ..., \mathbf{\Phi_J})$. Twice the restricted log likelihood of the CHE model is therefore
+
+
+\begin{equation}\label{LLCHE}
+    2\times l_R(\tau^2, \omega^2, \rho) = c - \sum^J_{j=1}log|\mathbf{\Phi_j}| - log(\sum^J_{j=1}\mathbf{1'}_j\mathbf{\Phi}^{-1}_j\mathbf{1}_j)-\mathbf{T}'\mathbf{Q}\mathbf{T},
+\end{equation}
+
+where $\mathbf{Q} = \mathbf{\Phi}^{-1}-\mathbf{\Phi}^{-1}\mathbf{1}(\mathbf{1}'\mathbf{\Phi}^{-1}\mathbf{1})^{-1}\mathbf{1}'\mathbf{\Phi}^{-1}$.
+
+
+\subsubsection{Satterthwaite Approximation for the Model-Based Variance Estimator}
+
+Under the CHE model, the model-based variance estimator is $V^M = 1/W$, where $W$ is $W = \sum^J_{j=1} w_j$ where $w_j$ for CHE is given in Equation \ref{CHEweights}.
+
+
+They use the delta method to approximate the sampling variance of $V^M$ in terms of the inverse expected information matrix of the restricted likelihood. Let $\mathbf{I}^E$ denote the expected information matrix of the CHE model with entries. 
+
+
+
+\begin{equation}
+     2I^E = \begin{bmatrix}
+                s & u \\
+                u & t 
+            \end{bmatrix} 
+\end{equation}
+
+
+For the inverse of $\mathbf{I}^E$:
+
+\begin{equation}
+     I^E = \begin{bmatrix}
+                s/2 & u/2 \\
+                u/2 & t/2 
+            \end{bmatrix} \nonumber
+\end{equation}
+
+
+
+\begin{equation}
+     (I^E)^{(-1)} = \begin{bmatrix}
+                s/2 & u/2 \\
+                u/2 & t/2 
+            \end{bmatrix}^{(-1)} \nonumber
+\end{equation}
+
+
+Note: Take the inverse of both sides where:  
+    $\begin{bmatrix}
+                a & b \\
+                c & d 
+            \end{bmatrix}^{(-1)} = \frac{1}{ad +bc}\begin{bmatrix}
+                d & -b \\
+                -c & a 
+            \end{bmatrix}$ 
+
+\begin{empheq}{align}
+        = \frac{1}{(s/2)(t/2)-(u/2)(u/2)}\begin{bmatrix}
+                t/2 & -u/2 \\
+                -u/2 & s/2 
+            \end{bmatrix} \nonumber
+\end{empheq}
+
+\begin{empheq}{align}
+        = \frac{4}{(s)(t)-(u^2)}\begin{bmatrix}
+                t/2 & -u/2 \\
+                -u/2 & s/2 
+            \end{bmatrix} \nonumber
+\end{empheq}
+
+
+Let $x = W \times \partial V^M/ \partial \hat{\tau}^2$ and $y = W \times \partial V^M/ \partial \hat{\omega}^2$. Therefore, 
+they can be rewritten as $x/W = \partial V^M/ \partial \hat{\tau}^2$ and $y/W = \partial V^M/ \partial \hat{\omega}^2$. 
+
+Now the delta method approximation for the variance of $V^M$ is:
+
+
+\begin{equation}
+    Var(V^M) \approx \left(  \frac{\partial V^M}{\partial (\tau^2, \omega^2)} \right)' (\mathbf{I}^E)^{-1} \left(\frac{\partial V^M}{\partial (\tau^2, \omega^2)}\right)
+\end{equation}
+
+Note: To rewrite the partial derivative in matrix form is  $\frac{\partial V^M}{\partial (\tau^2, \omega^2)} = \begin{bmatrix}
+        \partial V^M/ \partial \omega^2 \\
+         \partial V^M/ \partial \tau^2 
+    \end{bmatrix}$
+
+Through substitution and expanding the matrix:
+
+\begin{equation}
+    =\begin{bmatrix}
+        \partial V^M/ \partial \omega^2 &
+         \partial V^M/ \partial \tau^2 
+    \end{bmatrix} \frac{4}{st-u^2}\begin{bmatrix}
+                t/2 & -u/2 \\
+                -u/2 & s/2 
+            \end{bmatrix}
+    \begin{bmatrix}
+        \partial V^M/ \partial \omega^2 \\
+         \partial V^M/ \partial \tau^2 
+    \end{bmatrix}
+     \nonumber
+\end{equation}
+
+
+\begin{equation}
+    =\begin{bmatrix}
+        y/W &
+         X/W 
+    \end{bmatrix} \frac{4}{st-u^2}\begin{bmatrix}
+                t/2 & -u/2 \\
+                -u/2 & s/2 
+            \end{bmatrix}
+    \begin{bmatrix}
+        y/W \\
+         x/W
+    \end{bmatrix}
+    \nonumber
+\end{equation}
+
+multiply everything out to get: 
+
+\begin{equation}
+    Var(V^M) = \frac{2(sy^2+tx^2-2uxy)}{W^2(st-u^2)}
+\end{equation}
+
+
+Now find the degrees if freedom for CHE ( $ \zeta $; Equation \ref{CHEdf} ). If $E(V^M)$ is estimated using $1/W$, the Satterthwaite degrees of freedom for $V^M$ are: 
+
+\begin{equation}
+    \zeta =  \frac{2 \times [E(V)]^2}{Var(V)} =  \frac{st - u^2}{sy^2 + tx^2 - 2uxy}
+    \nonumber
+\end{equation}
+
+since 
+
+\begin{equation}
+    \zeta =  \frac{2 \times [E(V)]^2}{Var(V)} = \frac{2[1/W]^2}{Var(V^M}
+    \nonumber
+\end{equation}
+
+substituting $Var(V^M)$ from above
+
+\begin{equation}
+     \zeta = 2\left(\frac{1}{W}\right)^2\left(\frac{W^2(st-u^2)}{2(sy^2+tx^2-2uxy)}\right) =  \frac{st - u^2}{sy^2 + tx^2 - 2uxy}
+     \nonumber
+\end{equation}
+
+
+The derivations for x, y, s, t, and u are below. 
+
+\paragraph{Finding x and y}
+
+Below is how to find x and y. Using Equation \ref{CHEweights} for $w_j$, take the partial derivative with respect to $\hat{\tau^2}$:
+
+\begin{equation}
+    \begin{split}
+    \partial w_j / \partial \hat{\tau}^2 & = (-1) (k_j) (k_j\hat{\tau}^2 +k_j \rho \sigma^2_j + \hat{\omega}^2 + (1- \rho) \sigma^2_j)^{-2}(k_j) \\
+    & = \frac{-(k_j)^2}{(k_j\hat{\tau}^2 +k_j \rho \sigma^2_j + \hat{\omega}^2 + (1- \rho) \sigma^2_j)^2} \\
+    & = - w_j^2
+    \end{split}
+    \nonumber
+\end{equation}
+
+Now take partial derivative of $w_j$ with respect to $\hat{\omega}^2$:
+
+\begin{equation}
+    \begin{split}
+    \partial w_j / \partial \hat{\omega}^2 & = (-1) (k_j) (k_j\hat{\tau}^2 +k_j \rho \sigma^2_j + \hat{\omega}^2 + (1- \rho) \sigma^2_j)^{-2} \\
+    & = \frac{-(k_j)}{(k_j\hat{\tau}^2 +k_j \rho \sigma^2_j + \hat{\omega}^2 + (1- \rho) \sigma^2_j)^2} \times \frac{k_j}{k_j} \\
+    & = \frac{- w_j^2}{k_j}
+    \end{split}
+    \nonumber
+\end{equation}
+
+Since $V^M$ is $1/W$ and $W= \sum_{j=1}^Jw_j$, then:
+
+\begin{equation}
+    \begin{split}
+        x & = W \frac{\partial V^M}{\partial \hat{\tau}^2} = W \frac{\partial}{\partial \hat{\tau}^2} \left( \sum_{j=1}^Jw_j\right)^{(-1)} \\
+         & = W \left( \frac{-1}{ (\sum_{j=1}^J w_j)^2 } \right) \sum_{j=1}^J \frac{\partial w_j}{\partial \hat{\tau}^2} \\
+         & = W \left( \frac{-1}{ W^2 } \right) \sum_{j=1}^J - w_j^2 \\
+         & = \frac{1}{W} \sum_{j=1}^J w_j^2
+    \end{split}
+    \nonumber
+\end{equation}
+
+Now to find y: 
+
+
+\begin{equation}
+    \begin{split}
+        y & = W \frac{\partial V^M}{\partial \hat{\omega}^2} = W \frac{\partial}{\partial \hat{\omega}^2} \left( \sum_{j=1}^Jw_j\right)^{(-1)} \\
+         & = W \left( \frac{-1}{ (\sum_{j=1}^J w_j)^2 } \right) \sum_{j=1}^J \frac{\partial w_j}{\partial \hat{\omega}^2} \\
+         & = W \left( \frac{-1}{ W^2 } \right) \sum_{j=1}^J \frac{-w_j^2}{k_j} \\
+         & = \frac{1}{W} \sum_{j=1}^J \frac{w_j^2}{k_j}
+    \end{split}
+    \nonumber
+\end{equation}
+
+\paragraph{Finding s, t, u}
+
+Using the $K\times X$ matrix $\mathbf{Q}$,  $\mathbf{Q} = \mathbf{\Phi}^{-1}-\mathbf{\Phi}^{-1}\mathbf{1}(\mathbf{1}'\mathbf{\Phi}^{-1}\mathbf{1})^{-1}\mathbf{1}'\mathbf{\Phi}^{-1}$, Giesbrecht and Burns (1985) gave an expression for the expected information and the derivative of $\mathbf{\Phi}$ with respect to the variance components. For the CHE model: 
+
+\begin{equation}
+    \begin{split}
+        s & = tr(\mathbf{Q} \frac{\partial \mathbf{\Phi}}{\partial \hat{\tau}^2}\mathbf{Q}\frac{\partial \mathbf{\Phi}}{\partial \hat{\tau}^2}) \\
+        t & = tr(\mathbf{Q} \frac{\partial \mathbf{\Phi}}{\partial \hat{\omega}^2}\mathbf{Q}\frac{\partial \mathbf{\Phi}}{\partial \hat{\omega}^2}) \\
+        u & = tr(\mathbf{Q} \frac{\partial \mathbf{\Phi}}{\partial \hat{\tau}^2}\mathbf{Q}\frac{\partial \mathbf{\Phi}}{\partial \hat{\omega}^2}) 
+    \end{split}
+\end{equation}
+
+For $\frac{\partial \mathbf{\Phi}}{\partial \hat{\tau}^2}$ it is equal to $\mathbf{Z}\mathbf{Z}'$ which is a $K \times J$ block diagonal matrix of $\mathbf{1}_j$, $Z= diag(\mathbf{1}_1, \mathbf{1}_2, ..., \mathbf{1}_J)$. Also, $\frac{\partial \mathbf{\Phi}}{\partial \hat{\omega}^2}$ is a $K \times K$ identity matrix, $\mathbf{I}$. Using the properties of trace and substitution, it follows that:
+
+\begin{equation}
+    \begin{split}
+        s & = tr(\mathbf{Q}\mathbf{Z}\mathbf{Z}'\mathbf{Q}\mathbf{Z}\mathbf{Z}') = tr(\mathbf{Z}'\mathbf{Q}\mathbf{Z}\mathbf{Z}'\mathbf{Q}\mathbf{Z}) \\
+        t & = tr(\mathbf{Q} \mathbf{Q}) \\
+        u & = tr(\mathbf{Q} \mathbf{Z}\mathbf{Z}'\mathbf{Q}) = tr(\mathbf{Z}'\mathbf{Q}\mathbf{Q}\mathbf{Z})
+    \end{split}
+\end{equation}
+
+
+
+So, now we need to find $\mathbf{Q}$. Therefore, we first need to find $\mathbf{\Phi}^-1$ or more specifically, $\mathbf{\Phi}_j^-1$. This is because,  $\mathbf{\Phi}$ is a $K \times K$ block diagonal with the $\mathbf{\Phi}_j$ along the diagonal. The inverse of $\mathbf{\Phi}$ is just the a $K \times K$ black diagonal with the $\mathbf{\Phi}_j^-1$ along the diagonal. 
+
+To find the inverse of $\mathbf{\Phi}_j$, we can use the Woodbury matrix identity or a lemma from (Miller, 1981). 
+
+If $A$ and $A+B$ are invertible and $B$ has rank 1, then let $g = trace(BA^{-1})$. Then $g\neq -1$ and $(A +B)^{-1} = A^{-1} - \frac{1}{1+g}A^{-1}BA^{-1}$.
+
+Let $A = (\omega^2 + (1- \rho)\sigma^2_j)\mathbf{I}_j$ and $B=(\tau^2 + \rho\sigma_j^2)\mathbf{1}_j\mathbf{1}_j'$. B has a rank 1. $A^{-1} = \frac{\mathbf{I}_j}{(\omega^2 +(1- \rho)\sigma_j^2)}$. For the g: 
+
+\begin{equation}
+    \begin{split}
+        g &= tr(BA^{-1}) \\
+        & = tr\left(\frac{(\tau^2 + \rho\sigma_j^2)}{\omega^2 +(1-\rho)\sigma_j^2} \mathbf{1}_j\mathbf{1}_j' \mathbf{I}_j    \right) \\
+        & = \frac{(\tau^2 + \rho\sigma_j^2)}{\omega^2 +(1-\rho)\sigma_j^2} tr( \mathbf{1}_j\mathbf{1}_j') \\
+        & = \frac{(\tau^2 + \rho\sigma_j^2)}{\omega^2 +(1-\rho)\sigma_j^2} k_j
+    \end{split}
+    \nonumber
+\end{equation}
+
+Now for the $\mathbf{\Phi}_j^-1$:
+
+
+\begin{equation}
+    \begin{split}
+        \mathbf{\Phi}_j^{-1} & = A^{-1} - \frac{1}{1+g}A^{-1}BA^{-1} \\
+        & = A^{-1}(\mathbf{I}_j - \frac{1}{1+g}BA^{-1}) \\
+        & = \frac{1}{\omega^2 +(1-\rho)\sigma^2_j}(\mathbf{I}_j - \frac{1}{1+\frac{k_j(\tau^2 + \rho\sigma^2_j)}{\omega^2 +(1-\rho)\sigma^2_j}}\frac{(\tau^2 + \rho\sigma^2_j)}{\omega^2 +(1-\rho)\sigma^2_j}\mathbf{1}_j\mathbf{1}_j')  \\
+        & = \frac{1}{\omega^2 +(1-\rho)\sigma^2_j}(\mathbf{I}_j - \frac{\tau^2 + \rho\sigma^2_j}{\omega^2 +(1-\rho)\sigma^2_j+k_j(\tau^2 + \rho\sigma^2_j)}\mathbf{1}_j\mathbf{1}_j') 
+    \end{split}
+\end{equation}
+
+Now the next terms in $\mathbf{Q}$ in terms of $\Phi_j$ are $\mathbf{\Phi}_j^{-1}\mathbf{1}_j$,  $\mathbf{1}_j'\mathbf{\Phi}_j^{-1}\mathbf{1}_j$, and $\mathbf{1}_j'\mathbf{\Phi}_j^{-1}$. The values for those are: $\mathbf{\Phi}_j^{-1}\mathbf{1}_j = \frac{w_j}{k_j}\mathbf{1}_j $,  $\mathbf{1}_j'\mathbf{\Phi}_j^{-1}\mathbf{1}_j = w_j$, and $\mathbf{1}_j'\mathbf{\Phi}_j^{-1} = \mathbf{1}_j'\frac{w_j}{k_j}$. Also, note, $tr(\mathbf{1}'\mathbf{1})= K$
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Now for s:
+
+\begin{equation}
+    s = tr(\mathbf{Z}'\mathbf{Q}\mathbf{Z}\mathbf{Z}'\mathbf{Q}\mathbf{Z}) 
+    \nonumber
+\end{equation}
+
+
+For $\mathbf{Z}'\mathbf{Q}\mathbf{Z}$:
+
+
+\begin{equation}
+   = \begin{bmatrix}
+        \mathbf{1}_1' & & & \\
+         & \mathbf{1}_2' & &\\
+         & & \ddots &  \\
+         & &  & \mathbf{1}_J'
+    \end{bmatrix}_{J \times K} \times (\mathbf{\Phi}^{-1}- \mathbf{\Phi}^{-1}\mathbf{1}(\mathbf{1}'\mathbf{\Phi}^{-1}\mathbf{1})^{-1}\mathbf{1}'\mathbf{\Phi}^{-1}) \times
+   \begin{bmatrix}
+        \mathbf{1}_1 & & & \\
+         & \mathbf{1}_2 & &\\
+         & & \ddots &  \\
+         & &  & \mathbf{1}_J
+    \end{bmatrix}_{K \times J}
+    \nonumber
+\end{equation}
+
+
+For one diagonal:
+
+\begin{equation}
+    \begin{split}
+         & = \left(\mathbf{1}'_j\mathbf{\Phi_j}^{-1}-\mathbf{1}'_j\left(\frac{w_j}{k_j}\mathbf{1}_j\right)\left(\frac{1}{wj}\right)\left(\mathbf{1}'\frac{w_j}{k_j}\right)\right)\mathbf{1}_j \\
+         & = \left(\mathbf{1}'_j\mathbf{\Phi_j}^{-1}-\left(\mathbf{1}'_j\frac{w_j}{k_j}\mathbf{1}_j\right)\left(\frac{1}{wj}\right)\left(\mathbf{1}'\frac{w_j}{k_j}\right)\right)\mathbf{1}_j \\
+         & = \left(\mathbf{1}'_j\mathbf{\Phi_j}^{-1}-\left(w_j\right)\left(\frac{1}{wj}\right)\left(\mathbf{1}'\frac{w_j}{k_j}\right)\right)\mathbf{1}_j \\
+         & = \left(\mathbf{1}'_j\mathbf{\Phi_j}^{-1}-\left(\frac{1}{wj}\right)\left(w_j\right)\left(\mathbf{1}'\frac{w_j}{k_j}\right)\right)\mathbf{1}_j \\
+         & = \left(\mathbf{1}'_j\mathbf{\Phi_j}^{-1}\mathbf{1}_j -\left(\frac{1}{wj}\right)\left(w_j\right)\left(\mathbf{1}'\frac{w_j}{k_j}\mathbf{1}_j \right)\right)\\
+         & = \left(w_j -\left(\frac{1}{wj}\right)\left(w_j\right)\left(w_j \right)\right)\\
+         & = \left(w_j -\left(\frac{1}{wj}\right)\left( w_j^2 \right)\right)\\
+    \end{split}
+    \nonumber
+\end{equation}
+written as matrix form:
+\begin{equation}
+     \begin{bmatrix}
+        w_1 & &   \\
+         &  \ddots &  \\
+         & &   w_J
+    \end{bmatrix} - \frac{1}{W}
+     \begin{bmatrix}
+         w_1^2 & \dots & w_1w_j  \\
+         \vdots & \ddots & \vdots \\
+         w_jw_1 & \dots &  w_J^2
+    \end{bmatrix} 
+    \nonumber
+\end{equation}
+Let,
+\begin{equation}
+     A = \begin{bmatrix}
+        w_1 & &   \\
+         &  \ddots &  \\
+         & &   w_J
+    \end{bmatrix} 
+    \nonumber
+\end{equation}
+\begin{equation}
+     B = \begin{bmatrix}
+         w_1^2 & \dots & w_1w_j  \\
+         \vdots & \ddots & \vdots \\
+         w_jw_1 & \dots &  w_J^2
+    \end{bmatrix}  
+    \nonumber
+\end{equation}
+
+\begin{equation}
+\begin{split}
+    (\mathbf{Z}'\mathbf{Q}\mathbf{Z})(\mathbf{Z}'\mathbf{Q}\mathbf{Z}) & = (A-B)^2 \\
+     & = A^2 + B^2 - 2AB
+\end{split}
+     \nonumber
+\end{equation}
+
+\begin{equation}
+\begin{split}
+     =\begin{bmatrix}
+        w_1^2 & &   \\
+         &  \ddots &  \\
+         & &   w_J^2
+    \end{bmatrix}  & + \frac{1}{W^2}
+    \begin{bmatrix}
+         w_1^2 & \dots & w_1w_j  \\
+         \vdots & \ddots & \vdots \\
+         w_jw_1 & \dots &  w_J^2
+    \end{bmatrix} 
+     \begin{bmatrix}
+         w_1^2 & \dots & w_1w_j  \\
+         \vdots & \ddots & \vdots \\
+         w_jw_1 & \dots &  w_J^2
+    \end{bmatrix} \\ &- 
+    \frac{2}{W} \begin{bmatrix}
+        w_1 & &   \\
+         &  \ddots &  \\
+         & &   w_J
+    \end{bmatrix}  \begin{bmatrix}
+         w_1^2 & \dots & w_1w_j  \\
+         \vdots & \ddots & \vdots \\
+         w_jw_1 & \dots &  w_J^2
+    \end{bmatrix}
+\end{split}
+    \nonumber
+\end{equation}
+
+\begin{equation}
+\begin{split}
+     = & \begin{bmatrix}
+        w_1^2 & &   \\
+         &  \ddots &  \\
+         & &   w_J^2
+    \end{bmatrix}   + \frac{1}{W^2}   \times \\
+     & \begin{bmatrix}
+         w^4_1 +w^2_1w^2_2 + ...+w^2_1w^2_j & & \\
+         & w^4_2 +w^2_2w^2_1 + ...+w^2_2w^2_j & \\
+          & &  \ddots &  \\
+         & &  &w^4_j +w^2_1w^2_j + ...+w^2_{j-1}w^2_j 
+     \end{bmatrix} \\ &- 
+    \frac{2}{W} \begin{bmatrix}
+        w_1^3 & &   \\
+         &  \ddots &  \\
+         & &   w_J^3
+    \end{bmatrix} 
+\end{split}
+    \nonumber
+\end{equation}
+
+
+Now using properties of trace, $tr( \mathbf{Z}'\mathbf{Q}\mathbf{Z}\mathbf{Z}'\mathbf{Q}\mathbf{Z})$,
+
+\begin{equation}
+    =\sum_{j=1}^J w_j^2 + \frac{1}{W^2} (w^4_1+w^2_1w^2_2+...+w^4_2+w^2_2w^2_1 +...) - \frac{2}{W} \sum_{j=1}^Jw_j^3
+    \nonumber
+    \\
+\end{equation}
+
+
+For the middle term, $1/W^2(w^4_1+w^2_1w^2_2+...+w^4_2+w^2_2w^2_1 +...)$, factor out $w^2$ from each diagonal cell to become: $1/W^2(w^2_1(w^2_1+w^2_2+ ... + w_j^2)+...+w_2^2(w^2_2+w^2_1+ ...+ w_j^2 )+...)$ this becomes $1/W^2(\sum_{j=1}^Jw_j^2\sum_{j=1}^Jw_j^2) = 1/W^2(\sum_{j=1}^Jw_j^2)^2 = x^2$. The first term, $\sum_{j=1}^J w_j^2 $ is $Wx$, so therefore $s$ is equal to:
+
+\begin{equation}
+    s = x^2 + Wx - \frac{2}{W} \sum_{j=1}^Jw_j^3
+    \nonumber
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% u
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Now for u: 
+
+\begin{equation}
+    u = tr(\mathbf{Z}'\mathbf{Q}\mathbf{Q}\mathbf{Z}) 
+    \nonumber
+\end{equation}
+
+
+
+For $\mathbf{Z}'\mathbf{Q}$:
+
+
+\begin{equation}
+  \mathbf{Z}'\mathbf{Q} = \begin{bmatrix}
+        \mathbf{1}_1' & & & \\
+         & \mathbf{1}_2' & &\\
+         & & \ddots &  \\
+         & &  & \mathbf{1}_j'
+    \end{bmatrix}_{J \times K} \times (\mathbf{\Phi}^{-1}- \mathbf{\Phi}^{-1}\mathbf{1}(\mathbf{1}'\mathbf{\Phi}^{-1}\mathbf{1})^{-1}\mathbf{1}'\mathbf{\Phi}^{-1}) 
+    \nonumber
+\end{equation}
+
+
+\begin{equation}
+   = \begin{bmatrix}
+        \mathbf{1}_1'\mathbf{\phi}_1^{-1} & & & \\
+         & \mathbf{1}_2'\mathbf{\phi}_2^{-1} & &\\
+         & & \ddots &  \\
+         & &  & \mathbf{1}_j'\mathbf{\phi}_j^{-1}
+    \end{bmatrix}_{J \times K}  - \begin{bmatrix}
+        w_1 \\
+        w_2 \\
+        \vdots \\
+        w_j
+    \end{bmatrix} \frac{1}{W} 
+    \begin{bmatrix}
+        \frac{w_1}{k_1}\mathbf{1}_1' & \frac{w_2}{k_2}\mathbf{1}_2' & . & . & . & \frac{w_j}{k_j}\mathbf{1}_j'
+    \end{bmatrix}
+    \nonumber
+\end{equation}
+
+
+\begin{equation}
+   = \begin{bmatrix}
+        \mathbf{1}_1'\frac{w_1}{k_1} & &  \\
+         & \mathbf{1}_2'\frac{w_2}{k_2} &  \\
+         & & \ddots &  \\
+
+         & & &   \mathbf{1}_j'\frac{w_j}{k_j}
+    \end{bmatrix} -  \frac{1}{W} 
+      \begin{bmatrix}
+         \frac{w_1^2}{k_1}\mathbf{1}_1' & \frac{w_1w_2}{k_2}\mathbf{1}_2' &  \dots & \frac{ w_1w_j}{k_j}\mathbf{1}_j'  \\
+         &  \frac{w_2^2}{k_2}\mathbf{1}_2' &  &\\
+         & & \ddots &  \\
+
+         & & & \frac{w_j^2}{k_j}\mathbf{1}_j'
+    \end{bmatrix} 
+    \nonumber
+\end{equation}
+
+\begin{equation}
+  \mathbf{Z}'\mathbf{Q}  = \begin{bmatrix}
+        \frac{w_1}{k_1}(1 - \frac{w_1}{W})\mathbf{1}_1' & -\frac{w_1w_2}{Wk_2}\mathbf{1}_2' &  \dots  \\
+         &  \frac{w_2}{k_2}(1 - \frac{w_2}{W})\mathbf{1}_2' & &  \\
+         & & \ddots &  \\
+         & & & \frac{w_j}{k_j}(1 - \frac{w_j}{W})\mathbf{1}_j'
+    \end{bmatrix} 
+    \nonumber
+\end{equation}
+
+Now for $\mathbf{Q}\mathbf{Z}$:
+
+\begin{equation}
+  \begin{split}
+      = & \begin{bmatrix}
+        \mathbf{\phi}_1^{-1} &  & &\\
+         & \mathbf{\phi}_2^{-1} &  &\\
+         & & \ddots &  \\
+         & & &   \mathbf{\phi}_j^{-1}
+    \end{bmatrix}\begin{bmatrix}
+        \mathbf{1}_1 & & &  \\
+         & \mathbf{1}_2 & &  \\
+         & & \ddots &  \\
+         & & &  \mathbf{1}_j
+    \end{bmatrix} -  \frac{1}{W} \times \\ 
+    & \begin{bmatrix}
+        (\frac{w_1}{k_1})^2\mathbf{1}_1\mathbf{1}_1' & \frac{w_1w_2}{k_1k_2}\mathbf{1}_1\mathbf{1}_2' &  \dots & &  \\
+         &  (\frac{w_2}{k_2})^2\mathbf{1}_2\mathbf{1}_2' & & &   \\
+         & & \ddots & &  \\
+         & & & &  (\frac{w_j}{k_j})^2\mathbf{1}_j\mathbf{1}_j'
+    \end{bmatrix} \begin{bmatrix}
+        \mathbf{1}_1 & & &  \\
+         & \mathbf{1}_2 & &  \\
+         & & \ddots &  \\
+         & & &  \mathbf{1}_j
+    \end{bmatrix}
+  \end{split}
+    \nonumber
+\end{equation}
+
+\begin{equation}
+     = \begin{bmatrix}
+        \mathbf{\phi}_1^{-1}\mathbf{1}_1  & & &  \\
+         & \mathbf{\phi}_2^{-1}\mathbf{1}_2  & &  \\
+         & & \ddots &  \\
+         & & & &   \mathbf{\phi}_J^{-1}\mathbf{1}_j 
+    \end{bmatrix} - \frac{1}{W} 
+    \begin{bmatrix}
+        (\frac{w_1}{k_1})^2\mathbf{1}_1\mathbf{1}_1\mathbf{1}_1' & & & &  \\
+         &  (\frac{w_2}{k_2})^2\mathbf{1}_2\mathbf{1}_2\mathbf{1}_2' & & &   \\
+         & & \ddots & &  \\
+         & & & &  (\frac{w_j}{k_j})^2\mathbf{1}_j\mathbf{1}_j\mathbf{1}_j'
+    \end{bmatrix}
+     \nonumber
+\end{equation}
+
+Note: trace of  $\mathbf{1}_j\mathbf{1}_j'$ is $k_j$. 
+
+\begin{equation}
+     = \begin{bmatrix}
+        \frac{w_1}{k_1}\mathbf{1}_1  & & & &  \\
+         & \frac{w_2}{k_2}\mathbf{1}_2  & & &  \\
+         & & \ddots & & \\
+         & & & &   \frac{w_j}{k_j}\mathbf{1}_j 
+    \end{bmatrix} - \frac{1}{W} 
+    \begin{bmatrix}
+        (\frac{w_1^2}{k_1})\mathbf{1}_1 & &   &  &     \\
+         &  (\frac{w_2^2}{k_2})\mathbf{1}_2 & & &   \\
+         & & \ddots & &  \\
+         & & & &  (\frac{w_J^2}{k_J})\mathbf{1}_j
+    \end{bmatrix}
+    \nonumber
+\end{equation}
+
+
+\begin{equation}
+   \mathbf{Q}\mathbf{Z} =  \begin{bmatrix}
+        \frac{w_1}{k_1}(1 - \frac{w_1}{W})\mathbf{1}_1 & &   &  &     \\
+         &  \frac{w_2}{k_2}(1 - \frac{w_2}{W})\mathbf{1}_2 & & &   \\
+         & & \ddots & &  \\
+         & & & & \frac{w_J}{k_J}(1 - \frac{w_J}{W})\mathbf{1}_j
+    \end{bmatrix} 
+    \nonumber
+    \\
+\end{equation}
+
+
+Now $\mathbf{Z}'\mathbf{Q}\mathbf{Q}\mathbf{Z}$ is equal to: 
+
+\begin{equation}
+\begin{split}
+   = & \begin{bmatrix}
+        \frac{w_1}{k_1}(1 - \frac{w_1}{W})\mathbf{1}_1' & -\frac{w_1w_2}{Wk_2}\mathbf{1}_2' &  \dots  &  &  &   \\
+         &  \frac{w_2}{k_2}(1 - \frac{w_2}{W})\mathbf{1}_2' & & &   \\
+         & & \ddots & &  \\
+         & & & &  \frac{w_j}{k_j}(1 - \frac{w_j}{W})\mathbf{1}_j'
+    \end{bmatrix}  \times \\
+    & \begin{bmatrix}
+        \frac{w_1}{k_1}(1 - \frac{w_1}{W})\mathbf{1}_1 & &   &  &    \\
+         &  \frac{w_2}{k_2}(1 - \frac{w_2}{W})\mathbf{1}_2 & & &   \\
+         & & \ddots & &  \\
+         & & & &  \frac{w_j}{k_j}(1 - \frac{w_j}{W})\mathbf{1}_j
+    \end{bmatrix} 
+\end{split}
+    \nonumber
+\end{equation}
+
+
+\begin{equation}
+   = \begin{bmatrix}
+        (\frac{w_1}{k_1}(1 - \frac{w_1}{W}))^2\mathbf{1}_1'\mathbf{1}_1 & &   &  &     \\
+         &  (\frac{w_2}{k_2}(1 - \frac{w_2}{W}))^2\mathbf{1}_2'\mathbf{1}_2 & & &   \\
+         & & \ddots & &  \\
+         & & & &  (\frac{w_j}{k_j}(1 - \frac{w_j}{W}))^2\mathbf{1}_j'\mathbf{1}_j
+    \end{bmatrix} 
+    \nonumber
+\end{equation}
+
+Now with the properties of trace, to find $u = tr(\mathbf{Z}'\mathbf{Q}\mathbf{Q}\mathbf{Z})$:
+
+\begin{equation}
+    \begin{split}
+        & = tr\left( \left(\frac{w_1}{k_1}(1 - \frac{w_1}{W})\right)^2\mathbf{1}_1'\mathbf{1}_1  + ... + (\frac{w_j}{k_j}(1 - \frac{w_j}{W}))^2\mathbf{1}_j'\mathbf{1}_j \right) \\
+         & = tr\left( \left(\frac{w_1}{k_1}(1 - \frac{w_1}{W})\right)^2k_1 + ... + (\frac{w_j}{k_j}(1 - \frac{w_j}{W}))^2k_j\right) \\
+        & = tr\left(\frac{w_1^2}{k_1}(1 - \frac{w_1}{W})^2  + ... + \frac{w_j^2}{k_j}(1 - \frac{w_j}{W})^2 \right) \\
+        & = tr\left(\frac{w_1^2}{k_1}(1 + \frac{w_1^2}{W^2}- \frac{2w_1}{W})  + ... + \frac{w_j^2}{k_j}(1 + \frac{w_j^2}{W^2} - \frac{2w_j}{W}) \right) \\
+        &= \sum_{j=1}^J \frac{w_j^2}{k_j} + \sum_{j=1}^J \frac{w_j^2}{k_j}\frac{w_j^2}{W^2} - \sum_{j=1}^J \frac{2}{W}\frac{w_j^3}{k_j} \\
+        &= \sum_{j=1}^J \frac{w_j^2}{k_j} + \sum_{j=1}^J \frac{w_j^2}{k_j}\frac{w_j^2}{W^2} -  \frac{2}{W}\sum_{j=1}^J\frac{w_j^3}{k_j} \\
+         &= Wy  -  \frac{2}{W}\sum_{j=1}^J\frac{w_j^3}{k_j} + \sum_{j=1}^J \frac{w_j^2}{k_j}\frac{w_j^2}{W^2}  \\
+         &= Wy  -  \frac{2}{W}\sum_{j=1}^J\frac{w_j^3}{k_j} + \sum_{j=1}^J \frac{1}{W} \frac{w_j^2}{k_j}\frac{1}{W}w_j^2  \\
+         &= Wy  -  \frac{2}{W}\sum_{j=1}^J\frac{w_j^3}{k_j} + \sum_{j=1}^J \frac{1}{W} \frac{w_j^2}{k_j }\sum_{j=1}^J\frac{1}{W}w_j^2  \\
+         &= Wy  -  \frac{2}{W}\sum_{j=1}^J\frac{w_j^3}{k_j} + xy
+    \end{split}
+    \nonumber
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% t
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Now for t: 
+
+\begin{equation}
+    t = tr(\mathbf{Q}\mathbf{Q}) 
+    \nonumber
+\end{equation}
+
+\begin{equation}
+    \begin{split}
+       QQ & = (\mathbf{\Phi}^{-1} - \mathbf{\Phi}^{-1}\mathbf{1}(\mathbf{1}'\mathbf{\Phi}^{-1}\mathbf{1})^{-1}\mathbf{1}'\mathbf{\Phi}^{-1})^2 \\
+       & = \left(\mathbf{\Phi}^{-1} - \frac{1}{W} 
+       \begin{bmatrix} 
+       \frac{w_1}{k_1}\mathbf{1}_1 \\
+       \vdots \\
+       \frac{w_j}{k_j}\mathbf{1}_j
+       \end{bmatrix} \begin{bmatrix}
+           \frac{w_1}{k_1}\mathbf{1}_1' & \dots & \frac{w_j}{k_j}\mathbf{1}_j'
+       \end{bmatrix}  \right)^2
+    \end{split}
+    \nonumber
+\end{equation}
+
+Let $A = \mathbf{\Phi}^{-1}$ and $B = \frac{1}{W} 
+       \begin{bmatrix} 
+       \frac{w_1}{k_1}\mathbf{1}_1 \\
+       \vdots \\
+       \frac{w_j}{k_j}\mathbf{1}_j
+       \end{bmatrix} \begin{bmatrix}
+           \frac{w_1}{k_1}\mathbf{1}_1' & \dots & \frac{w_j}{k_j}\mathbf{1}_j'
+       \end{bmatrix}$.
+
+By substituting $A$ and $B$, we get:
+
+\begin{equation}
+    \begin{split}
+        QQ & = (A - B)^2 = A^2 + B^2 - 2AB \\
+        tr(QQ) & = tr(A^2) + tr(B^2) - tr(2AB)
+    \end{split}   
+     \nonumber
+\end{equation}
+
+Now we need to find $tr(A^2)$, $ tr(B^2)$, and $tr(2AB)$.
+
+For $A^2$:
+
+
+\begin{equation}
+    \begin{split}
+        (\mathbf{\Phi}^{-1})^2 & = \begin{bmatrix}
+        (\mathbf{\Phi}_1^{-1})^2 & &  \\
+        & \ddots &  \\
+        & & (\mathbf{\Phi}_j^{-1})^2 
+    \end{bmatrix} \\
+       (\mathbf{\Phi}_j^{-1})^2  & = \left( \frac{1}{\omega^2 + (1-\rho) \sigma^2_j} \left(\mathbf{I}_j - \frac{\tau^2 +\rho\sigma_j^2}{k_j(\tau^2 + \rho\sigma^2_j)+\omega^2+(1-\rho)\sigma_j^2} \mathbf{1}_j \mathbf{1}_j'  \right) \right)^2 
+    \end{split}
+     \nonumber
+\end{equation}
+
+
+Let $n_j = \omega^2 + (1-\rho) \sigma^2_j$ and $m_j = \frac{\tau^2 +\rho\sigma_j^2}{k_j(\tau^2 + \rho\sigma^2_j)+\omega^2+(1-\rho)\sigma_j^2}$. Then:
+
+\begin{equation}
+    \begin{split}
+         (\mathbf{\Phi}_j^{-1})^2 & = \frac{1}{n_j^2} \left( \mathbf{I}^2_j + m^2_j \mathbf{1}_j \mathbf{1}_j' \mathbf{1}_j \mathbf{1}_j'  - 2m_j\mathbf{1}_j \mathbf{1}_j'  \right) \\
+         & = \frac{1}{n_j^2} \left( \mathbf{I}^2_j + m^2_j \begin{bmatrix}
+             k_j & \dots & k_j \\
+             \vdots & \ddots  & \vdots  \\
+             k_j &  \dots  &   k_j
+         \end{bmatrix}_{k_j \times k_j}  - \begin{bmatrix}
+             2m_j & \dots & 2m_j \\
+             \vdots & \ddots  & \vdots  \\
+             2m_j &  \dots  &   2m_j
+         \end{bmatrix}_{k_j \times k_j}  \right) \\
+         & = \frac{1}{n_j^2} \left( \begin{bmatrix}
+             m_j^2 k_j - 2m_j + 1 & m_j^2 k_j - 2m_j & \dots & m_j^2 k_j - 2m_j \\
+             m_j^2 k_j - 2m_j  & m_j^2 k_j - 2m_j +1 & \dots & m_j^2 k_j - 2m_j  \\
+             \vdots  & \vdots & \ddots &  \vdots \\
+             m_j^2 k_j - 2m_j  & m_j^2 k_j - 2m_j  & \dots&  m_j^2 k_j - 2m_j +1 \\
+         \end{bmatrix}  \right) \\ 
+         & = \left( \begin{bmatrix}
+             \frac{m_j^2 k_j - 2m_j + 1}{n_j^2} & \frac{m_j^2 k_j - 2m_j}{n_j^2}& \dots & \frac{m_j^2 k_j - 2m_j}{n_j^2} \\
+             \frac{m_j^2 k_j - 2m_j}{n_j^2} & \frac{m_j^2 k_j - 2m_j + 1}{n_j^2} & \dots & \frac{m_j^2 k_j - 2m_j}{n_j^2}  \\
+             \vdots  & \vdots & \ddots &  \vdots \\
+             \frac{m_j^2 k_j - 2m_j}{n_j^2} & \frac{m_j^2 k_j - 2m_j}{n_j^2} & \dots& \frac{m_j^2 k_j - 2m_j + 1}{n_j^2}\\
+         \end{bmatrix}  \right) 
+    \end{split}
+    \nonumber
+\end{equation}
+
+Now take $tr(A^2$):
+
+\begin{equation}
+    \begin{split}
+        tr(A^2) & = \sum_{j=1}^J \frac{m_j^2 k_j^2 - 2m_jk_j + k_j}{n_j^2} \\
+                & = \sum_{j=1}^J \frac{m_j^2 k_j^2 +1 - 2m_jk_j + k_j -1}{n_j^2} \\
+                & = \sum_{j=1}^J \frac{(m_jk_j-1)^2+(k_j-1)}{n_j^2} \\
+                & = \sum_{j=1}^J \frac{(m_jk_j-1)^2}{n_j^2} + \frac{(k_j-1)}{n_j^2} \\
+                & = \sum_{j=1}^J \left(\frac{(m_jk_j-1)}{n_j}\right)^2 + \frac{(k_j-1)}{n_j^2} \\
+    \end{split}
+    \nonumber
+\end{equation}
+
+
+Now substitute $m_j$ and $n_j$ back in:
+
+\begin{equation}
+    \begin{split}
+         tr(A^2) & = \sum_{j=1}^J\left( \frac{\frac{(\tau^2 +\rho\sigma_j^2)k_j}{k_j(\tau^2 + \rho\sigma^2_j)+\omega^2+(1-\rho)\sigma_j^2}- 1}{\omega^2 + (1 - \rho)\sigma_j^2} \right)^2 + \frac{k_j-1}{(\omega^2 + (1 - \rho)\sigma_j^2)^2} \\
+       & = \sum_{j=1}^J\left( \frac{1}{k_j(\tau^2 + \rho\sigma^2_j)+\omega^2+(1-\rho)\sigma_j^2} \right)^2 + \frac{k_j-1}{(\omega^2 + (1 - \rho)\sigma_j^2)^2} \\
+       & = \sum_{j=1}^J\left( \frac{k_j}{k_j} \times \frac{1}{k_j(\tau^2 + \rho\sigma^2_j)+\omega^2+(1-\rho)\sigma_j^2} \right)^2 + \frac{k_j-1}{(\omega^2 + (1 - \rho)\sigma_j^2)^2} \\
+       & = \sum_{j=1}^J\left( \frac{1}{k_j} \times w_j \right)^2 + \frac{k_j-1}{(\omega^2 + (1 - \rho)\sigma_j^2)^2} \\
+       & = \sum_{j=1}^J\frac{w_j^2}{k_j^2}  + \frac{k_j-1}{(\omega^2 + (1 - \rho)\sigma_j^2)^2} \\
+    \end{split}
+    \nonumber
+\end{equation}
+
+Now that we have found $tr(A^2)$, we need to find $tr(B^2)$ and $tr(2AB)$. 
+
+For $B^2$:
+
+\begin{equation}
+    \begin{split}
+        B^2 & = \frac{1}{W^2}\begin{bmatrix}
+            \frac{w_1}{k_1}\mathbf{1}_1 \\
+            \vdots \\
+            \frac{w_j}{k_j}\mathbf{1}_j
+        \end{bmatrix} \begin{bmatrix}
+            \frac{w_1}{k_1}\mathbf{1}_1' & \dots & \frac{w_j}{k_j}\mathbf{1}_j'  
+        \end{bmatrix}\begin{bmatrix}
+            \frac{w_1}{k_1}\mathbf{1}_1 \\
+            \vdots \\
+            \frac{w_j}{k_j}\mathbf{1}_j
+        \end{bmatrix} \begin{bmatrix}
+            \frac{w_1}{k_1}\mathbf{1}_1' & \dots & \frac{w_j}{k_j}\mathbf{1}_j'  
+        \end{bmatrix} \\
+        & = \frac{1}{W^2}\begin{bmatrix}
+             \frac{w_1^2}{k_1^2}\mathbf{1}_1\mathbf{1}_1'& \dots & &\frac{w_1w_j}{k_1k_j}\mathbf{1}_1\mathbf{1}_j' \\
+             & \ddots & & &\\
+             & & &  \frac{w_j^2}{k_j^2}\mathbf{1}_j\mathbf{1}_j'
+        \end{bmatrix} \begin{bmatrix}
+             \frac{w_1^2}{k_1^2}\mathbf{1}_1\mathbf{1}_1'& \dots & &\frac{w_1w_j}{k_1k_j}\mathbf{1}_1\mathbf{1}_j' \\
+             & \ddots & & &\\
+             & & &  \frac{w_j^2}{k_j^2}\mathbf{1}_j\mathbf{1}_j'
+        \end{bmatrix} \\
+        = & \frac{1}{W^2}\begin{bmatrix}
+            \left[\frac{w_1^4}{k_1^4} + \left( \frac{w_1w_2}{k_1k_2} \right)^2 + \dots + \left( \frac{w_1w_j}{k_1k_j} \right)^2  \right] k_1^2 & & \\
+            & \ddots & \\
+            & & \left[\frac{w_j^4}{k_j^4} +  \dots + \left( \frac{w_jw_1}{k_jk_1} \right)^2  \right] k_j^2
+        \end{bmatrix}
+    \end{split}
+    \nonumber
+\end{equation}
+
+Now taking the $tr(B^2)$:
+
+\begin{equation}
+    \begin{split}
+        tr(B^2) & =  \sum_{j=1}^J\left(\frac{w_1^4}{k_1^4} + \left( \frac{w_1w_2}{k_1k_2} \right)^2 + \dots + \left( \frac{w_1w_j}{k_1k_j} \right)^2  \right) k_1^2 +  \dots +  \left(\frac{w_j^4}{k_j^4} +  \dots + \left( \frac{w_jw_1}{k_jk_1} \right)^2  \right) k_j^2 \\
+         & = \frac{1}{W^2 }  \sum_{j=1}^J \frac{w_j^2}{k_j}  \sum_{j=1}^J \frac{w_j^2}{k_j} = y^2
+    \end{split}
+    \nonumber
+\end{equation}
+
+Finally, since we have found $tr(A^2)$ and $tr(B^2)$, the last step in finding $t$ is to find $tr(2AB)$. 
+
+\begin{equation}
+    \begin{split}
+        2AB  & = 2 \times \mathbf{\Phi}^{-1} \frac{1}{W}\begin{bmatrix}
+            \frac{w_1}{k_1}\mathbf{1}_1 \\
+            \vdots \\
+            \frac{w_j}{k_j}\mathbf{1}_j
+        \end{bmatrix} \begin{bmatrix}
+            \frac{w_1}{k_1}\mathbf{1}_1' & \dots & \frac{w_j}{k_j}\mathbf{1}_j'  
+        \end{bmatrix} \\
+        & = \frac{2}{W} \begin{bmatrix}
+            \mathbf{\Phi}_1^{-1} \mathbf{1}_1\mathbf{1}_1'\left(\frac{w_1}{k_1}\right)^2 & & \\
+            & \ddots & \\
+            & & \mathbf{\Phi}_j^{-1} \mathbf{1}_j\mathbf{1}_j'\left(\frac{w_j}{k_j}\right)^2
+        \end{bmatrix} \\
+        & = \frac{2}{W} \begin{bmatrix}
+            \left(\frac{w_1}{k_1}\right)^3\mathbf{1}_1\mathbf{1}_1' & & \\
+            & \ddots & \\
+            & & \left(\frac{w_j}{k_j}\right)^3\mathbf{1}_j\mathbf{1}_j'
+        \end{bmatrix}
+    \end{split}
+    \nonumber
+\end{equation}
+
+Now $tr(2AB)$ is:
+
+\begin{equation}
+    tr(2AB) = \frac{2}{W}tr\left(\left(\frac{w_j}{k_j}\right)^3\mathbf{1}_j\mathbf{1}_j'\right) = \frac{2}{W} \sum_{j=1}^J\times k_j \times \left(\frac{w_j}{k_j}\right)^3 = \frac{2}{W}\sum_{j=1}^J\frac{w_j^3}{k_j^2}
+    \nonumber
+\end{equation}
+
+All together: $t = tr(QQ) = tr(A^2) + tr(B^2) - tr(2AB)$ which equals:
+
+\begin{equation}
+    t = \sum_{j=1}^J \frac{w_j^2}{k_j^2} + \sum_{j=1}^J \frac{k_j-1}{(\omega^2 + (1-\rho)\sigma_j^2)^2} + y^2 - \frac{2}{W}\sum_{j=1}^J\frac{w_j^3}{k_j^2}.
+    \nonumber
+\end{equation}
+
+

@@ -1,0 +1,182 @@
+
+\chapter{HTZ Degrees of Freedom for Multiple Categories}\label{App: multiplecat}
+\def\Pr{{\text{Pr}}}
+\def\E{{\text{E}}}
+\def\Var{{\text{Var}}}
+\def\Cov{{\text{Cov}}}
+\def\cor{{\text{cor}}}
+\def\bm{\mathbf}
+\def\bs{\boldsymbol}
+
+
+% %James' Post with some of my work added in.. need to rewrite more
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%meta-anova
+
+Below is the derivation of the HTZ degrees of freedom for a study-level categorical moderator. The original derivation is presented by \textcite{pustejovsky2024}. This derivation is presented here with some steps elaborated. 
+
+In the context of a test of a study-level categorical moderator, with $C$ categories from a no-intercept model, let $\mu_c$ be the overall pooled effect for $c=1,\cdots, C$. Let $\bm{\mu} = \left[\mu_c\right]_{c=1}^C$ be a vector of these $\mu_c$ values. The corresponding estimator of $\bm{\mu}$  is $\bm{\hat{\mu}} = \left[\hat{\mu}_c\right]_{c=1}^C$. Because the estimators for each category are independent, the diagonal of the cluster-robust variance estimator ($\bm{V}^R$; see Equation \ref{eq:RVE_VR}) can be expressed as $\bm{V}^R = \bigoplus_{c=1}^C V^R_c$.
+$\bm{V}^R$ is assumed to be unbiased, $E(V_c^R) = Var(\hat{\mu}_c) = \psi_c$ \autocite{pustejovsky_wald_2025}. Let $\bs{\Psi} = \bigoplus_{c=1}^C \psi_c$.
+
+
+
+For the null hypothesis that the overall pooled effects of each category are all equal,  $H_0: \mu_1 = \mu_2 = \cdots = \mu_C$,  $q=C-1$ is the number of contrasts. The $\mathbf{C}$ contrast matrix in this context has $q \times C$ dimensions and is constructed as $\mathbf{C} = \begin{bmatrix}
+    -\mathbf{1}_q & \mathbf{I}_q
+\end{bmatrix}$.  The null hypothesis can also be written as: $H_0:\mathbf{C}\bm{\mu} = \bm{0}_q$. In this particular case, the Wald statistic becomes:
+\begin{equation}
+    Q = \hat{\bm{\mu}}'\mathbf{C}'(\mathbf{C} \mathbf{V}^R \mathbf{C}') \mathbf{C}\hat{\bm{\mu}}.
+    \nonumber
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%small sample approximation
+
+The Q statistic and the $\mathbf{D}$ can still be constructed as Equations \ref{eq: Q stat reformulation} and \ref{eq: D matrix}, respectively. However, $\mathbf{z}$ in this context is now $\mathbf{z} = \mathbf{\Omega}^{-1/2}(\mathbf{C}\hat{\mu_c})$ \autocite{pustejovsky_wald_2025}.
+
+
+% \begin{equation}
+% \bm{D} = \bm{G} \bm{V}^R \bm{G}' =
+% \begin{bmatrix}
+% g_{11} & g_{12} & \cdots & g_{1C} \\
+% g_{21} & g_{22} & \cdots & g_{2C} \\
+% \vdots & \vdots & \ddots & \vdots \\
+% g_{q1} & g_{q2} & \cdots & g_{qC}
+% \end{bmatrix}
+% \begin{bmatrix}
+% V^R_1 & 0 & \cdots & 0 \\
+% 0 & V^R_2 & \cdots & 0 \\
+% \vdots & \vdots & \ddots & \vdots \\
+% 0 & 0 & \cdots & V^R_C
+% \end{bmatrix}
+% \begin{bmatrix}
+% g_{11} & g_{21} & \cdots & g_{q1} \\
+% g_{12} & g_{22} & \cdots & g_{q2} \\
+% \vdots & \vdots & \ddots & \vdots \\
+% g_{1C} & g_{2C} & \cdots & g_{qC}
+% \end{bmatrix}
+% \end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% To make sense of the approximations, I will look at the form of $\bm{D}$. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Because $\bm{D}$ is invariant to linear transformations of $\bm{C}$, we can rewrite the null hypothesis as $H_0: \bs\Psi_{\circ}^{-1/2} \bm{C} = \bm{0}_q$, where $\bs\Psi_{\circ} = \bigoplus_{c=2}^C \psi_c$ is the diagonal of the true sampling variances of categories 2 through $C$ only. Now in this formulation, $\bs\Omega$, $\bm{z}$, and $\bs\Omega$ become: $\bs\Omega = \bs\Psi_{\circ}^{-1/2} \bm{C} \bs\Psi \bm{C}'\bs\Psi_{\circ}^{-1/2}$, $\bm{z} = \bs\Omega^{-1/2}\bs\Psi_{\circ}^{-1/2}\bm{C}\hat\mu_c$, and $\bm{G} = \bs\Omega^{-1/2} \bs\Psi_{\circ}^{-1/2} \bm{C}$. By expressing $\bm{C}$ in this way, we can derive a closed-form expression for $\bs\Omega^{-1/2}$.
+
+Finding $\bs\Omega^{-1/2}$ is not straightforward. First, it is necessary to find the inverse using the Woodbury identity. Below we can rewrite $\bs\Omega$ where $\bm{f} = \bs\Psi_{\circ}^{-1/2} \bm{1}_q = \left[ \psi_c^{-1/2}\right]_{c = 2}^C$:
+\begin{equation}
+    \begin{aligned}
+\bs\Omega &= \bs\Psi_{\circ}^{-1/2} \bm{C} \bs\Psi \bm{C}'\bs\Psi_{\circ}^{-1/2} \\
+&= \bs\Psi_{\circ}^{-1/2} \left(\bs\Psi_{\circ} + \psi_1 \bm{1}_q \bm{1}_q'\right)\bs\Psi_{\circ}^{-1/2} \\
+&= \bm{I}_q + \psi_1 \bm{f} \bm{f}'.
+\end{aligned}
+\nonumber
+\end{equation}
+Then, $\bs\Omega^{-1}$ using the Woodbury identity is: 
+\begin{equation}
+    \bs\Omega^{-1} = \bm{I} - \frac{1}{W} \bm{f} \bm{f}',
+    \nonumber
+\end{equation}
+where $W = \sum_{c=1}^C \frac{1}{\psi_c}$.
+
+Now, to find the closed-form expression for $\bs\Omega^{-1/2}$, we can use a formula presented by \textcite{fasi_computing_2023} to find the square root of a perturbation of the scaled identity matrix (Equation 1.9 in their paper). To find the square root of $\bs\Omega^{-1}$, you can rewrite it as:
+\begin{equation}
+    \bs\Omega^{-1/2} = \mathbf{I}_q - \kappa \ \bm{f} \bm{f}',
+    \nonumber
+\end{equation}
+where $\kappa = \frac{\sqrt{\psi_1}}{W \sqrt{\psi_1} + \sqrt{W}}$.
+Matrix $\bm{G}$ with $q \times C$ dimensions can be written as: 
+\begin{equation}
+    \begin{aligned}
+\bm{G} &= \bs\Omega^{-1/2} \bs\Psi_{\circ}^{-1/2} \bm{C} \\
+&= \left( \mathbf{I}_q - \kappa \ \bm{f} \bm{f}' \right) \bs\Psi_{\circ}^{-1/2} \left[-\bm{1}_q, \ \bm{I}_q \right] \\
+&= \left[\frac{\kappa(W \psi_1 - 1) - \psi_1}{\psi_1} \bm{f},  \left( \mathbf{I}_q - \kappa \ \bm{f} \bm{f}' \right) \bs\Psi_{\circ}^{-1/2}\right],
+\nonumber
+\end{aligned}
+\end{equation}
+with entries given by 
+\begin{equation}
+    g_{sc} = \begin{cases}
+\frac{\kappa(W \psi_1 - 1) - \psi_1}{\psi_1 \sqrt{\psi_{s+1}}} & \text{if} \quad c = 1 \\
+\frac{I(s+1 = c)}{\sqrt{\psi_{c}}} - \frac{\kappa}{\psi_c \sqrt{\psi_{s+1}}} & \text{if} \quad c > 1.
+\end{cases}
+\nonumber
+\end{equation}
+   
+Given that $\bm{D} = \bm{G} \bm{V}^R \bm{G}'$ and $\bm{V}^R$ is diagonal, the entries of $\bm{D}$ can be written as:
+\begin{equation}
+    d_{st} = \sum_{c=1}^C g_{sc} g_{tc} V^R_c.
+    \nonumber
+\end{equation}
+As mentioned earlier, the variance estimators for each category are independent, so the variance of $d_{st}$ is:
+\begin{equation}
+    \Var(d_{st}) = \sum_{c=1}^C g_{sc}^2 g_{tc}^2 \Var(V^R_c).
+    \nonumber
+\end{equation}
+
+$\Var(V^R_c)$ can be written in terms of the Sattherwaite degrees of freedom for the overall pooled effect of category $c$, $\nu_c = 2\left[\E(V^R_c)\right]^2 / \Var(V^R_c)$ (see Appendix \ref{App: overallpooled}), as $Var(V_c^R) = \frac{2}{W^2_c\nu_c}$. Then, $\Var(d_{st})$ becomes: 
+\begin{equation}
+    \Var(d_{st}) = 2 \sum_{c=1}^C g_{sc}^2 g_{tc}^2 \frac{\psi_c^2}{\nu_c}.
+    \nonumber
+\end{equation}
+Using this expression, we can obtain Zhang's approximate degrees of freedom in this context:
+\begin{equation}
+    \begin{aligned}
+q(q + 1)\eta_Z^{-1} &= \sum_{s=1}^q \sum_{t = 1}^q \Var(d_{st}) \\ 
+&= 2\sum_{s=1}^q \sum_{t = 1}^q \sum_{c=1}^C g_{sc}^2 g_{tc}^2 \frac{\psi_c^2}{\nu_c} \\
+&= 2 \sum_{c=1}^C \frac{\psi_c^2}{\nu_c} \sum_{s=1}^q \sum_{t=1}^q g_{sc}^2 g_{tc}^2 \\
+&= 2 \sum_{c=1}^C \frac{\psi_c^2}{\nu_c} \sum_{s=1}^q g_{sc}^2 \sum_{t=1}^q g_{tc}^2 \\
+&= 2\sum_{c=1}^C \frac{\psi_c^2}{\nu_c} \left(\sum_{s=1}^q g_{sc}^2\right)^2.
+\end{aligned}
+\nonumber
+\end{equation}
+To simplify first we find $\sum_{s=1}^q g_{s1}^2$:
+\begin{equation}
+    \begin{aligned}
+\sum_{s=1}^q g_{s1}^2 &= \sum_{s=1}^q \frac{\left(\kappa(W \psi_1 - 1) - \psi_1\right)^2}{\psi_1^2 \psi_{s+1}} \\
+&= \frac{\left(\kappa(W \psi_1 - 1) - \psi_1\right)^2}{\psi_1^2} \sum_{c=2}^C \frac{1}{\psi_{s+1}} \\
+&= \frac{\left(\kappa(W \psi_1 - 1) - \psi_1\right)^2}{\psi_1^2} \frac{(W \psi_1 - 1)}{\psi_1} \\
+&= \frac{\left(\kappa(W \psi_1 - 1) - \psi_1\right)^2}{\psi_1^3} (W \psi_1 - 1) \\
+&= \frac{ \left[ \kappa^2 (W \psi_1 - 1)^2 - 2 \kappa (W \psi_1 - 1) \psi_1 + \psi_1^2 \right] }{ \psi_1^3 } (W \psi_1 - 1) \\
+&= \frac{ \left[ \kappa^2 A^2 - 2 \kappa A \psi_1 + \psi_1^2 \right] }{ \psi_1^3 } A \\
+&= \frac{1}{\psi_1^3} \left[ \kappa^2 A^3 - 2 \kappa A^2 \psi_1 + A \psi_1^2 \right] \\
+&= \frac{1}{\psi_1^3} \left( \frac{1}{W^2 \psi_1^2} A^3 - \frac{2}{W \psi_1} A^2 + A \psi_1^2 \right)\\
+&= \frac{1}{\psi_1^3} \left[ A \left( \frac{A^2}{W^2 \psi_1^2} - \frac{2 A \psi_1}{W} + \psi_1^2 \right) \right]\\
+&= \frac{A}{\psi_1^3} \left( \psi_1 - \frac{1}{W} \right)^2\\
+&= \frac{1}{\psi_1^2} \left(\psi_1 - \frac{1}{W}\right),
+\end{aligned}
+\nonumber
+\end{equation}
+Note: $A = W \psi_1 - 1 $ and $\left( \sum_{s=1}^q \frac{1}{\psi_{s+1}} =  \frac{(W \psi_1 - 1)}{\psi_1} \right)$. 
+
+Now for $c = 2,...,C$, 
+\begin{equation}
+    \begin{aligned}
+\sum_{s=1}^q g_{sc}^2 &= \sum_{s=1}^q \left(\frac{I(s+1 = c)}{\sqrt{\psi_{c}}} - \frac{\kappa}{\psi_c \sqrt{\psi_{s+1}}}\right)^2 \\
+&= \sum_{s=1}^q \left[ \left( \frac{I(s+1 = c)}{\sqrt{\psi_c}} \right)^2 - 2 \times \frac{I(s+1 = c)}{\sqrt{\psi_c}} \times \frac{\kappa}{\psi_c \sqrt{\psi_{s+1}}} + \left( \frac{\kappa}{\psi_c \sqrt{\psi_{s+1}}} \right)^2 \right] \\
+&= \frac{1}{\psi_c} + \sum_{s=1}^q \frac{\kappa^2}{\psi_c^2 \psi_{s+1}} - 2 \times \frac{\kappa}{\psi_c^2 \sqrt{\psi_{c}}}\\
+&= \frac{1}{\psi_c} - \frac{2 \kappa}{\psi_c^2} + \frac{\kappa^2}{\psi_c^2}\sum_{s=1}^q \frac{1}{\psi_{s+1}} \\
+&= \frac{1}{\psi_c} - \frac{2 \kappa}{\psi_c^2} + \frac{\kappa^2}{\psi_c^2}\frac{(W \psi_1 - 1)}{\psi_1} \\
+&= \frac{1}{\psi_c^2}\left[\psi_c - 2\kappa + \kappa^2\frac{(W \psi_1 - 1)}{\psi_1}\right] \\
+&= \frac{1}{\psi_c^2}\left[\psi_c + \left(- 2\kappa + \kappa^2\frac{(W \psi_1 - 1)}{\psi_1} \right) \right] \\
+&= \frac{1}{\psi_c^2} \left(\psi_c - \frac{1}{W}\right)
+\end{aligned}
+\nonumber
+\end{equation}
+Therefore, Zhang's approximate degrees of freedom for a study-level categorical moderator is:
+\begin{equation}
+    \begin{aligned}
+q(q + 1)\eta_Z^{-1} &= 2\sum_{c=1}^C \frac{\psi_c^2}{\nu_c} \left(\sum_{s=1}^q g_{sc}^2\right)^2 \\
+&= 2\sum_{c=1}^C \frac{1}{\nu_c \psi_c^2}\left(\psi_c - \frac{1}{W}\right)^2 \\
+&= 2\sum_{c=1}^C \frac{1}{\nu_c}\left(1 - \frac{1}{\psi_c W}\right)^2
+\end{aligned}
+\nonumber
+\end{equation}
+After rearranging: 
+\begin{equation}
+    \eta_Z = \frac{q(q + 1)}{2 \sum_{c=1}^C \frac{1}{\nu_c}\left(1 - \frac{1}{\psi_c W}\right)^2}.
+    \nonumber
+\end{equation}
+From this, the degrees of freedom for $F$ distribution would be $q$ and $\eta_Z - q + 1$.
+
