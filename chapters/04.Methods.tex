@@ -280,7 +280,7 @@ For the $k_j$ values sampled from a stylized distribution, I sampled the $k_j \s
     \vspace{-5pt}
 \end{figure}
 
-For the third method of obtaining $k_j$ and $\sigma_j^2$, the balanced assumption method, I estimate power assuming perfect balance where all the studies had the arithmetic mean for $\sigma_j^2$ and $k_j$ of the empirical dataset from data generation, \textcite{WilliamsRyan2022HiMI}. This is the exact same way that the $\mu_c$ values are generated, so the approximation will return whatever the power neighborhood level, $P$,  is for that condition. Under this sampling method, we can see how different the true simulated power is from the power neighborhood value in that condition. 
+For the third method of obtaining $k_j$ and $\sigma_j^2$, the balanced assumption method, I estimate power assuming perfect balance where all the studies had the arithmetic means for $\sigma_j^2$ and $k_j$ of the empirical dataset from data generation, \textcite{WilliamsRyan2022HiMI}. This is the exact same way that the $\mu_c$ values are generated, so the approximation will return whatever the power neighborhood level, $P$,  is for that condition. Under this sampling method, we can see how different the true simulated power is from the power neighborhood value in that condition. 
 
 \section{Simulation Design}\label{sec:simulationdesgin}
 
@@ -318,7 +318,7 @@ In this section, I detail the simulation design conditions. The factors that I e
 
        Pattern Type ($f_c$)  & 2a, 3a, 3b, 3c, 4a, 4b, 4c, 4d \\
        Number of studies ($J$)  & 24, 36, 48, 60, 72  \\ 
-       Between-study heterogeneity ($\tau$)  & 0.05, 0.20 ,0.40 \\
+       Between-study heterogeneity ($\tau$)  & 0.05, 0.20, 0.40 \\
        Within-study heterogeneity ($\omega$) & 0.05, 0.20 \\
        Sampling correlation ($\rho$) & .2, .5, .8 \\
        Power Neighborhood ($P$) & $5\%$ $20\%$, $40\%$, $60\%$, $80\%$, $90\%$ \\
@@ -392,7 +392,7 @@ where $S_T^2$ is the sample variance, $S_T^2 = \frac{1}{K-1}\sum_{k=1}^K(T_k - \
 
 I generated 150 power estimates using the approximation for each condition. I came up with 150 power estimates per condition by running some tests within one condition and calculating the MCSE. From these tests, I determined that I needed about 150 power estimates per condition to have MCSE values $\leq 0.01$. Then, I averaged the power estimates up to the condition level, resulting in $8640$ average power estimates.
 
-For the simulated data, I calculated the rejection rate for the cluster-robust Wald test, which is the proportion of replications where a test returned a p-value less than the criterion $\alpha$-level: $\rho_{\alpha} = Pr(p_r) < \alpha$, where $R$ is the number of simulation iterations, $p_r$ is the p-value from replication $r$, $r = 1, \cdots, R$. The rejection rate is estimated as:
+For the simulated data, I calculated the rejection rate for the cluster-robust Wald test, which is the proportion of replications where a test returned a p-value less than the criterion $\alpha$-level: $\rho_{\alpha} = Pr(p_r < \alpha)$, where $R$ is the number of simulation iterations, $p_r$ is the p-value from replication $r$, $r = 1, \cdots, R$. The rejection rate is estimated as:
 \begin{equation}
     r_{\alpha} = \frac{1}{R} \sum_{r=1}^R I(p_r < \alpha).
 \end{equation}
