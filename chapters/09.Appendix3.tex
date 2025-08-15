@@ -9,10 +9,6 @@
 \def\bs{\boldsymbol}
 
 
-% %James' Post with some of my work added in.. need to rewrite more
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%meta-anova
-
 Below is the derivation of the HTZ degrees of freedom for a study-level categorical moderator. The original derivation is presented by \textcite{pustejovsky2024}. This derivation is presented here with some steps elaborated. 
 
 In the context of a test of a study-level categorical moderator, with $C$ categories from a no-intercept model, let $\mu_c$ be the overall pooled effect for $c=1,\cdots, C$. Let $\bm{\mu} = \left[\mu_c\right]_{c=1}^C$ be a vector of these $\mu_c$ values. The corresponding estimator of $\bm{\mu}$  is $\bm{\hat{\mu}} = \left[\hat{\mu}_c\right]_{c=1}^C$. Because the estimators for each category are independent, the diagonal of the cluster-robust variance estimator ($\bm{V}^R$; see Equation \ref{eq:RVE_VR}) can be expressed as $\bm{V}^R = \bigoplus_{c=1}^C V^R_c$.
@@ -137,29 +133,54 @@ To simplify first we find $\sum_{s=1}^q g_{s1}^2$:
 \sum_{s=1}^q g_{s1}^2 &= \sum_{s=1}^q \frac{\left(\kappa(W \psi_1 - 1) - \psi_1\right)^2}{\psi_1^2 \psi_{s+1}} \\
 &= \frac{\left(\kappa(W \psi_1 - 1) - \psi_1\right)^2}{\psi_1^2} \sum_{c=2}^C \frac{1}{\psi_{s+1}} \\
 &= \frac{\left(\kappa(W \psi_1 - 1) - \psi_1\right)^2}{\psi_1^2} \frac{(W \psi_1 - 1)}{\psi_1} \\
-&= \frac{\left(\kappa(W \psi_1 - 1) - \psi_1\right)^2}{\psi_1^3} (W \psi_1 - 1) \\
-&= \frac{ \left[ \kappa^2 (W \psi_1 - 1)^2 - 2 \kappa (W \psi_1 - 1) \psi_1 + \psi_1^2 \right] }{ \psi_1^3 } (W \psi_1 - 1) \\
-&= \frac{ \left[ \kappa^2 A^2 - 2 \kappa A \psi_1 + \psi_1^2 \right] }{ \psi_1^3 } A \\
-&= \frac{1}{\psi_1^3} \left[ \kappa^2 A^3 - 2 \kappa A^2 \psi_1 + A \psi_1^2 \right] \\
-&= \frac{1}{\psi_1^3} \left( \frac{1}{W^2 \psi_1^2} A^3 - \frac{2}{W \psi_1} A^2 + A \psi_1^2 \right)\\
-&= \frac{1}{\psi_1^3} \left[ A \left( \frac{A^2}{W^2 \psi_1^2} - \frac{2 A \psi_1}{W} + \psi_1^2 \right) \right]\\
-&= \frac{A}{\psi_1^3} \left( \psi_1 - \frac{1}{W} \right)^2\\
-&= \frac{1}{\psi_1^2} \left(\psi_1 - \frac{1}{W}\right),
+&= \frac{\left(\left( \frac{\sqrt{\psi_1}}{W \sqrt{\psi_1} + \sqrt{W}}\right)(W \psi_1 - 1) - \psi_1\right)^2}{\psi_1^2} \frac{(W \psi_1 - 1)}{\psi_1}, \\
 \end{aligned}
 \nonumber
 \end{equation}
-Note: $A = W \psi_1 - 1 $ and $\left( \sum_{s=1}^q \frac{1}{\psi_{s+1}} =  \frac{(W \psi_1 - 1)}{\psi_1} \right)$. 
+
+
+Defining $\left(\left(\frac{\sqrt{\psi_1}}{W \sqrt{\psi_1} + \sqrt{W}}\right)(W \psi_1 - 1) - \psi_1\right)$ in the expression above as $a$, $a$ simplifies to:
+\begin{equation}
+    \begin{aligned}
+    a &=\left(\frac{\sqrt{\psi_1}}{W \sqrt{\psi_1} + \sqrt{W}}\right) \left(W \psi_1 - 1 \right) - \psi_1 \\
+     &=\left(\frac{1}{W \sqrt{\psi_1} + \sqrt{W}}\right)\left(W \psi_1\sqrt{\psi_1} - \sqrt{\psi_1}\right) - \psi_1 \\
+     &=\left(\frac{1}{W \sqrt{\psi_1} + \sqrt{W}}\right)\left(W \psi_1\sqrt{\psi_1} - \sqrt{\psi_1} - W\psi_1\sqrt{\psi_1} - \psi_1\sqrt{W} \right) \\
+     &=\left(\frac{1}{W \sqrt{\psi_1} + \sqrt{W}}\right)\left( - \sqrt{\psi_1}  - \psi_1\sqrt{W} \right) \\
+     &=\left(\frac{-1}{W \sqrt{\psi_1} + \sqrt{W}}\right)\left( \sqrt{\psi_1}  + \psi_1\sqrt{W} \right) \\
+     &=\left(\frac{-\sqrt{\psi_1}}{\sqrt{W} \left(1 + \sqrt{W\psi_1}\right) }\right)\left( 1  + \sqrt{W\psi_1} \right) \\
+     &=\frac{-\sqrt{\psi_1}}{\sqrt{W}  } \\
+    \end{aligned}
+    \nonumber
+\end{equation}
+
+Substituting $a$ back into $\sum_{s=1}^q g_{s1}^2$ above:
+
+\begin{equation}
+    \begin{aligned}
+        &= \frac{\left(\left( \frac{\sqrt{\psi_1}}{W \sqrt{\psi_1} + \sqrt{W}}\right)(W \psi_1 - 1) - \psi_1\right)^2}{\psi_1^2} \frac{(W \psi_1 - 1)}{\psi_1} \\
+        &= \frac{a^2}{\psi_1^2} \frac{(W \psi_1 - 1)}{\psi_1} \\
+        &= \frac{\left(\frac{-\sqrt{\psi_1}}{\sqrt{W}  }\right)^2}{\psi_1^2} \frac{(W \psi_1 - 1)}{\psi_1} \\
+        &= \frac{\left(\frac{\psi_1}{W  }\right)}{\psi_1^2} \frac{(W \psi_1 - 1)}{\psi_1} \\
+        &= \frac{1}{\psi_1^2}\frac{1}{W}  (W \psi_1 - 1) \\
+        &= \frac{1}{\psi_1^2} \left(\psi_1 - \frac{1}{W}\right).
+    \end{aligned}
+    \nonumber
+\end{equation}
+
 
 Now for $c = 2,...,C$, 
 \begin{equation}
     \begin{aligned}
 \sum_{s=1}^q g_{sc}^2 &= \sum_{s=1}^q \left(\frac{I(s+1 = c)}{\sqrt{\psi_{c}}} - \frac{\kappa}{\psi_c \sqrt{\psi_{s+1}}}\right)^2 \\
-&= \sum_{s=1}^q \left[ \left( \frac{I(s+1 = c)}{\sqrt{\psi_c}} \right)^2 - 2 \times \frac{I(s+1 = c)}{\sqrt{\psi_c}} \times \frac{\kappa}{\psi_c \sqrt{\psi_{s+1}}} + \left( \frac{\kappa}{\psi_c \sqrt{\psi_{s+1}}} \right)^2 \right] \\
-&= \frac{1}{\psi_c} + \sum_{s=1}^q \frac{\kappa^2}{\psi_c^2 \psi_{s+1}} - 2 \times \frac{\kappa}{\psi_c^2 \sqrt{\psi_{c}}}\\
+&= \sum_{s=1}^q \left[ \left( \frac{I(s+1 = c)}{\sqrt{\psi_c}} \right)^2 - 2 \frac{I(s+1 = c)}{\sqrt{\psi_c}} \frac{\kappa}{\psi_c \sqrt{\psi_{s+1}}} + \left( \frac{\kappa}{\psi_c \sqrt{\psi_{s+1}}} \right)^2 \right] \\
+&= \frac{1}{\psi_c} + \sum_{s=1}^q \frac{\kappa^2}{\psi_c^2 \psi_{s+1}} - 2 \frac{\kappa}{\psi_c^2 \sqrt{\psi_{c}}}\\
 &= \frac{1}{\psi_c} - \frac{2 \kappa}{\psi_c^2} + \frac{\kappa^2}{\psi_c^2}\sum_{s=1}^q \frac{1}{\psi_{s+1}} \\
 &= \frac{1}{\psi_c} - \frac{2 \kappa}{\psi_c^2} + \frac{\kappa^2}{\psi_c^2}\frac{(W \psi_1 - 1)}{\psi_1} \\
 &= \frac{1}{\psi_c^2}\left[\psi_c - 2\kappa + \kappa^2\frac{(W \psi_1 - 1)}{\psi_1}\right] \\
-&= \frac{1}{\psi_c^2}\left[\psi_c + \left(- 2\kappa + \kappa^2\frac{(W \psi_1 - 1)}{\psi_1} \right) \right] \\
+&= \frac{1}{\psi_c^2}\left[\psi_c - \frac{2\sqrt{\psi_1}}{\sqrt{W}(1+\sqrt{\psi_1 W})} + \frac{\psi_1}{W(1+\sqrt{\psi_1 W})^2}\frac{(W \psi_1 - 1)}{\psi_1}\right] \\
+&= \frac{1}{\psi_c^2}\left[\psi_c - \frac{2\sqrt{\psi_1 W}(1 + \sqrt{\psi_1 W}) +(\psi_1 W - 1)}{W(1+\sqrt{\psi_1 W})^2}  \right] \\
+&= \frac{1}{\psi_c^2}\left[\psi_c - \frac{(1+2\sqrt{\psi_1 W}+\psi_1 W)}{W(1+\sqrt{\psi_1 W})^2}  \right] \\
+&= \frac{1}{\psi_c^2}\left[\psi_c - \frac{(1+\sqrt{\psi_1 W})^2}{W(1+\sqrt{\psi_1 W})^2}  \right] \\
 &= \frac{1}{\psi_c^2} \left(\psi_c - \frac{1}{W}\right)
 \end{aligned}
 \nonumber

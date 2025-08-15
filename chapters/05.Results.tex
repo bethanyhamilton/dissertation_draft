@@ -8,28 +8,33 @@ Across the factors that I evaluated in the simulation study, the CHE+RVE model w
 
 \section{Monte Carlo Standard Error}
 
-I ran 150 iterations for the approximation results and averaged the resulting power values for each sampling/imputation method per condition. For the empirical sampling method, the range of MCSE values was $(0, 0.011)$ across conditions. For the stylized sampling method, the range of MCSE values was $(0, 0.011)$ across conditions. For the simulated results, I ran 2,496 iterations per condition; this resulted in a range of MCSE values of $(0, 0.010)$. The MCSE of the power difference for the empirical sampling method resulted in a range of MCSE of ($.002,  0.015)$. The MCSE of the power difference for the stylized sampling method resulted in a range of MCSE values of $(0.002, 0.014)$.
+I ran 150 iterations for the approximation results and averaged the resulting power values for each sampling method per condition. For the empirical sampling method, the range of MCSE values was $(0, 0.011)$ across conditions. For the stylized sampling method, the range of MCSE values was $(0, 0.011)$ across conditions. For the simulated results, I ran 2,496 iterations per condition; this resulted in a range of MCSE values of $(0, 0.010)$. The MCSE of the power difference for the empirical sampling method resulted in a range of MCSE of ($.002,  0.015)$. The MCSE of the power difference for the stylized sampling method resulted in a range of MCSE values of $(0.002, 0.014)$.
 
-For the balanced assumption method results, there is no variation in the approximated power estimates, because it returns the value of the power neighborhood factor as discussed in Chapter \ref{ch: methods}. Therefore, there is no corresponding MCSE estimate for the approximation results, and the MCSE of the discrepancy between the approximation results using the balanced assumption method and the simulated power will be the same as the MCSE of the simulated power. 
+For the balanced assumption method results, there is no variation in the approximated power estimates, because it returns the value of the power neighborhood factor as discussed in Chapter \ref{ch: methods}. Therefore, the MCSE of the discrepancy between the approximation results using the balanced assumption method and the simulated power will be the same as the MCSE of the simulated power. 
 
 \section{Power Discrepancies}
 
-In the following sections, I present the results from the analysis of deviance and visual analysis for the power discrepancies when using the empirical sampling method. Then, I compare the results of the power discrepancies across sampling/imputation methods through a visual analysis.   
+In the following sections, I present the results from the analysis of deviance and visual analysis for the power discrepancies when using the empirical sampling method. Then, I compare the results of the power discrepancies across sampling methods through a visual analysis.   
 
-\subsection{Analysis of Deviance for Power Discrepancies when using the Empirical Sampling Method} \label{sec: analysis of deviance - empirical}
+\subsection{Analysis of Deviance for Power Discrepancies when Using the Empirical Sampling Method} \label{sec: analysis of deviance - empirical}
 
 Table \ref{tab:SequentialAnalysis} below presents the results of the analysis of deviance for power discrepancies of the empirical sampling method (please refer to Section \ref{sec: analysis of deviance} for the methods of this analysis). The primary goal of this analysis is to determine which factors are most salient in explaining the variation of the discrepancies between the approximation and the true power. As seen in the top row of this table, the residual deviance from the null model was 48808.6. The deviance reported in the subsequent rows is the reduction in twice the log-likelihood of each corresponding term, and they were calculated sequentially in order from top to bottom. I also added a column for the ranking of the deviance from largest to smallest. From this table, the following are the top ten factors and interactions based on the ranking of the deviance: 1) the total number of studies ($J$), 2) the pattern of the $\mu_c$ ($f_c$), 3) the interaction between the total number of studies and the pattern of the $\mu_c$  ($J \times f_c$), 4) the interaction between the total number of studies and the balance of the number of studies across categories ($J \times bal. j_c$), 5) the balance of the number of studies across categories ($bal. j_c$), 6) the interaction between the pattern of the $\mu_c$ and the balance of the number of studies across categories ($f_c \times bal. j_c$), 7) the interaction between the power neighborhood and the balance of the number of studies across categories ($P \times bal. j_c$), 8) the interaction between the between-study heterogeneity and the power neighborhood ($\tau \times P$), 9) the interaction between the power neighborhood and the pattern of the $\mu_c$ ($P \times f_c$), and 10) the interaction between the total number of studies and the power neighborhood  ($J \times P$). 
 
 From the results of this analysis, I decided to primarily focus on the pattern of the $\mu_c$ factor, the total number of studies factor, the balance of the number of studies across categories factor, and their interactions when constructing figures, because they explained the majority of the variation in the power discrepancies. I also decided to examine the between-study heterogeneity factor in conjunction with the other factors to see its impact after accounting for the other factors. To evaluate the effect of the power neighborhood, $P$, I include the levels as tick marks on the x-axis in the figures in the next section. As a consequence, to see the impact of the power neighborhood, you can evaluate the trajectory of the magnitude of the discrepancies as you move along the x-axis. These results also suggest that the within-study heterogeneity factor and the sampling correlation factor had little impact on the discrepancies between the power estimates from the approximation and the true simulated power when using the empirical sampling method for the approximation. 
 
 \begin{table}[H]
-\caption{Sequential Analysis of Deviance for Power Discrepancies when using the Empirical Sampling Method}
-     \label{tab:SequentialAnalysis}
+\caption{Sequential Analysis of Deviance for Power Discrepancies when using the Empirical Sampling Method}\label{tab:SequentialAnalysis}
     \centering
-    \begin{tabular}{p{3cm}p{3cm}p{3cm}p{3cm}}
-        \toprule
-    Term & d.f. & Deviance & Rank \\ \midrule
-       Null deviance & & 48808.6 & \\
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}
+    l
+    S[table-format=2.0]
+    S[table-format=5.1]
+    S[table-format=2.0]
+    }
+    \toprule
+        Term & {d.f.} & {Deviance} & {Rank} \\ 
+        \midrule
+        Null deviance & & 48808.6 & \\
         &&&\\
        $Deviance$ & & & \\
        $J$ & 4 & 8369.0 & 1 \\
@@ -60,12 +65,12 @@ From the results of this analysis, I decided to primarily focus on the pattern o
        $P:f_c$ & 35 & 1080.9 & 9 \\
        $P:bal. j_c$ & 5 & 1245.6 & 7 \\
        $f_c:bal. j_c$ & 7 & 1505.0 & 6 \\
-        \bottomrule
-    \end{tabular}
-   
-    \small
-      d.f. = Degrees of freedom; $J$ is the total number of primary studies factor; $\tau$ is the between-study heterogeneity factor; $\omega$ is the within-study factor; $\rho$ is the sample correlation factor; $P$ is the power neighborhood factor; $f_c$ is the pattern of the $\mu_c$ factor; $bal. j_c$ is the balance of the $j_c$ factor. 
+    \bottomrule
+    \end{tabular*}
+    \begin{flushright}
+    \footnotesize d.f. = Degrees of freedom; $J$ is the total number of primary studies factor; $\tau$ is the between-study heterogeneity factor; $\omega$ is the within-study factor; $\rho$ is the sample correlation factor; $P$ is the power neighborhood factor; $f_c$ is the pattern of the $\mu_c$ factor; $bal. j_c$ is the balance of the $j_c$ factor. 
    % \caption{Caption}
+    \end{flushright}
 \end{table}
 
 
@@ -155,45 +160,46 @@ Finally, even though the analysis of deviance in Section \ref{sec: analysis of d
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Approximation Performance Across Sampling/Imputation Methods}
+\subsection{Approximation Performance Across Sampling Methods}
 
-I also examined differences in the power discrepancies across sampling/imputation methods for the primary study characteristics when making assumptions about the number of effect sizes ($k_j$) and the sampling variances ($\sigma_j^2$) in the approximation. I found that the performance of the approximation when using the stylized sampling method was similar to that of the empirical sampling method across all conditions. 
-This is probably due to how well the stylized distributions fit the empirical distributions, as seen in Figures \ref{fig:densitysigma_sq} and \ref{fig:pmfkj}. In most conditions, the balanced assumption method underestimated the true power. However, when $J=24$ and $C=4$, the power estimates from the balanced assumption method overestimated the true power to about the same degree as the empirical and stylized sampling methods.
+I also examined differences in the power discrepancies across sampling methods for the primary study characteristics when making assumptions about the number of effect sizes ($k_j$) and the sampling variances ($\sigma_j^2$) in the approximation. I found that the performance of the approximation when using the stylized sampling method was similar to that of the empirical sampling method across all conditions. 
+This is probably due to how well the stylized distribution for $\sigma_j^2$ fits the corresponding empirical distribution (Figure \ref{fig:densitysigma_sq}) despite the stylized distribution for the $k_j$ not fitting the corresponding empirical distribution as well (Figure \ref{fig:pmfkj}). In most conditions, the balanced assumption method underestimated the true power. However, when $J=24$ and $C=4$, the power estimates from the balanced assumption method overestimated the true power to about the same degree as the empirical and stylized sampling methods.
 
-Figures \ref{fig: fc_bal_allsamp_rejrate}, \ref{fig: fc_bal_allsamp_rejrate_J24}, \ref{fig: allsamp_bal_J72}, \ref{fig: allsamp_tau}, \ref{fig: fc_omega_all_samp_rejrate}, and \ref{fig: fc_rho_all_samp_rejrate} present the results of the power discrepancies under the three different assumptions of the primary study characteristics. To compare across the sampling/imputation methods, instead of graphing the approximated power on the x-axis as in the last section, the rejection rate (true power) is mapped to the x-axis. The reason I changed the x-axis is because for the balanced assumption method the power estimates that result from the approximation will return the power neighborhood value since the $\mu_c$ were generated the same way, so using the simulated power as the x-axis ensures that it is the same point of comparison for all three methods. 
+Figures \ref{fig: fc_bal_allsamp_rejrate}, \ref{fig: fc_bal_allsamp_rejrate_J24}, \ref{fig: allsamp_bal_J72}, \ref{fig: allsamp_tau}, \ref{fig: fc_omega_all_samp_rejrate}, and \ref{fig: fc_rho_all_samp_rejrate} present the results of the power discrepancies under the three different assumptions of the primary study characteristics. To compare across the sampling methods, instead of graphing the approximated power on the x-axis as in the last section, the rejection rate (true power) is mapped to the x-axis. The reason I changed the x-axis is because for the balanced assumption method the power estimates that result from the approximation will return the power neighborhood value since the $\mu_c$ were generated the same way, so using the simulated power as the x-axis ensures that it is the same point of comparison for all three methods. 
 
 %how closely does the approximate power with balanced condition correspond to real power, when the real simulated power level is based on heterogeneous study characteristics? 
 
-In Figure \ref{fig: fc_bal_allsamp_rejrate}, patterns of the $\mu_c$ and the sampling/imputation methods are mapped onto facets, and the balance of the $j_c$ is mapped onto color. Regarding the difference in the performance of the approximation using different sampling methods for the $k_j$ and $\sigma_j^2$, the figure shows that there are minimal differences between the empirical and stylized sampling methods. Both sampling methods resulted in samples where the approximation overestimated the true power beyond five percentage points when $C = 4$ and there was imbalanced $j_c$ across the categories. Across all conditions, the empirical sampling method performed better, as expected. For example, as can be seen in Figure \ref{fig: fc_bal_allsamp_rejrate_J24}, when the power neighborhood is $P = 0.9$ and the number of studies was $J= 24$, only the stylized sampling method resulted in samples that overestimated the true power. For the empirical sampling method, across conditions, the approximation at most underestimated the true power by $2.94$ percentage points and overestimated the power by $20.82$ percentage points. For the stylized sampling method, the approximation at most underestimated the true power by $3.16$ percentage points and overestimated the power by $25.72$ percentage points. In cases where the empirical sampling method was accurate (within $\pm 5$ percentage points), the stylized method did overestimate the true power by more than five percentage points in some conditions. This happened when $C = 3$ and $J \leq 36$ by as much as 8.85 percentage points. 
+In Figure \ref{fig: fc_bal_allsamp_rejrate}, patterns of the $\mu_c$ and the sampling methods are mapped onto facets, and the balance of the $j_c$ is mapped onto color. Regarding the difference in the performance of the approximation using different sampling methods for the $k_j$ and $\sigma_j^2$, the figure shows that there are minimal differences between the empirical and stylized sampling methods. Both sampling methods resulted in samples where the approximation overestimated the true power beyond five percentage points when $C = 4$ and there was imbalanced $j_c$ across the categories. Across all conditions, the empirical sampling method performed better, as expected. For example, as can be seen in Figure \ref{fig: fc_bal_allsamp_rejrate_J24}, when the power neighborhood is $P = 0.9$ and the number of studies was $J= 24$, only the stylized sampling method resulted in samples that overestimated the true power. For the empirical sampling method, across conditions, the approximation at most underestimated the true power by $2.94$ percentage points and overestimated the power by $20.82$ percentage points. For the stylized sampling method, the approximation at most underestimated the true power by $3.16$ percentage points and overestimated the power by $25.72$ percentage points. In cases where the empirical sampling method was accurate (within $\pm 5$ percentage points), the stylized method did overestimate the true power by more than five percentage points in some conditions. This happened when $C = 3$ and $J \leq 36$ by as much as 8.85 percentage points. 
 
-Because I generated the $\mu_c$ using the mean $\sigma_j^2$ and mean $k_j$ of the empirical distributions from the \textcite{WilliamsRyan2022HiMI} dataset, the approximation with balanced characteristics returns the exact value of the power neighborhood factor I used to generate the $\mu_c$ for that condition. Figure \ref{fig: fc_bal_allsamp_rejrate} shows how much the true power is off from the power neighborhood factor used in that condition. For example, across all conditions with a power neighborhood value of $P = 0.6$, the true power was at most $25.3$ percentage points above and $24.2$ percentage points below a power of $60\%$ (which were the biggest discrepancies for the balanced assumption method as well). Assuming balanced study characteristics results in power estimates that overestimate around the same magnitude as the stylized (max overestimation is $25$ percentage points) when $C=4$ and $J=24$ (see Figure \ref{fig: fc_bal_allsamp_rejrate_J24}). However, unlike the other methods, the balanced method underestimates power across the rest of the conditions. For example, Figure \ref{fig: allsamp_bal_J72} displays discrepancies in power versus true power faceted by $f_c$ and the sampling/imputation methods with balance of $j_c$ as the color when $J=72$. As seen in this graph, while the stylized and the empirical sampling methods result in accurate approximations across all the values of $f_c$, the balanced method results in power estimates much smaller than the true power.  Neither the balance of the $j_c$ nor the $f_c$ explains the underestimation, because the power discrepancy for the balanced assumption method does not vary by these factors. 
+Because I generated the $\mu_c$ using the mean $\sigma_j^2$ and mean $k_j$ of the empirical distributions from the \textcite{WilliamsRyan2022HiMI} dataset, the approximation with balanced characteristics returns the exact value of the power neighborhood factor I used to generate the $\mu_c$ for that condition. Figure \ref{fig: fc_bal_allsamp_rejrate} shows how much the true power is off from the power neighborhood factor used in that condition. For example, across all conditions with a power neighborhood value of $P = 0.6$, the true power was at most $25.3$ percentage points above and $24.2$ percentage points below a power neighborhood of $60\%$ (which were the biggest discrepancies for the balanced assumption method as well). Assuming balanced study characteristics results in power estimates that overestimate around the same magnitude as the stylized (max overestimation is $25$ percentage points) when $C=4$ and $J=24$ (see Figure \ref{fig: fc_bal_allsamp_rejrate_J24}). 
 
-The magnitude of the discrepancy for the balance assumption method when it underestimates the true power appears to be impacted by the value of the power neighborhood, with the largest discrepancies occurring around $P = .4$ and $P = .6$. Furthermore, the between-study heterogeneity also seems to impact the degree of the underestimation of the true power for the balanced assumption method. Figure \ref{fig: allsamp_tau} displays the discrepancies in approximated power compared to true power with $f_c$ and the sampling/imputation methods mapped onto facets and between-study heterogeneity ($\tau$) mapped onto color. The figure shows that the value of $\tau$ impacts the discrepancy for the balanced assumption method, where the true power estimate is consistently greater than the power estimate of the approximation when $\tau = 0.05$ across all $f_c$.
+However, unlike the other methods, the balanced method underestimates power across the rest of the conditions. For example, Figure \ref{fig: allsamp_bal_J72} displays discrepancies in power versus true power faceted by $f_c$ and the sampling methods with balance of $j_c$ as the color when $J=72$. As seen in this graph, while the stylized and the empirical sampling methods result in accurate approximations across all the values of $f_c$, the balanced method results in power estimates much smaller than the true power.  Neither the balance of the $j_c$ nor the $f_c$ explains the underestimation, because the power discrepancy for the balanced assumption method does not vary by these factors. 
+
+The magnitude of the discrepancy for the balance assumption method when it underestimates the true power appears to be impacted by the value of the power neighborhood, with the largest discrepancies occurring around $P = .4$ and $P = .6$. Furthermore, the between-study heterogeneity also seems to impact the degree of the underestimation of the true power for the balanced assumption method. Figure \ref{fig: allsamp_tau} displays the discrepancies in approximated power compared to true power with $f_c$ and the sampling methods mapped onto facets and between-study heterogeneity ($\tau$) mapped onto color. The figure shows that the value of $\tau$ impacts the discrepancy for the balanced assumption method, where the true power estimate is consistently greater than the power estimate of the approximation when $\tau = 0.05$ across all $f_c$.
 
 
 \begin{sidewaysfigure}
     \centering
-    \vspace{-5pt}\includegraphics[width=\linewidth]{chapters/plots/fc_bal_allsamp_rejrate.png}\caption{Power discrepancy between approximation power and true power vs. true power by pattern type ($f_c$), sampling/imputation methods for the primary study characteristics, and the balance of the number of studies per category (Balanced $j_c$ vs. Imbalanced $j_c$).The solid lines indicate no discrepancy between the approximated and simulated power. The dashed lines indicate that the approximated power over- or underestimated the true power by five percentage points.\label{fig: fc_bal_allsamp_rejrate}}
+    \vspace{-5pt}\includegraphics[width=\linewidth]{chapters/plots/fc_bal_allsamp_rejrate.png}\caption{Power discrepancy between approximation power and true power vs. true power by pattern type ($f_c$), sampling methods for the primary study characteristics, and the balance of the number of studies per category (Balanced $j_c$ vs. Imbalanced $j_c$).The solid lines indicate no discrepancy between the approximated and simulated power. The dashed lines indicate that the approximated power over- or underestimated the true power by five percentage points.\label{fig: fc_bal_allsamp_rejrate}}
+    \vspace{-5pt}
+\end{sidewaysfigure}
+
+\begin{sidewaysfigure}
+    \centering\vspace{-5pt}\includegraphics[width=\linewidth]{chapters/plots/fc_bal_allsamp_rejrate_J24.png}\caption{Power discrepancy between approximation power and true power vs. true power by pattern type ($f_c$), sampling methods for the primary study characteristics, and the balance of the number of studies per category (Balanced $j_c$ vs. Imbalanced $j_c$) for $J = 24$. The solid lines indicate no discrepancy between the approximated and simulated power. The dashed lines indicate that the approximated power over- or underestimated the true power by five percentage points. \label{fig: fc_bal_allsamp_rejrate_J24}}
+    \vspace{-5pt}
+\end{sidewaysfigure}
+
+
+
+\begin{sidewaysfigure}
+    \centering
+    \vspace{-5pt}\includegraphics[width=\linewidth]{chapters/plots/allsamp_bal_J72.png}\caption{Power discrepancy between approximation power and true power vs. true power by pattern type ($f_c$), sampling methods for the primary study characteristics, and the balance of the number of studies per category (Balanced $j_c$ vs. Imbalanced $j_c$) for $J = 72$. The solid lines indicate no discrepancy between the approximated and simulated power. The dashed lines indicate that the approximated power over- or underestimated the true power by five percentage points. \label{fig: allsamp_bal_J72}}
     \vspace{-5pt}
 \end{sidewaysfigure}
 
 \begin{sidewaysfigure}
     \centering
-    \vspace{-5pt}\includegraphics[width=\linewidth]{chapters/plots/fc_bal_allsamp_rejrate_J24.png}\caption{Power discrepancy between approximation power and true power vs. true power by pattern type ($f_c$), sampling/imputation methods for the primary study characteristics, and the balance of the number of studies per category (Balanced $j_c$ vs. Imbalanced $j_c$) for $J = 24$. The solid lines indicate no discrepancy between the approximated and simulated power. The dashed lines indicate that the approximated power over- or underestimated the true power by five percentage points. \label{fig: fc_bal_allsamp_rejrate_J24}}
-    \vspace{-5pt}
-\end{sidewaysfigure}
-
-
-
-\begin{sidewaysfigure}
-    \centering
-    \vspace{-5pt}\includegraphics[width=\linewidth]{chapters/plots/allsamp_bal_J72.png}\caption{Power discrepancy between approximation power and true power vs. true power by pattern type ($f_c$), sampling/imputation methods for the primary study characteristics, and the balance of the number of studies per category (Balanced $j_c$ vs. Imbalanced $j_c$) for $J = 72$. The solid lines indicate no discrepancy between the approximated and simulated power. The dashed lines indicate that the approximated power over- or underestimated the true power by five percentage points. \label{fig: allsamp_bal_J72}}
-    \vspace{-5pt}
-\end{sidewaysfigure}
-
-\begin{sidewaysfigure}
-    \centering
-    \vspace{-5pt}\includegraphics[width=\linewidth]{chapters/plots/allsamp_tau.png}\caption{Power discrepancy between approximation power and true power vs. true power by pattern type ($f_c$), sampling/imputation methods for the primary study characteristics, and between-study heterogeneity ($\tau$). The solid lines indicate no discrepancy between the approximated and simulated power. The dashed lines indicate that the approximated power over- or underestimated the true power by five percentage points. \label{fig: allsamp_tau}}
+    \vspace{-5pt}\includegraphics[width=\linewidth]{chapters/plots/allsamp_tau.png}\caption{Power discrepancy between approximation power and true power vs. true power by pattern type ($f_c$), sampling methods for the primary study characteristics, and between-study heterogeneity ($\tau$). The solid lines indicate no discrepancy between the approximated and simulated power. The dashed lines indicate that the approximated power over- or underestimated the true power by five percentage points. \label{fig: allsamp_tau}}
     \vspace{-5pt}
 \end{sidewaysfigure}
 
@@ -201,13 +207,13 @@ Figures \ref{fig: fc_omega_all_samp_rejrate} and \ref{fig: fc_rho_all_samp_rejra
  
 \begin{sidewaysfigure}
     \centering
-    \vspace{-5pt}\includegraphics[width=\linewidth]{chapters/plots/fc_omega_all_samp_rejrate.png}\caption{Power discrepancy between approximation power and true power vs. true power by pattern type ($f_c$), sampling/imputation methods for the primary study characteristics, and within-study heterogeneity ($\omega$). The solid lines indicate no discrepancy between the approximated and simulated power. The dashed lines indicate that the approximated power over- or underestimated the true power by five percentage points.\label{fig: fc_omega_all_samp_rejrate}}
+    \vspace{-5pt}\includegraphics[width=\linewidth]{chapters/plots/fc_omega_all_samp_rejrate.png}\caption{Power discrepancy between approximation power and true power vs. true power by pattern type ($f_c$), sampling methods for the primary study characteristics, and within-study heterogeneity ($\omega$). The solid lines indicate no discrepancy between the approximated and simulated power. The dashed lines indicate that the approximated power over- or underestimated the true power by five percentage points.\label{fig: fc_omega_all_samp_rejrate}}
     \vspace{-5pt}
 \end{sidewaysfigure}
 
 \begin{sidewaysfigure}
     \centering
-    \vspace{-5pt}\includegraphics[width=\linewidth]{chapters/plots/fc_rho_all_samp_rejrate.png}\caption{Power discrepancy between approximation power and true power vs. true power by pattern type ($f_c$), sampling/imputation methods for the primary study characteristics, and sampling correlation ($\rho$). The solid lines indicate no discrepancy between the approximated and simulated power. The dashed lines indicate that the approximated power over- or underestimated the true power by five percentage points. \label{fig: fc_rho_all_samp_rejrate}}
+    \vspace{-5pt}\includegraphics[width=\linewidth]{chapters/plots/fc_rho_all_samp_rejrate.png}\caption{Power discrepancy between approximation power and true power vs. true power by pattern type ($f_c$), sampling methods for the primary study characteristics, and sampling correlation ($\rho$). The solid lines indicate no discrepancy between the approximated and simulated power. The dashed lines indicate that the approximated power over- or underestimated the true power by five percentage points. \label{fig: fc_rho_all_samp_rejrate}}
     \vspace{-5pt}
 \end{sidewaysfigure}
 
@@ -226,10 +232,16 @@ From this ranking, it seems that $J$, $f_c$, $bal. j_c$, and $\tau$ and their in
 \caption{Sequential Analysis of Deviance for Type I Error}
      \label{tab:SequentialAnalysis - Nominal Error}
     \centering
-    \begin{tabular}{p{3cm}p{3cm}p{3cm}p{3cm}}
-        \toprule
-    Term & d.f. & Deviance & Rank \\ \midrule
-       Null deviance & & 5892.6 & \\
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}
+    l
+    S[table-format=2.0]
+    S[table-format=5.1]
+    S[table-format=2.0]
+    }
+    \toprule
+        Term & {d.f.} & {Deviance} & {Rank} \\ 
+        \midrule
+        Null deviance & & 5892.6  & \\
         &&&\\
        $Deviance$ & & & \\
        $J$ & 4 & 1257.3 & 1 \\
@@ -254,11 +266,10 @@ From this ranking, it seems that $J$, $f_c$, $bal. j_c$, and $\tau$ and their in
        $\rho:bal. j_c$ & 2 & 0.04 & 21 \\ 
        $f_c:bal. j_c$ & 7 & 120.8 & 9 \\
         \bottomrule
-    \end{tabular}
-   
-    \small
-      d.f. = Degrees of freedom; $J$ is the total number of primary studies factor; $\tau$ is the between-study heterogeneity factor; $\omega$ is the within-study factor; $\rho$ is the sample correlation factor; $f_c$ is the pattern of the $\mu_c$ factor; $bal. j_c$ is the balance of the $j_c$ factor. 
-   % \caption{Caption}
+    \end{tabular*}
+   \begin{flushright}
+    \footnotesize d.f. = Degrees of freedom; $J$ is the total number of primary studies factor; $\tau$ is the between-study heterogeneity factor; $\omega$ is the within-study factor; $\rho$ is the sample correlation factor; $f_c$ is the pattern of the $\mu_c$ factor; $bal. j_c$ is the balance of the $j_c$ factor. 
+    \end{flushright}
 \end{table}
 
 \subsection{Type I Error Rates}
@@ -271,11 +282,11 @@ Figures \ref{fig: type1error_bal} and \ref{fig: type1error_bal_tau} display boxp
 
 In Figure \ref{fig: type1error_bal}, the pattern of the $\mu_c$ ($f_c$) is the y-axis, the Type I error rate is the x-axis, the number of total studies ($J$) and the balance of the number of studies per category (Balanced $j_c$ vs. Imbalanced $j_c$) are mapped on to the facets. Figure \ref{fig: type1error_bal} shows that the cluster-robust Wald test results in Type I error rates below the nominal level when there are more categories. This is particularly true when $J = 24$ and $J = 36$ for $C = 4$ and when $J = 24$ for $C = 3$ and there is an imbalance in the $j_c$.  The Type I error rate should ideally be at the nominal level. The balance of the $j_c$ across $C$ does result in the HTZ test being more conservative as well, with the imbalanced $j_c$ across the $C$ condition resulting in lower Type I error rates, comparatively. 
 
-Following the results of the analysis of deviance, I also decided to evaluate the influence of between-study heterogeneity after accounting for the other impactful factors. Figure \ref{fig: type1error_bal_tau} has facets for between-study heterogeneity ($\tau$) and number of total studies ($J$), and the balance of the number of studies per category (bal. $j_c$) mapped to the color. While the boxes are rather small, the figure shows that the level of $\tau$ impacts Type I error rates as well. From this figure, the HTZ test is more conservative when $J$ is small, with a greater number of categories, and imbalanced $j_c$, but particularly when there is small between-study heterogeneity.
+Following the results of the analysis of deviance, I also decided to evaluate the influence of between-study heterogeneity after accounting for the other impactful factors. Figure \ref{fig: type1error_bal_tau} has facets for the balance of the number of studies per category (bal. $j_c$) and number of total studies ($J$), and the between-study heterogeneity ($\tau$)  mapped to the color. While the boxes are rather small, the figure shows that the level of $\tau$ impacts Type I error rates as well. From this figure, the HTZ test is more conservative when $J$ is small, with a greater number of categories, and imbalanced $j_c$, but particularly when there is small between-study heterogeneity.
 
 \begin{figure}
     \centering
-    \vspace{-5pt}\includegraphics[width=\linewidth]{chapters/plots/type1error_bal.png}\caption{Type I error by pattern type ($f_c$), the number of studies ($J$), and the balance of the number of studies per category (Balanced $j_c$ vs. Imbalanced $j_c$). The solid lines indicate the nominal  $\alpha$ level of $.05$. The dashed lines indicate bounds for simulation error.\label{fig: type1error_bal}}
+    \vspace{-5pt}\includegraphics[width=\linewidth]{chapters/plots/type1error_bal.png}\caption{Type I error by pattern type ($f_c$), the number of studies ($J$), and the and the balance of $j_c$ across categories (bal. $j_c$). The solid lines indicate $\alpha =.05$. The dashed lines indicate bounds for MCSE.\label{fig: type1error_bal}}
     \vspace{-5pt}
 \end{figure}
 
@@ -283,7 +294,7 @@ Following the results of the analysis of deviance, I also decided to evaluate th
 
 \begin{figure}
     \centering
-    \vspace{-5pt}\includegraphics[width=\linewidth]{chapters/plots/type1error_bal_tau.png}\caption{Type I error by pattern type ($f_c$), the number of studies ($J$), between-study heterogeneity ($\tau$), and the balance of the number of studies per category (Balanced $j_c$ vs. Imbalanced $j_c$). The solid lines indicate the nominal $\alpha$ level of $.05$. The dashed lines indicate bounds for simulation error. \label{fig: type1error_bal_tau}}
+    \vspace{-5pt}\includegraphics[width=\linewidth]{chapters/plots/type1error_bal_tau_all.png}\caption{Type I error by pattern type ($f_c$), the number of studies ($J$), between-study heterogeneity ($\tau$), and the balance of $j_c$ across categories (bal. $j_c$). The solid lines indicate $\alpha =.05$. The dashed lines indicate bounds for MCSE. \label{fig: type1error_bal_tau}}
     \vspace{-5pt}
 \end{figure}
 

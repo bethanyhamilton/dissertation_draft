@@ -12,10 +12,14 @@
 
 \documentclass[letterpaper,12pt]{report}	% The documentclass must be ``report''.
 
-\usepackage{makecell}
-\usepackage{rotating}
+\usepackage{styles/utformat}  
+
+
 
 \input{structural/preamble}  
+
+
+
 \addbibresource{Dissertation.bib}
 
 \input{structural/about} 
@@ -26,7 +30,6 @@
 
 
 \begin{document}
-\pagenumbering{roman}
 
 \copyrightpage  % Produces the copyright page. Optional.
 
@@ -56,9 +59,11 @@ For Abhi, Nirvaan, Cary, Hema, and Io. Thank you for giving me the strength to k
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Acknowledgements and/or preface are optional, but must occur here. %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\begin{acknowledgments}		% Optional
-%Thanks to advisors, Abhi, and friends
-%\end{acknowledgments}
+\begin{acknowledgments}	
+
+\input{chapters/acknowledgments}  
+
+\end{acknowledgments}
 
 %\begin{preface}		% Optional
 %Readers, this document represents a great deal of time and effort. Enjoy. Cheers, \theauthor.
@@ -69,7 +74,9 @@ For Abhi, Nirvaan, Cary, Hema, and Io. Thank you for giving me the strength to k
 % The abstract heading is generated automatically.
 % Do NOT use \begin{abstract} ... \end{abstract}.
 %
+
 \utabstract
+
 \input{chapters/abstract}    % this includes the text from `abstract.tex`
 
 \tableofcontents   % Table of Contents will be automatically
@@ -98,9 +105,6 @@ For Abhi, Nirvaan, Cary, Hema, and Io. Thank you for giving me the strength to k
 % dissertations =) ).
 %
 
-
-\cleardoublepage
-\pagenumbering{arabic}
 \include{chapters/01.Introduction}
 \include{chapters/02.LiteratureReview}
 \include{chapters/03.Theory}

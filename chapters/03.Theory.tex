@@ -1,40 +1,42 @@
 \chapter{Theory} \label{ch: theory}
 
-In this chapter, I provide an overview of the power approximation developed for this study and the methodology used to develop it. Specifically, I present forms of the degrees of freedom that can be used in the power analysis of categorical moderators. 
-
-%Maybe add the Moments of $\mathbf{V}^R$?
+In this chapter, I provide an overview of the power approximation developed for this study, as well as the methodology used to derive it. Specifically, I present forms of the degrees of freedom that can be used in the power analysis of categorical moderators. 
 
 \section{Background and Context}
-The following is an overview of some concepts necessary for approximating the distribution of the cluster-robust Wald statistic for a study-level categorical moderator, which is presented at the end of this chapter.
 
-\subsection{The $\mathbf{D}$ Matrix}
+The following is an overview of some concepts necessary for approximating the degrees of freedom of the cluster-robust Wald statistic for a study-level categorical moderator, which is presented at the end of this chapter.
 
- As detailed in Chapter \ref{ch:literaturereview}, \textcite{tipton2015b} proposed a test for multiple constraints where the degrees of freedom accounted for features of the design matrix, but that involves the distribution of the random matrix  $(\mathbf{C}\mathbf{V^R}\mathbf{C}')^{-1}$ (from Equation \ref{eq: omnibus test all predictors}), which is difficult to approximate. For that approximation, they used the following expressions. Let $\mathbf{\Omega}$ denote the true variance of $\mathbf{C}\bm{\hat{\beta}}-\mathbf{c}$, which is $\mathbf{\Omega} = \mathbf{C}Var(\bm{\hat{\beta}})\mathbf{C}'$. For the null hypothesis, $H_0: \mathbf{C}\mathbf{\hat{\beta}} = \mathbf{c}$, the $Q$ statistic from Equation \ref{eq: omnibus test all predictors} can be rewritten as \autocite{tipton2015b}:
+\subsection{The \texorpdfstring{$\mathbf{D}$}{ } Matrix}
+
+As detailed in Chapter \ref{ch:literaturereview}, \textcite{tipton2015b} proposed a test for multiple constraints where the degrees of freedom accounted for features of the design matrix, but that involves the distribution of the random matrix  $(\mathbf{C}\mathbf{V^R}\mathbf{C}')^{-1}$ (from Equation \ref{eq: omnibus test all predictors}), which is difficult to approximate. For that approximation, they used the following expressions. Let $\mathbf{\Omega}$ denote the true variance of $\mathbf{C}\bm{\hat{\beta}}-\mathbf{c}$, which is $\mathbf{\Omega} = \mathbf{C}Var(\bm{\hat{\beta}})\mathbf{C}'$. For the null hypothesis, $H_0: \mathbf{C}\mathbf{\hat{\beta}} = \mathbf{c}$, the $Q$ statistic from Equation \ref{eq: omnibus test all predictors} can be rewritten as \autocite{tipton2015b}:
 \begin{equation} \label{eq: Q stat reformulation}
     Q = \mathbf{z}'\mathbf{D}^{-1}\mathbf{z},
 \end{equation}
-where  $\mathbf{z} = \mathbf{\Omega}^{-1/2}(\mathbf{C}\bm{\hat{\beta}}-\mathbf{c})$. $\mathbf{z}$ is normally distributed with mean of $0$ and covariance $\mathbf{I}_q$. The $\mathbf{D}$ matrix is as follows:
+where $\mathbf{z} = \mathbf{\Omega}^{-1/2}(\mathbf{C}\bm{\hat{\beta}}-\mathbf{c})$. $\mathbf{z}$ is normally distributed with mean of $0$ and covariance $\mathbf{I}_q$. The $\mathbf{D}$ matrix is as follows:
 \begin{equation} \label{eq: D matrix}
     \mathbf{D} = \bm{G}\mathbf{V}^R\bm{G}',
 \end{equation}
 where $\bm{G} = \bm{\Omega}^{-1/2} \bm{C}$. \textcite{tipton2015b} evaluated methods to approximate the sampling distribution of this $\mathbf{D}$ matrix specifically. 
 
-In the context of a test of a study-level categorical moderator, with $C$ categories from a no-intercept model, let $\mu_c$ be the overall pooled effect for $c=1,\cdots, C$. Let $\bm{\mu} = \left[\mu_c\right]_{c=1}^C$ be a vector of these $\mu_c$ values. The corresponding estimator of $\bm{\mu}$  is $\bm{\hat{\mu}} = \left[\hat{\mu}_c\right]_{c=1}^C$. Because the estimators for each category are independent, the diagonal of the cluster-robust variance estimator ($\bm{V}^R$; see Equation \ref{eq:RVE_VR}) can be expressed as $\bm{V}^R = \bigoplus_{c=1}^C V^R_c$.
-$\bm{V}^R$ is assumed to be unbiased, $E(V_c^R) = Var(\hat{\mu}_c)$ \autocite{pustejovsky_wald_2025}.
+In the context of a test of a study-level categorical moderator, with $C$ categories from a no-intercept model, let $\mu_c$ be the overall pooled effect for $c=1,\cdots, C$. Let $\bm{\mu} = \left[\mu_c\right]_{c=1}^C$ be a vector of these $\mu_c$ values. The corresponding estimator of $\bm{\mu}$ is $\bm{\hat{\mu}} = \left[\hat{\mu}_c\right]_{c=1}^C$. The estimators for each category are independent because the categories are study-level. And because the estimators for each category are independent, the diagonal of the cluster-robust variance estimator ($\bm{V}^R$; see Equation \ref{eq:RVE_VR}) can be expressed as $\bm{V}^R = \bigoplus_{c=1}^C V^R_c$ where the $V^R_c$ are independent.
+$\bm{V}^R$ is assumed to be unbiased, $E(V_c^R) = Var(\hat{\mu}_c)$ \autocite{pustejovsky_wald_2025}. Additionally, the degrees of freedom for one category (Proof found in Appendix A) is presented here: 
+\begin{equation}
+   \nu_c = \left[ \sum_{j = 1} ^{Jc} \frac{w^2_{jc}}{ (W_c - w_{jc}) ^2} - \frac{2}{W} \sum_{j = 1} ^{Jc} \frac{w_{jc}^3}{(W_c - w_{jc})^2} + \frac{1}{W_c^2} \left(\sum_{j = 1} ^{Jc} \frac{w_{jc}^2}{W-w_{jc}} \right)^2 \right]^{-1}.
+   \label{Eq: nu_c df}
+\end{equation}
 
-For the null hypothesis that the overall pooled effects of each category are all equal,  $H_0: \mu_1 = \mu_2 = \cdots = \mu_C$,  $q=C-1$ is the number of contrasts. The $\mathbf{C}$ contrast matrix in this context has $q \times C$ dimensions and is constructed as $\mathbf{C} = \begin{bmatrix}
+For the null hypothesis that the overall pooled effects of each category are all equal, $H_0: \mu_1 = \mu_2 = \cdots = \mu_C$, $q=C-1$ is the number of contrasts. The $\mathbf{C}$ contrast matrix in this context has $q \times C$ dimensions and is constructed as $\mathbf{C} = \begin{bmatrix}
     -\mathbf{1}_q & \mathbf{I}_q
-\end{bmatrix}$.  The null hypothesis can also be written as: $H_0:\mathbf{C}\bm{\mu} = \bm{0}_q$. In this particular case, the Wald statistic becomes:
+\end{bmatrix}$. The null hypothesis can also be written as: $H_0:\mathbf{C}\bm{\mu} = \bm{0}_q$. In this particular case, the Wald statistic becomes:
 \begin{equation}
     Q = \hat{\bm{\mu}}'\mathbf{C}'(\mathbf{C} \mathbf{V}^R \mathbf{C}') \mathbf{C}\hat{\bm{\mu}}.
     \nonumber
 \end{equation}
 The Q statistic and the $\mathbf{D}$ can still be constructed as Equations \ref{eq: Q stat reformulation} and \ref{eq: D matrix}, respectively. However, $\mathbf{z}$ in this context is now $\mathbf{z} = \mathbf{\Omega}^{-1/2}(\mathbf{C}\hat{\mu_c})$ \autocite{pustejovsky_wald_2025}.
 
-
 \subsection{HTZ Test}
 
-One of the ways \textcite{tipton2015b} approximated the sampling distribution of $\mathbf{D}$ was using a Wishart distribution, where the test statistic would follow Hotelling's $T^2$ distribution. As detailed in Chapter \ref{ch:literaturereview}, the best approach was one derived by \textcite{zhang2012, zhang2013}(Equation, \ref{eq:HTZ_eta}) for special cases of heteroskedastic one-way ANOVA and MANOVA \autocite{tipton2015b}.  This approach to find the distribution of Q was to use Hotelling's $T^2$ distribution with $\eta$ degrees of freedom or HTZ-based degrees of freedom (Equation \ref{eq:HTZ_eta}) and is presented again below:
+One of the ways \textcite{tipton2015b} approximated the sampling distribution of $\mathbf{D}$ was using a Wishart distribution, where the test statistic would follow Hotelling's $T^2$ distribution. As detailed in Chapter \ref{ch:literaturereview}, the best approach was one derived by \textcite{zhang2012, zhang2013}(Equation, \ref{eq:HTZ_eta}) for special cases of heteroskedastic one-way ANOVA and MANOVA \autocite{tipton2015b}. This approach to find the distribution of Q was to use Hotelling's $T^2$ distribution with $\eta$ degrees of freedom or HTZ-based degrees of freedom (Equation \ref{eq:HTZ_eta}) and is presented again below:
 \begin{equation}
     \eta z = \frac{q(q+1)}{\sum_{s=1}^q \sum_{t=1}^q Var(d_{st})},
     \nonumber
@@ -44,17 +46,16 @@ where $d_{st}$ is the entry in row $s$ and column $t$ of $\bm{D}$.
 \subsection{Study Level Weights}
 
 For this approximation, we use the study-level weights for the CHE working model that \textcite{vembye2023} presented (Equation \ref{eq: CHEweights-study}). Below are the study-level weights in the context of a categorical moderator with index $c$: 
-
 \begin{equation} \label{eq: CHEweights-study_cat}
     \tilde{w}_{jc} = \frac{k_{jc}}{k_{jc}\hat{\tau}^2 + k_{jc}\rho\sigma_{jc}^2 +\hat{\omega}^2 + (1- \rho)\sigma_{jc}^2}.
 \end{equation}.
 
-In this study, I aim to provide a closed-form solution for study-level categorical moderators of the broader derivation they found in \textcite{tipton2015b}, which will be used for power analyses.  
+In this study, I aim to provide a closed-form solution for study-level categorical moderators of the broader derivation presented in \textcite{tipton2015b}, which will be used for power analyses.  
 
 
  \section{Moderator with Two Categories}
 
- In this section, I present the Satterthwaite degrees of freedom for a categorical moderator with two categories. For the full derivation, please see Appendix \ref{App: twocat}. Given a moderator with two categories, $C=2$, using a no-intercept model and constraining the regression coefficients to be equal, the $\mathbf{C}$ matrix has $1 \times 2$ dimensions and becomes:
+In this section, I present the Satterthwaite degrees of freedom for a categorical moderator with two categories. For the full derivation, please see Appendix \ref{App: twocat}. Given a moderator with two categories, $C=2$, using a no-intercept model and constraining the regression coefficients to be equal, the $\mathbf{C}$ matrix has $1 \times 2$ dimensions and becomes:
  \begin{equation}
      \mathbf{C} = 
      \begin{bmatrix} 
@@ -76,7 +77,7 @@ Furthermore, the $\mathbf{C}$ multiplied by the vector of regression coefficient
      0 
  \end{bmatrix}$. 
 
- Then, to be able to find the moments of $\mathbf{V}^R$, we need to specify the true variance of $(\mathbf{C}\bm{\hat{\beta}}-\mathbf{c})$. For $C = 2$,  $\mathbf{\Omega}$ is:
+Then, to be able to find the moments of $\mathbf{V}^R$, we need to specify the true variance of $(\mathbf{C}\bm{\hat{\beta}}-\mathbf{c})$. For $C = 2$,  $\mathbf{\Omega}$ is:
  \begin{equation}
      \begin{split}
          \mathbf{\Omega}  &= \mathbf{C}Var(\bm{\hat{\beta}}) \mathbf{C}' \\
@@ -105,16 +106,16 @@ For the $\mathbf{z}$ in the $Q$-statistic from Equation \ref{eq: Q stat reformul
 Now that we have found $\mathbf{z}$ and $\mathbf{D}$,  the $Q$-statistic (Equation \ref{eq: Q stat reformulation}) reduces to $t^2$-statistic, so the $t$-statistic formulation is as follows:
 \begin{equation}
     \begin{split}
-         \sqrt{Q} &= t = \frac{\left(\mathbf{\hat{\mu}}_2 - \mathbf{\hat{\mu}}_1  \right)}{\sqrt{\left(V^R_1 + V^R_2 \right)} } \\
+         \sqrt{Q} &= t = \frac{\left(\mathbf{\hat{\mu}}_2 - \mathbf{\hat{\mu}}_1  \right)}{\sqrt{\left(V^R_1 + V^R_2 \right)} }. \\
     \end{split}
     \nonumber
 \end{equation}
 
-To find the Satterthwaite degrees of freedom for a categorical moderator with two categories, I define the moments of $D$ below:
+Because the categories are study-level, $V_1^R$ and $V_2^R$ are independent. To find the Satterthwaite degrees of freedom for a categorical moderator with two categories, the moments of $D$ are below:
 \begin{equation}
     \begin{split}
         E(D) & = \left(\sum_{c=1}^2 \frac{1}{W_c}  \right)^{-1} \left(E(V^R_1) + E(V^R_2)  \right) \\
-         Var(D) & = \left(\sum_{c=1}^2 \frac{1}{W_c}  \right)^{-2 } \left(Var(V^R_1) + Var(V^R_2)  \right) \\
+         Var(D) & = \left(\sum_{c=1}^2 \frac{1}{W_c}  \right)^{-2 } \left(Var(V^R_1) + Var(V^R_2)  \right). \\
     \end{split}
     \nonumber
 \end{equation}
@@ -127,11 +128,7 @@ Using the equation for the Satterthwaite degrees of freedom (Equation \ref{eq: s
     \end{split}
     \label{eq: two_catdf}
 \end{equation}
-To simplify this further, we can express Equation \ref{eq: two_catdf} in terms of the degrees of freedom for one category (Proof found  in Appendix A) presented here: 
-\begin{equation}
-   \nu_c = \left[ \sum_{j = 1} ^{Jc} \frac{w^2_{jc}}{ (W_c - w_{jc}) ^2} - \frac{2}{W} \sum_{j = 1} ^{Jc} \frac{w_{jc}^3}{(W_c - w_{jc})^2} + \frac{1}{W_c^2} \left(\sum_{j = 1} ^{Jc} \frac{w_{jc}^2}{W-w_{jc}} \right)^2 \right]^{-1}
-   \label{Eq: nu_c df}
-\end{equation}
+To simplify this further, we can express Equation \ref{eq: two_catdf} in terms of the degrees of freedom for one category.
 
 The Satterthwaite degrees of freedom for a two-categorical moderator in terms of $\nu_c$ is:
 \begin{equation} \label{eq: two_catdf in nu_c df terms2}
@@ -141,13 +138,12 @@ The Satterthwaite degrees of freedom for a two-categorical moderator in terms of
 \end{equation}
 
  %%%%%%%%%% general case
- \section{Moderator with Multiple Categories}
+\section{Moderator with Multiple Categories} \label{sec: mult categories}
 
 Below are the details of the power approximation for the robust HTZ test. For the derivation of the HTZ approximation for the robust variance estimator when there are multiple categories, please refer to Appendix \ref{App: multiplecat} or \textcite{pustejovsky2024}. In this derivation, $\mathbf{D}$ is redefined since the approximation requires taking the inverse of the $\mathbf{\Omega}^{-1/2}$, which is difficult to do in application. The $\mathbf{z}$ will be defined as: $\mathbf{z} = \mathbf{\Omega}^{-1/2}\mathbf{C}\hat{\mu}_c $ and a new matrix $\bm{G}$ is defined as $\bm{G} = \bm{\Omega}^{-1/2}\mathbf{C} $ therefore substituting in $\bm{G}$, $\bm{D}$ now becomes:
 \begin{equation}
     \mathbf{D} = \mathbf{G}\mathbf{V}^R\mathbf{G}'.
 \end{equation}
- % Write out the process of the new derivation and what is needed. 
 
 For the cluster-robust Wald test statistic of a study-level categorical moderator with multiple categories, the closed-form solution of the HTZ degrees of freedom for a study-level categorical moderator is:
 
@@ -155,150 +151,28 @@ For the cluster-robust Wald test statistic of a study-level categorical moderato
     \label{eq: multiple_categories_satt}
     \eta_z = \frac{C(C+1)}{2\sum_{c=1}^C \frac{1}{\nu_c}\left(1 - \frac{W_c}{\mathbf{W} } \right)^2},
 \end{equation}
-where $W_c = \sum_{j=1}^J \tilde{w}_{jc}$, $\tilde{w}_{jc}$ are the study-level weights for the CHE model (Equation \ref{eq: CHEweights-study_cat}), $W = \sum_{c=1}^C W_c$, and $\nu_c$ is the degrees of freedom for category $c$ (Equation \ref{Eq: nu_c df}). Equation \ref{eq: multiple_categories_satt} is equivalent to Equation \ref{eq: two_catdf in nu_c df terms2} when $C=2$.
+where $W_c = \sum_{j=1}^{Jc} \tilde{w}_{jc}$, $\tilde{w}_{jc}$ are the study-level weights for the CHE model (Equation \ref{eq: CHEweights-study_cat}), $W = \sum_{c=1}^C W_c$, and $\nu_c$ are the degrees of freedom for category $c$ (Equation \ref{Eq: nu_c df}). Equation \ref{eq: multiple_categories_satt} is equivalent to Equation \ref{eq: two_catdf in nu_c df terms2} when $C=2$. Equation \ref{eq: multiple_categories_satt} will be used as the degrees of freedom for the test of multiple categories that follow a null of $F$-statistic where the degrees of freedom are:  $(d_1 = C-1, d_2 = \eta_z - q +1)$. 
+
+%If $k_j$ and $\sigma_j^2$ are balanced across studies, the study-level weights will be equal across studies. 
+
+
+% when balance kj and sigma_j_sq. w_jc will all be same. W_c ends up just being j_c (number of studies in category c) a multiple of that. the degrees of freedom per category should be J_c - 1. eta_z becomes a function of c and J_c for the balance kj and sigma_j_sq
+
 
 %and $\psi_c$ is the expected value of $V^R$ for one category, $\frac{1}{W_c}$.
 
-Equation \ref{eq: multiple_categories_satt} will be used as the degrees of freedom for the test of multiple categories that follow a null of $F$-statistic where the degrees of freedom are:  $(d_1 = C-1, d_2 = \eta_z - q +1$).
+\subsection{Power for the HTZ Test Based on the CHE+RVE Model} \label{sec: power_multiple}
 
-Finally, I found the power by:
-\begin{equation} \label{eq: power F}
-    P(\alpha, \lambda, d_1, d_2) = 1 - F_F(c_{\alpha, d_1, d_2 }| d_1, d_2, \lambda),
-\end{equation}
-where $\lambda$ is the non-centrality parameter and $F_F(x| d_1, d_2, \lambda)$ is the cumulative distribution function of a non-central F-distribution. The non-centrality parameter is found by: 
+I assume that the alternative hypothesis follows a non-central F-distribution and has a non-centrality parameter of: 
 \begin{equation} \label{eq: NCP}
     \lambda = \sum_{c=1}^C W_c \times (\mu_c - \overline{\mu})^2,
 \end{equation}
-where $\overline{\mu}$ is the weighted average: $\overline{\mu}_c = \sum_{c=1}^C \frac{(W_c \times \mu_c)}{W}$.
+where $\overline{\mu}$ is the weighted average: $\overline{\mu}_c = \sum_{c=1}^C \frac{(W_c \times \mu_c)}{W}$. Finally, the following equation is used to find the power of the  cluster-robust Wald test using the approximated degrees of freedom:
+\begin{equation} \label{eq: power F}
+    P(\alpha, \lambda, d_1, d_2) = 1 - F_F(c_{\alpha, d_1, d_2 }| d_1, d_2, \lambda),
+\end{equation}
+where $F_F(x| d_1, d_2, \lambda)$ is the cumulative distribution function of a non-central F-distribution.
 
-%  mu_wavg = sum(weights*(mu_p))/ sum(weights)
- % ncp = sum(weights*(mu_p-mu_wavg)^2)
+Because I assume that the alternative hypothesis follows non-central F with $d_1$ and $d_2$ degrees of freedom and has the non-centrality parameter from Equation \ref{eq: NCP}, the resulting power estimates using Equation \ref{eq: multiple_categories_satt} are an approximation of the true power of the robust HTZ test. Therefore, it is necessary to evaluate the accuracy of Equation \ref{eq: multiple_categories_satt}. In the next chapter, I detail the methodology of a Monte Carlo simulation I used to validate the power approximation formula.  
 
-%where $\nu_c$ is the degrees of freedom for a specific category $\nu_c = 2[E(V_c^R)]^2/Var(V_c^R)$ and $\psi_c$ is the $E(V_c^R)$ or $Var(\hat{\mu}_c)$.
-
-% Power analysis  
-
-
-
-%So, for a null hypothesis is $H_0 : \mu_1 = \dots = \mu_C$ while the alternative hypothesis is $H_a: \mu_c$'s are not all equal.  The distribution of the null hypothesis for the $Q$ is approximately the Hotelling's $T^2$ distribution with $q$ dimensions and degrees of freedom $\nu$, so that:
-
-%\begin{equation}
- %   \frac{\nu - q +1}{\nu q}Q \sim F(q, \nu - q +1)
-%\end{equation}
-
-%The power is the probability to reject the null hypothesis given that the alternative hypothesis is true ($Power = P(reject H_0 | H_a is true)$). The distribution of the alternative hypothesis is a non-central $F$ distribution with the following non-centrality parameter:
-
-%\begin{equation}
-%    \frac{\sum_{c=1}^{C}n_c(\mu_c - \overline{\mu})^2}{V}
-%\end{equation}.
-
-
- 
-
-%The overall pooled effect for one category is %$\hat{\beta}_c = \frac{1}{W_c}\sum_{j_{c}=1}^{Jc} \sum_{k_j=1}^{K_j} w_{k_jjc} \overline{T}_{k_jjc}$ 
-
-%where. 
-
-%The corresponding average effect size variance would be $\overline{\sigma}_{jc} = \sigma_{jc} \sqrt{\frac{(k_{jc}-1)\rho+1}{k_{jc} }}$. 
-
-%If the CHE model is correctly specified, then 
-
-
-%\begin{equation}
-%    Var(\beta_c) \approx \frac{1}{W_c}
-%\end{equation}
-
-
-
-
-%For the Robust Hypothesis test with the CHE working mode, a robust estimator for the variance of $\hat{\beta}_c$ from a no-intrecept model is given by: 
-
-%For $P = 1, \dots, p$,
-
-%\begin{equation}
-%    \mathbf{V}^R_c = \frac{1}{W_c^2}\sum^{Jc}_{jc=1}\sum^{K_j}_{k_j=1}\frac{w^2_{k_jjc}(\overline{T}_{jc} - \hat{\mu}_c)^2}{(1-\frac{w_{k_jjc}}{W_c})}
-%\end{equation}
-
-
-
-
-
-
-
-
-
-
-
-
-%In a two category case: $\mathbf{C}$ will be a $1 \times 2$ matrix: $\begin{bmatrix} -1 & 1 \end{bmatrix}$. 
-
-
-
-%%%%%%%Above is just messy notes I need to rewrite below is what I worked through from Tipton and Pustejovsky (2015)
-
-
-
-%The covariance-variance matrix for CE model is :
-
-%\begin{equation}
-%    \begin{split}
-%        \Phi_{jc(CE)} &= \tau^2 \mathbf{J}_{jc} + \rho\sigma^2_{jc}(\mathbf{J}_{jc} - \mathbf{I}_{jc}) + \sigma^2_{jc}\mathbf{I}_{jc} \\
-%        &= \tau^2 \mathbf{J}_{jc} + \rho\sigma^2_{jc}\mathbf{J}_{jc} - \rho\sigma^2_{jc}\mathbf{I}_{jc} + \sigma^2_{jc}\mathbf{I_{jc}} \\ 
- %       &= (\tau^2 + \rho\sigma^2_{jc}) \mathbf{J}_{jc}  - (\rho -1) \sigma^2_{jc}\mathbf{I}_{jc}  \\ 
-  %     &= (\tau^2 + \rho\sigma^2_{jc}) \begin{bmatrix}
-  %         1 &  \dots & 1 \\
-  %         \vdots & \ddots & \vdots \\
-  %         1 & \dots & 1
-  %     \end{bmatrix} - (\rho -1) \sigma^2_{jc}\begin{bmatrix}
-  %         1 & 0 & 0& \dots & 0 \\
-  %         0 & 1 & 0 & \dots & 0 \\
-  %         0 & 0 &1 &\dots & 0 \\
-  %         \vdots & \vdots &\ddots & \vdots &\vdots \\
-  %         0 & 0 & 0 & \dots &1
-   %    \end{bmatrix}  \\ 
-   %    &= \begin{bmatrix}
-   %        \tau^2 + \rho\sigma^2_{jc} - (\rho -1)\sigma^2_{jc} & \tau^2+\rho\sigma_{jc}^2 & \dots \\
-    %        \tau^2+\rho\sigma_{jc}^2 & \ddots & \\
-    %        \vdots & & &
-    %   \end{bmatrix} \\
-    %   &= \begin{bmatrix}
-    %       \tau^2 + \rho\sigma^2_{jc} - \rho\sigma^2_{jc} + \sigma^2_{jc} & \tau^2+\rho\sigma_{jc}^2 & \dots \\
-    %        \tau^2+\rho\sigma_{jc}^2 & \ddots & \\
-    %        \vdots & & &
-    %   \end{bmatrix} \\
-    %   &= \begin{bmatrix}
-    %       \tau^2  + \sigma^2_{jc} & \tau^2+\rho\sigma_{jc}^2 & \dots \\
-    %        \tau^2+\rho\sigma_{jc}^2 & \ddots & \\
-    %        \vdots & & &
-    %   \end{bmatrix}
-  %  \end{split} 
- %   \nonumber
-%\end{equation}
-
-%For the M matrix of dimensions $P \times P$
-
-%\begin{equation}
-%    M = \mathbf{X}'\mathbf{W}\mathbf{X}
-%\end{equation}
-
-%where $\mathbf{W}$ is a $K \times K$ diagonal block matrix with each block diagonal equal to $\mathbf{W}_{jc}$. Each $\mathbf{W}_{jc}$ has the dimensions $k_{jc} \times k_{jc}$. The $\mathbf{X}$ matrix has the dimensions $K \times P$. Since we are looking at between-study categorical predictor, for each study that is in $p$ category it will have a $1$ for each effect size in that study and $0$ for all other categories. For the martix $\mathbf{M}$ it will be a diagonal matrix where each element of the diagonal is the inverse sum of the weights across studies for one category: $1/\sum_{jc= 1}^{Jc}\sum_{k_{jc} =1}^{K_{jc}} w_{k_{jc}jc}$:
-
-%\begin{equation}
-%    M = \begin{bmatrix}
-%        \frac{1}{/\sum_{jc= 1}^{Jc}\sum_{k_{jc} =1}^{K_{jc}}w_{k_{j_1}j_1} } & & &\\
-%        & \frac{1}{\sum_{jc= 1}^{Jc}\sum_{k_{jc} =1}^{K_{jc}}w_{k_{j_2}j_2} } &  &\\
-%        & & \ddots & \\
-%        & & & \frac{1}{\sum_{jc= 1}^{Jc}\sum_{k_{jc} =1}^{K_{jc}}w_{k_{jc}jc} }
-%    \end{bmatrix}
-%    \nonumber
-%\end{equation}
-
-%The exact variance of b is: 
-
-%\begin{equation}
-%    Var(b) = \mathbf{M} \left[ \sum_{jc= 1}^{Jc}\sum_{k_{jc} =1}^{K_{jc}} \mathbf{X}_{jc}' \mathbf{W}_{jc} \mathbf{\Phi}_{jc}  \mathbf{X}_{jc} \right] \mathbf{M}
-%\end{equation}
-
-%Also, note, for a given study all the weights are the same. For $\sum_{jc= 1}^{Jc}\sum_{k_{jc} =1}^{K_{jc}} \mathbf{X}_{jc}' \mathbf{W}_{jc} \mathbf{\Phi}_{jc}  \mathbf{X}_{jc}$, along the diagonal elements we get: $k_{jc}w_{jc}\sum_{jc=1}^{Jc}\left(\frac{\sigma^2_{jc}-\rho\sigma^2_{jc}}{k_{jc}} + \tau^2 + \sigma^2_{jc} \right)$ . Then after multiplying $\mathbf{M}$ to this matrix and then multiplying the result by  $\mathbf{M}$ again we get the following a diagonal matrix of $P \times P$ dimensions: 
-%$\frac{1}{\sum_{jc= 1}^{Jc}\sum_{k_{jc} =1}^{K_{jc}} w_{k_{jc}jc}}k_{jc}w_{jc}\sum_{jc=1}^{Jc}\left(\frac{\sigma^2_{jc}-\rho\sigma^2_{jc}}{k_{jc}} + \tau^2 + \sigma^2_{jc} \right)$.
 
