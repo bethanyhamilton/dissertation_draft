@@ -20,13 +20,13 @@ For the null hypothesis that the overall pooled effects of each category are all
     -\mathbf{1}_q & \mathbf{I}_q
 \end{bmatrix}$.  The null hypothesis can also be written as: $H_0:\mathbf{C}\bm{\mu} = \bm{0}_q$. In this particular case, the Wald statistic becomes:
 \begin{equation}
-    Q = \hat{\bm{\mu}}'\mathbf{C}'(\mathbf{C} \mathbf{V}^R \mathbf{C}') \mathbf{C}\hat{\bm{\mu}}.
+    Q = \hat{\bm{\mu}}'\mathbf{C}'(\mathbf{C} \mathbf{V}^R \mathbf{C}')^{-1} \mathbf{C}\hat{\bm{\mu}}.
     \nonumber
 \end{equation}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %small sample approximation
 
-The Q statistic and the $\mathbf{D}$ can still be constructed as Equations \ref{eq: Q stat reformulation} and \ref{eq: D matrix}, respectively. However, $\mathbf{z}$ in this context is now $\mathbf{z} = \mathbf{\Omega}^{-1/2}(\mathbf{C}\hat{\mu_c})$ \autocite{pustejovsky_wald_2025}.
+The Q statistic and the $\mathbf{D}$ can still be constructed as Equations \ref{eq: Q stat reformulation} and \ref{eq: D matrix}, respectively. However, $\mathbf{z}$ in this context is now $\mathbf{z} = \mathbf{\Omega}^{-1/2}(\mathbf{C}\bm{\hat{\mu}})$ \autocite{pustejovsky_wald_2025}.
 
 
 % \begin{equation}
@@ -58,7 +58,7 @@ The Q statistic and the $\mathbf{D}$ can still be constructed as Equations \ref{
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Because $\bm{D}$ is invariant to linear transformations of $\bm{C}$, we can rewrite the null hypothesis as $H_0: \bs\Psi_{\circ}^{-1/2} \bm{C} = \bm{0}_q$, where $\bs\Psi_{\circ} = \bigoplus_{c=2}^C \psi_c$ is the diagonal of the true sampling variances of categories 2 through $C$ only. Now in this formulation, $\bs\Omega$, $\bm{z}$, and $\bs\Omega$ become: $\bs\Omega = \bs\Psi_{\circ}^{-1/2} \bm{C} \bs\Psi \bm{C}'\bs\Psi_{\circ}^{-1/2}$, $\bm{z} = \bs\Omega^{-1/2}\bs\Psi_{\circ}^{-1/2}\bm{C}\hat\mu_c$, and $\bm{G} = \bs\Omega^{-1/2} \bs\Psi_{\circ}^{-1/2} \bm{C}$. By expressing $\bm{C}$ in this way, we can derive a closed-form expression for $\bs\Omega^{-1/2}$.
+Because Zhang's approximate degrees of freedom is invariant to linear transformations of $\bm{C}$, we can rewrite the null hypothesis as $H_0: \bs\Psi_{\circ}^{-1/2} \bm{C} = \bm{0}_q$, where $\bs\Psi_{\circ} = \bigoplus_{c=2}^C \psi_c$ is the diagonal of the true sampling variances of categories 2 through $C$ only. Now in this formulation, $\bs\Omega$, $\bm{z}$, and $\bm{G}$ become: $\bs\Omega = \bs\Psi_{\circ}^{-1/2} \bm{C} \bs\Psi \bm{C}'\bs\Psi_{\circ}^{-1/2}$, $\bm{z} = \bs\Omega^{-1/2}\bs\Psi_{\circ}^{-1/2}\bm{C}\hat\mu_c$, and $\bm{G} = \bs\Omega^{-1/2} \bs\Psi_{\circ}^{-1/2} \bm{C}$. By expressing $\bm{C}$ in this way, we can derive a closed-form expression for $\bs\Omega^{-1/2}$.
 
 Finding $\bs\Omega^{-1/2}$ is not straightforward. First, it is necessary to find the inverse using the Woodbury identity. Below we can rewrite $\bs\Omega$ where $\bm{f} = \bs\Psi_{\circ}^{-1/2} \bm{1}_q = \left[ \psi_c^{-1/2}\right]_{c = 2}^C$:
 \begin{equation}
@@ -111,7 +111,7 @@ As mentioned earlier, the variance estimators for each category are independent,
     \nonumber
 \end{equation}
 
-$\Var(V^R_c)$ can be written in terms of the Sattherwaite degrees of freedom for the overall pooled effect of category $c$, $\nu_c = 2\left[\E(V^R_c)\right]^2 / \Var(V^R_c)$ (see Appendix \ref{App: overallpooled}), as $Var(V_c^R) = \frac{2}{W^2_c\nu_c}$. Then, $\Var(d_{st})$ becomes: 
+$\Var(V^R_c)$ can be written in terms of the Satterthwaite degrees of freedom for the overall pooled effect of category $c$, $\nu_c = 2\left[\E(V^R_c)\right]^2 / \Var(V^R_c)$ (see Appendix \ref{App: overallpooled}), as $Var(V_c^R) = \frac{2\psi_c^2}{\nu_c}$. Then, $\Var(d_{st})$ becomes: 
 \begin{equation}
     \Var(d_{st}) = 2 \sum_{c=1}^C g_{sc}^2 g_{tc}^2 \frac{\psi_c^2}{\nu_c}.
     \nonumber
@@ -131,7 +131,7 @@ To simplify first we find $\sum_{s=1}^q g_{s1}^2$:
 \begin{equation}
     \begin{aligned}
 \sum_{s=1}^q g_{s1}^2 &= \sum_{s=1}^q \frac{\left(\kappa(W \psi_1 - 1) - \psi_1\right)^2}{\psi_1^2 \psi_{s+1}} \\
-&= \frac{\left(\kappa(W \psi_1 - 1) - \psi_1\right)^2}{\psi_1^2} \sum_{c=2}^C \frac{1}{\psi_{s+1}} \\
+&= \frac{\left(\kappa(W \psi_1 - 1) - \psi_1\right)^2}{\psi_1^2} \sum_{c=2}^C \frac{1}{\psi_{c}} \\
 &= \frac{\left(\kappa(W \psi_1 - 1) - \psi_1\right)^2}{\psi_1^2} \frac{(W \psi_1 - 1)}{\psi_1} \\
 &= \frac{\left(\left( \frac{\sqrt{\psi_1}}{W \sqrt{\psi_1} + \sqrt{W}}\right)(W \psi_1 - 1) - \psi_1\right)^2}{\psi_1^2} \frac{(W \psi_1 - 1)}{\psi_1}, \\
 \end{aligned}
@@ -153,7 +153,7 @@ Defining $\left(\left(\frac{\sqrt{\psi_1}}{W \sqrt{\psi_1} + \sqrt{W}}\right)(W 
     \nonumber
 \end{equation}
 
-Substituting $a$ back into $\sum_{s=1}^q g_{s1}^2$ above:
+Substituting $a$ back into $\sum_{s=1}^q g_{s1}^2=$ above:
 
 \begin{equation}
     \begin{aligned}
@@ -173,12 +173,12 @@ Now for $c = 2,...,C$,
     \begin{aligned}
 \sum_{s=1}^q g_{sc}^2 &= \sum_{s=1}^q \left(\frac{I(s+1 = c)}{\sqrt{\psi_{c}}} - \frac{\kappa}{\psi_c \sqrt{\psi_{s+1}}}\right)^2 \\
 &= \sum_{s=1}^q \left[ \left( \frac{I(s+1 = c)}{\sqrt{\psi_c}} \right)^2 - 2 \frac{I(s+1 = c)}{\sqrt{\psi_c}} \frac{\kappa}{\psi_c \sqrt{\psi_{s+1}}} + \left( \frac{\kappa}{\psi_c \sqrt{\psi_{s+1}}} \right)^2 \right] \\
-&= \frac{1}{\psi_c} + \sum_{s=1}^q \frac{\kappa^2}{\psi_c^2 \psi_{s+1}} - 2 \frac{\kappa}{\psi_c^2 \sqrt{\psi_{c}}}\\
+&= \frac{1}{\psi_c} + \sum_{s=1}^q \frac{\kappa^2}{\psi_c^2 \psi_{s+1}} - 2 \frac{\kappa}{\psi_c^2 }\\
 &= \frac{1}{\psi_c} - \frac{2 \kappa}{\psi_c^2} + \frac{\kappa^2}{\psi_c^2}\sum_{s=1}^q \frac{1}{\psi_{s+1}} \\
 &= \frac{1}{\psi_c} - \frac{2 \kappa}{\psi_c^2} + \frac{\kappa^2}{\psi_c^2}\frac{(W \psi_1 - 1)}{\psi_1} \\
 &= \frac{1}{\psi_c^2}\left[\psi_c - 2\kappa + \kappa^2\frac{(W \psi_1 - 1)}{\psi_1}\right] \\
 &= \frac{1}{\psi_c^2}\left[\psi_c - \frac{2\sqrt{\psi_1}}{\sqrt{W}(1+\sqrt{\psi_1 W})} + \frac{\psi_1}{W(1+\sqrt{\psi_1 W})^2}\frac{(W \psi_1 - 1)}{\psi_1}\right] \\
-&= \frac{1}{\psi_c^2}\left[\psi_c - \frac{2\sqrt{\psi_1 W}(1 + \sqrt{\psi_1 W}) +(\psi_1 W - 1)}{W(1+\sqrt{\psi_1 W})^2}  \right] \\
+&= \frac{1}{\psi_c^2}\left[\psi_c - \frac{2\sqrt{\psi_1 W}(1 + \sqrt{\psi_1 W}) -(\psi_1 W - 1)}{W(1+\sqrt{\psi_1 W})^2}  \right] \\
 &= \frac{1}{\psi_c^2}\left[\psi_c - \frac{(1+2\sqrt{\psi_1 W}+\psi_1 W)}{W(1+\sqrt{\psi_1 W})^2}  \right] \\
 &= \frac{1}{\psi_c^2}\left[\psi_c - \frac{(1+\sqrt{\psi_1 W})^2}{W(1+\sqrt{\psi_1 W})^2}  \right] \\
 &= \frac{1}{\psi_c^2} \left(\psi_c - \frac{1}{W}\right)
